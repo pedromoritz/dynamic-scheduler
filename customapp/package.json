@@ -1,0 +1,14 @@
+{
+  "name": "customap",
+  "version": "1.0.0",
+  "description": "Custom App",
+  "author": "Pedro Moritz de Carvalho Neto <pmoritz@yahoo.com>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "js-sha512": "^0.8.0"
+  }
+}
