@@ -11,11 +11,28 @@ const app = express();
 let dataStructure = [];
 
 app.get('/ping', (req, res) => {
-  let item = sha512(Date());
-  console.log(item);
+  let item = 'object=>' +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString()) +
+    sha512(Math.random().toString());
   dataStructure.push(item);
+  console.log(item);
   console.log(dataStructure.length);
   res.send('pong');
+});
+
+app.get('/purge', (req, res) => {
+  dataStructure.length = 0;
+  global.gc();
+  console.log('purge');
+  res.send('purge');
 });
 
 process.on('SIGINT', function() {

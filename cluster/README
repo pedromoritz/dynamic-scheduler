@@ -1,5 +1,5 @@
 CRIAR CLUSTER
-minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm
+minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.23.3
 
 HABILITAR METRICS API
 minikube addons enable metrics-server -p ppgcc
@@ -21,4 +21,24 @@ minikube dashboard -p ppgcc
 
 ATIVAR APPS USANDO APACHE BENCHMARK
 ab -n 10000000 -c 1000 http://192.168.49.2:31001/ping
+
+ab -n 1000000 -c 1000 http://localhost:8080/ping
+
+curl http://localhost:8080/purge
+
+kubectl top nodes
+kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
+kubectl get pods --namespace lab1 -o wide
+kubectl get pods --namespace lab1
+
+kubectl --namespace lab1 delete pod `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name"
+
+kubectl --namespace lab1 logs -f `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name" |grep stressing-pod-1`
+
+curl http://192.168.59.117:31001/purge
+
+ab -n 75000 -c 1 http://192.168.59.117:31001/ping
+
+ 
+watch -n 5 kubectl top nodes
 

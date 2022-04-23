@@ -1,7 +1,8 @@
 FROM node:lts-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN npm install -g npm@8.7.0
 RUN npm install
 COPY app.js .
 EXPOSE 8080
-CMD [ "node", "app.js" ]
+CMD [ "node", "--max-old-space-size=8192", "--expose_gc", "app.js" ]

@@ -28,6 +28,7 @@ spec:
       labels:
         app: pod1
     spec:
+      schedulerName: ppgcc_scheduler
       containers:
       - name: customapp
         image: pedromoritz/customapp:latest
