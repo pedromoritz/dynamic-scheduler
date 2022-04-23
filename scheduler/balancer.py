@@ -36,19 +36,17 @@ def pod_scheduler(name, node, namespace="default"):
         print("error")
 
 def get_best_node(metrics_items):
-	return sorted(metrics_items, key=lambda d: d['memory'], reverse=True)[0]
+	return sorted(metrics_items, key=lambda d: d['memory'])[0]
 
 def get_bad_node(metrics_items):
-	bad_node_temp = {}
-	for item in metrics_items:
-		if int(item['memory']) > 2000000:
-			bad_node_temp = item
-	return bad_node_temp
+	higher_node = sorted(metrics_items, key=lambda d: d['memory'], reverse=True)[0]
+	return higher_node if int(higher_node['memory']) > 2000000 else {}
 
 def find_target_pods_on_bad_node(bad_node):
 	return [] #sorted(metrics_items, key=lambda d: d['memory'], reverse=True)[0]
 
 def get_metrics():
+    global best_node
     api_client = client.ApiClient()
     ret_metrics = api_client.call_api('/apis/metrics.k8s.io/v1beta1/nodes', 'GET', auth_settings=['BearerToken'], response_type='json', _preload_content=False)
     response = ret_metrics[0].data.decode('utf-8')
@@ -66,15 +64,15 @@ def get_metrics():
 
     best_node = get_best_node(metrics_items)
     bad_node = get_bad_node(metrics_items)
-
-    find_target_pods_on_bad_node(bad_node)
-
-    print(json.dumps(metrics_items, indent=4))
-    print("best node: " + json.dumps(best_node, indent=4))
+    #find_target_pods_on_bad_node(bad_node)
+    print("best_node: " + json.dumps(best_node, indent=4))
     print("bad node: " + json.dumps(bad_node, indent=4))
 
 def main():
-	# creating a scheduler to query metrics server every x seconds
+	# retrieving metrics for the first time
+    get_metrics()
+    print(best_node)
+    # creating a scheduler to query metrics server every x seconds
     sch = scheduler()
     sch.add_job(get_metrics, 'interval', seconds=10)
     sch.start()
@@ -82,6 +80,7 @@ def main():
     w = watch.Watch()
     for event in w.stream(v1.list_namespaced_pod, namespace):
         if event['object'].status.phase == "Pending" and event['object'].spec.scheduler_name == scheduler_name:
+            print(event['object'].metadata.name)
             try:
                 print("Scheduling " + event['object'].metadata.name)
                 res = pod_scheduler(event['object'].metadata.name, best_node['name'], namespace)

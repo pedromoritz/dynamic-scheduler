@@ -42,3 +42,4 @@ ab -n 75000 -c 1 http://192.168.59.117:31001/ping
  
 watch -n 5 kubectl top nodes
 
+kubectl get pods --namespace lab1 -o wide --watch
