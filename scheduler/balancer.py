@@ -33,6 +33,14 @@ def pod_scheduler(name, node, namespace="default"):
     try:
         client.CoreV1Api().create_namespaced_binding(namespace=namespace, body=body)
     except ValueError:
+        a = True
+        #print("error")
+
+def pod_evictor(name, namespace="default"):
+    body = client.V1beta1Eviction(metadata=client.V1ObjectMeta(name=name, namespace=namespace))
+    try:
+        v1.create_namespaced_pod_eviction(name=name, namespace=namespace, body=body)
+    except ValueError:
         print("error")
 
 def get_best_node(metrics_items):
@@ -42,11 +50,25 @@ def get_bad_node(metrics_items):
 	higher_node = sorted(metrics_items, key=lambda d: d['memory'], reverse=True)[0]
 	return higher_node if int(higher_node['memory']) > 2000000 else {}
 
-def find_target_pods_on_bad_node(bad_node):
-	return [] #sorted(metrics_items, key=lambda d: d['memory'], reverse=True)[0]
+def get_target_pods_on_bad_node(bad_node):
+    pods = []    
+    if len(bad_node) > 0:
+        global scheduler_name
+        field_selector = 'spec.nodeName='+bad_node['name']+','+'metadata.namespace=lab1'+','+'spec.schedulerName='+scheduler_name
+        list = v1.list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
+
+        for item in list.items:
+            pod = {}
+            pod['name'] = item.metadata.name
+            pod['namespace'] = item.metadata.namespace
+            pods.append(pod)
+
+    return pods
 
 def get_metrics():
     global best_node
+    global bad_node
+
     api_client = client.ApiClient()
     ret_metrics = api_client.call_api('/apis/metrics.k8s.io/v1beta1/nodes', 'GET', auth_settings=['BearerToken'], response_type='json', _preload_content=False)
     response = ret_metrics[0].data.decode('utf-8')
@@ -58,47 +80,44 @@ def get_metrics():
     	new_item = {}
     	new_item['name'] = item['metadata']['name']
     	new_item['timestamp'] = item['timestamp']
-    	new_item['cpu'] = item['usage']['cpu'][:-1] # cpu in nanocores
-    	new_item['memory'] = item['usage']['memory'][:-2] # memory in KB
+    	new_item['cpu'] = int(item['usage']['cpu'][:-1]) # cpu in nanocores
+    	new_item['memory'] = int(item['usage']['memory'][:-2]) # memory in KB
     	metrics_items.append(new_item)
 
     best_node = get_best_node(metrics_items)
     bad_node = get_bad_node(metrics_items)
-    #find_target_pods_on_bad_node(bad_node)
+    
+    print('--------------------------------------------')
+    #print(json.dumps(metrics_items, indent=4))
     print("best_node: " + json.dumps(best_node, indent=4))
     print("bad node: " + json.dumps(bad_node, indent=4))
+
+def eviction_workflow():
+    get_metrics()
+    target_pods_on_bad_node = get_target_pods_on_bad_node(bad_node)
+    if len(target_pods_on_bad_node) > 0:
+        pod_to_evict = target_pods_on_bad_node[0]
+        pod_evictor(pod_to_evict['name'], pod_to_evict['namespace'])
 
 def main():
 	# retrieving metrics for the first time
     get_metrics()
-    print(best_node)
     # creating a scheduler to query metrics server every x seconds
     sch = scheduler()
-    sch.add_job(get_metrics, 'interval', seconds=10)
+    sch.add_job(eviction_workflow, 'interval', seconds=10)
     sch.start()
     # creating a watch to verify pending pods and binding them to a node
     w = watch.Watch()
     for event in w.stream(v1.list_namespaced_pod, namespace):
         if event['object'].status.phase == "Pending" and event['object'].spec.scheduler_name == scheduler_name:
-            print(event['object'].metadata.name)
             try:
-                print("Scheduling " + event['object'].metadata.name)
+                #print("Scheduling " + event['object'].metadata.name)
                 res = pod_scheduler(event['object'].metadata.name, best_node['name'], namespace)
             except client.rest.ApiException as e:
-                print(json.loads(e.body)['message'])
+                a = True
+                #print(json.loads(e.body)['message'])
 
 if __name__ == '__main__':
     main()
-
-# analisa se ha target pod a ser movido
-# seleciona se ha no com melhor quantidade de recursos
-# gera a eviction do pod
-#testar 
-#podName = 'insert-name-of-pod'
-#podNamespace = 'insert-namespace-of-pod'
-#body = client.V1beta1Eviction(metadata=client.V1ObjectMeta(name=podName, namespace=podNamespace))
-#api_response = v1.create_namespaced_pod_eviction(name=podName, namespace=podNamespace, body=body)
-
-# faz o schedule para o no destino
 
 
