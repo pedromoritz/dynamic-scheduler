@@ -10,7 +10,7 @@ const app = express();
 
 let dataStructure = [];
 
-app.get('/ping', (req, res) => {
+app.get('/memory/increase', (req, res) => {
   let item = 'object=>' +
     sha512(Math.random().toString()) +
     sha512(Math.random().toString()) +
@@ -25,10 +25,10 @@ app.get('/ping', (req, res) => {
   dataStructure.push(item);
   console.log(item);
   console.log(dataStructure.length);
-  res.send('pong');
+  res.send('increase');
 });
 
-app.get('/purge', (req, res) => {
+app.get('/memory/purge', (req, res) => {
   dataStructure.length = 0;
   global.gc();
   console.log('purge');
