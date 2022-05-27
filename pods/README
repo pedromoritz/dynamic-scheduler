@@ -1,3 +1,0 @@
-CRIAR PODS
-kubectl apply -f pod1.yaml
-kubectl apply -f pod2.yaml

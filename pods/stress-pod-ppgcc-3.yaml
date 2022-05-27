@@ -1,43 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stressing-pod-ppgcc-m02
+  name: stress-pod-ppgcc-3
   namespace: lab1
 spec:
   type: NodePort
   selector:
-    app: stressing-pod-ppgcc-m02
+    app: stress-pod-ppgcc-3
   ports:
     - protocol: TCP
-      nodePort: 31002
+      nodePort: 31003
       port: 8080
       targetPort: http 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stressing-pod-ppgcc-m02
+  name: stress-pod-ppgcc-3
   namespace: lab1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stressing-pod-ppgcc-m02
+      app: stress-pod-ppgcc-3
   template:
     metadata:
       labels:
-        app: stressing-pod-ppgcc-m02
+        app: stress-pod-ppgcc-3
     spec:
+      schedulerName: ppgcc_balancer  
       containers:
       - name: customapp
         image: pedromoritz/customapp:latest
         imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "2.5Gi"
-            cpu: "1000m"
         ports:
           - name: http
             containerPort: 8080
-      nodeSelector:
-        kubernetes.io/hostname: ppgcc-m02

@@ -43,3 +43,60 @@ ab -n 75000 -c 1 http://192.168.59.117:31001/ping
 watch -n 5 kubectl top nodes
 
 watch -n 5 kubectl get pods --namespace lab1 -o wide
+
+capa
+
+resumo
+
+sumario
+
+1. introducao
+
+1.1 objetivos
+
+contextualizacao
+
+fundamentacao teorica
+
+
+
+referencias
+
+
+Introdução
+1. Introdução
+1.1 Objetivos
+  1 objetivo geral
+  n objetivos específicos
+Márcio Bastos Castro9:32 AM
+1.2 Estrutura do Documento
+
+2. Fundamentação Teórica
+
+
+
+
+Márcio Bastos Castro9:31 AM
+Introdução
+1. Introdução
+1.1 Objetivos
+  1 objetivo geral
+  n objetivos específicos
+Márcio Bastos Castro9:32 AM
+1.2 Estrutura do Documento
+2. Fundamentação Teórica
+2.1 Balanceamento de Carga
+Márcio Bastos Castro9:33 AM
+2.2 Orquestradores de Containeres
+  -> Foco no Kubernetes
+3. Proposta
+4. Resultados Preliminares
+5. Cronograma
+6. Referências Bibliográficas
+
+
+
+
+
+
+
