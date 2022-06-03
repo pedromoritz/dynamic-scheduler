@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import json
-
 from kubernetes import client, config, watch
 from apscheduler.schedulers.background import BackgroundScheduler as scheduler
 

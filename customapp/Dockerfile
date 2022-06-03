@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install -g npm@8.7.0
+RUN npm install -g npm@8.12.1
 RUN npm install
 COPY app.js .
 EXPOSE 8080

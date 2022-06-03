@@ -1,11 +1,12 @@
+README
+
 CRIAR CLUSTER
 minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.23.3
 
 HABILITAR METRICS API
 minikube addons enable metrics-server -p ppgcc
 
-CRIAR NAMESPACE
-kubectl create namespace lab1
+COMANDOS ÚTEIS
 
 LISTAR SERVIÇOS
 minikube service list -p ppgcc
@@ -18,6 +19,11 @@ kubectl top node --namespace lab1
 
 MOSTRAR DASHBOARD
 minikube dashboard -p ppgcc
+
+
+------------
+
+
 
 ATIVAR APPS USANDO APACHE BENCHMARK
 ab -n 10000000 -c 1000 http://192.168.49.2:31001/ping
