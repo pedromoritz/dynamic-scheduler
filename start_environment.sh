@@ -4,4 +4,4 @@ reset
 gnome-terminal --geometry=80x10+50+270 -- bash -c "./ppgcc_balancer.py" 
 gnome-terminal --geometry=140x10+50+0 -- bash -c "watch -n 1 kubectl get pods --namespace lab1 -o wide" 
 gnome-terminal --geometry=58x10+830+270 -- bash -c "watch -n 1 kubectl top node --namespace lab1"
-gnome-terminal --geometry=80x10+50+515 -- bash -c "./pingport.sh"
+#gnome-terminal --geometry=80x10+50+515 -- bash -c "./client.sh 192.168.59.121 100"
