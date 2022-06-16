@@ -84,7 +84,14 @@ def get_bad_node(available_nodes):
 
 def get_worst_memory_node(available_nodes):
   higher_node = sorted(available_nodes, key=lambda d: d['usage']['memory'], reverse=True)[0]
-  return higher_node if int(higher_node['usage']['memory']) > 2000000 else {}
+  #return higher_node if int(higher_node['usage']['memory']) > 2000000 else {}
+  quotient = int(higher_node['usage']['memory']) / int(higher_node['capacity']['memory'])
+  percent = round(quotient * 100, 2)
+  if percent > 90:
+    print("Bad node: " + higher_node['name'] + " => " + str(percent))
+    return {}
+  else:
+    return higher_node
 
 def get_target_pods_on_node(bad_node):
   pods = []
