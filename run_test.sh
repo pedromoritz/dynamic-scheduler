@@ -12,7 +12,7 @@ sleep 20
 
 echo "INCREASING MEMORY..."
 #hey -n 1000 -c 1 -o csv http://192.168.59.121:31001/memory/increase > $1.csv
-hey -n 10000 -c 1 -q 10 -t 5 http://192.168.59.121:31001/memory/increase
+hey -n 10000 -c 1 -q 10 http://192.168.59.121:31001/memory/increase
 
 # TODO
 # hey: exibir timestamp no csv 
