@@ -1,6 +1,6 @@
 README
 
-CRIAR CLUSTER
+CRIAR CLUSTER KUBERNETES
 minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.23.3
 
 HABILITAR METRICS API
@@ -20,89 +20,11 @@ kubectl top node --namespace lab1
 MOSTRAR DASHBOARD
 minikube dashboard -p ppgcc
 
-
-------------
-
-
-
-ATIVAR APPS USANDO APACHE BENCHMARK
-ab -n 10000000 -c 1000 http://192.168.49.2:31001/ping
-
-ab -n 1000000 -c 1000 http://localhost:8080/ping
-
-curl http://localhost:8080/purge
-
-kubectl top nodes
+EXIBIR NODES VIA METRICS API
 kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
-kubectl get pods --namespace lab1 -o wide
-kubectl get pods --namespace lab1
 
+REMOVER PODS DO NAMESPACE LAB1
 kubectl --namespace lab1 delete pod `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name"
 
-kubectl --namespace lab1 logs -f `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name" |grep stressing-pod-1`
-
-curl http://192.168.59.117:31001/purge
-
-ab -n 75000 -c 1 http://192.168.59.117:31001/ping
-
- 
-watch -n 5 kubectl top nodes
-
-watch -n 5 kubectl get pods --namespace lab1 -o wide
-
-capa
-
-resumo
-
-sumario
-
-1. introducao
-
-1.1 objetivos
-
-contextualizacao
-
-fundamentacao teorica
-
-
-
-referencias
-
-
-Introdução
-1. Introdução
-1.1 Objetivos
-  1 objetivo geral
-  n objetivos específicos
-Márcio Bastos Castro9:32 AM
-1.2 Estrutura do Documento
-
-2. Fundamentação Teórica
-
-
-
-
-Márcio Bastos Castro9:31 AM
-Introdução
-1. Introdução
-1.1 Objetivos
-  1 objetivo geral
-  n objetivos específicos
-Márcio Bastos Castro9:32 AM
-1.2 Estrutura do Documento
-2. Fundamentação Teórica
-2.1 Balanceamento de Carga
-Márcio Bastos Castro9:33 AM
-2.2 Orquestradores de Containeres
-  -> Foco no Kubernetes
-3. Proposta
-4. Resultados Preliminares
-5. Cronograma
-6. Referências Bibliográficas
-
-
-
-
-
-
-
+EXIBIR LOG DO TEST POD
+kubectl --namespace lab1 logs -f `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name" |grep scheduler`
