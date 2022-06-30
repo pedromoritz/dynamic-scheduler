@@ -7,7 +7,7 @@ from apscheduler.schedulers.background import BackgroundScheduler as scheduler
 config.load_kube_config()
 v1 = client.CoreV1Api()
 
-scheduler_name = "ppgcc_balancer"
+scheduler_name = "dynamic-scheduler"
 namespace = "lab1"
 best_node = {}
 bad_node = {}
@@ -87,7 +87,7 @@ def get_worst_memory_node(available_nodes):
   #return higher_node if int(higher_node['usage']['memory']) > 2000000 else {}
   quotient = int(higher_node['usage']['memory']) / int(higher_node['capacity']['memory'])
   percent = round(quotient * 100, 2)
-  if percent > 90:
+  if percent > 98:
     print("Bad node: " + higher_node['name'] + " => " + str(percent))
     return {}
   else:

@@ -1,23 +1,22 @@
 #!/bin/bash
-reset
 
-echo "NAMESPACE SETUP..."
-kubectl delete namespaces lab1
-kubectl create namespace lab1
+options=("kube-scheduler" "dynamic-scheduler")
 
-echo "CREATING PODS..."
-kubectl apply -f pods/pod-$1.yaml
+if [[ " ${options[@]} " =~ " $1 " ]]; then
+    echo "NAMESPACE SETUP..."
+	kubectl delete namespaces lab1
+	kubectl create namespace lab1
 
-sleep 20
+	echo "CREATING PODS..."
+	kubectl apply -f pods/pod-$1.yaml
 
-echo "INCREASING MEMORY..."
-#hey -n 1000 -c 1 -o csv http://192.168.59.121:31001/memory/increase > $1.csv
-hey -n 10000 -c 1 -q 10 http://192.168.59.121:31001/memory/increase
+	sleep 20
 
-# TODO
-# hey: exibir timestamp no csv 
-# hey: tempo entre requisicoes via parametro
-# hey: exibir erro no csv quando o alvo não responder
-# balancer: criar estrategia para zero timeout no balanceamento
-# balancer: distribuir os pods via outro scheduler
-
+	echo "INCREASING MEMORY..."
+	#hey -n 10000 -c 10 -q 10 -o csv http://192.168.59.121:31001/memory/increase > csv/$1.csv
+	hey -n 10000 -c 1 http://192.168.59.121:31001/memory/increase
+else
+	echo "usage:"
+	echo "./run_test.sh kube-scheduler or"
+	echo "./run_test.sh dynamic-scheduler"
+fi

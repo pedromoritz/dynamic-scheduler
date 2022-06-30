@@ -1,0 +1,48 @@
+
+Summary:
+  Total:	600.1331 secs
+  Slowest:	15.5581 secs
+  Fastest:	0.0609 secs
+  Average:	0.1568 secs
+  Requests/sec:	11.1075
+  
+  Total data:	58923 bytes
+  Size/request:	9 bytes
+
+Response time histogram:
+  0.061 [1]	|
+  1.611 [6537]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  3.160 [1]	|
+  4.710 [1]	|
+  6.260 [0]	|
+  7.809 [4]	|
+  9.359 [0]	|
+  10.909 [0]	|
+  12.459 [1]	|
+  14.008 [0]	|
+  15.558 [2]	|
+
+
+Latency distribution:
+  10% in 0.1252 secs
+  25% in 0.1353 secs
+  50% in 0.1410 secs
+  75% in 0.1501 secs
+  90% in 0.1662 secs
+  95% in 0.1913 secs
+  99% in 0.2357 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0090 secs, 0.0609 secs, 15.5581 secs
+  DNS-lookup:	0.0000 secs, 0.0000 secs, 0.0000 secs
+  req write:	0.0000 secs, 0.0000 secs, 0.0002 secs
+  resp wait:	0.1458 secs, 0.0609 secs, 3.3514 secs
+  resp read:	0.0001 secs, 0.0000 secs, 0.0004 secs
+
+Status code distribution:
+  [200]	6547 responses
+
+Error distribution:
+  [5]	Get "http://192.168.59.121:31002/memory/increase": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  [114]	Get "http://192.168.59.121:31002/memory/increase": dial tcp 192.168.59.121:31002: connect: connection refused
+
