@@ -1,0 +1,23 @@
+Class Pod {
+  private String name;
+  private PodMetrics metrics;
+  String get_name();
+  void set_name(String name);
+  PodMetrics get_metrics();
+}
+Class Node {
+  private String name;
+  private NodeMetrics metrics;
+  private List <Pod> pods;
+  Pod remove_pod();
+  add_pod(Pod p);
+  string get_name();
+  void set_name(String name);
+  NodeMetrics get_metrics();
+  List get_pods();
+}
+Class Cluster {
+  private List <Node> nodes;
+  set_nodes(List nodes);
+  List get_nodes();
+}
