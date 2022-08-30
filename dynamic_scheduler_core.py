@@ -1,4 +1,5 @@
 from kubernetes import client, config, watch
+import json
 
 class Cluster:
 
@@ -35,36 +36,19 @@ class Node:
 
   @property
   def metrics(self):
-    print('a')
     return self.get_metrics(self.node_name)
 
   def get_metrics(self, node_name):
-    configuration = client.Configuration()
-    configuration.api_key_prefix["authorization"] = "Bearer"
-    api_client = client.ApiClient(configuration)
-    custom_api = client.CustomObjectsApi(api_client)
-    response = custom_api.list_cluster_custom_object("metrics.k8s.io", "v1beta1", "nodes")
-    print(response)
-
-    #available_nodes = self.get_available_nodes()
-    #api_client = client.ApiClient()
-    #ret_metrics = api_client.call_api('/apis/metrics.k8s.io/v1beta1/nodes', 'GET', auth_settings=['BearerToken'], response_type='json', _preload_content=False)
-    #response = ret_metrics[0].data.decode('utf-8')
-    #print(response)    
-    response_obj = json.loads(response)
-    metrics_items_raw = response_obj["items"]
-    metrics_items = {}
-    for item in metrics_items_raw:  
-      new_item = {}
-      new_item['timestamp'] = item['timestamp']
-      new_item['memory'] = int(item['usage']['memory'][:-2]) # memory in KB
-      new_item['cpu'] = int(item['usage']['cpu'][:-1]) # cpu in nanocores
-      metrics_items[item['metadata']['name']] = new_item
-    for node in available_nodes:
-      node['usage'] = {}
-      node['usage']['memory'] = metrics_items[node['name']]['memory']
-      node['usage']['cpu'] = metrics_items[node['name']]['cpu']
-    return available_nodes#
+    api_client = client.ApiClient()
+    ret_metrics = api_client.call_api('/apis/metrics.k8s.io/v1beta1/nodes/'+node_name, 'GET', auth_settings=['BearerToken'], response_type='json', _preload_content=False)
+    response = json.loads(ret_metrics[0].data.decode('utf-8'))
+    node_metrics = {}
+    node_metrics['name'] = node_name
+    node_metrics['timestamp'] = response['timestamp'] # metric timestamp
+    node_metrics['usage'] = {}
+    node_metrics['usage']['memory'] = int(response['usage']['memory'][:-2]) # memory in KB
+    node_metrics['usage']['cpu'] = int(response['usage']['cpu'][:-1]) # cpu in nanocores
+    return node_metrics
 
 class Pod:
 
