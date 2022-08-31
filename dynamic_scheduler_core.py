@@ -41,11 +41,7 @@ class Node:
     configuration.api_key_prefix['authorization'] = 'Bearer'
     api_client = client.ApiClient(configuration)
     custom_api = client.CustomObjectsApi(api_client)
-    response = custom_api.list_cluster_custom_object(
-      'metrics.k8s.io',
-      'v1beta1',
-      f'nodes/{node_name}'
-    )
+    response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', f'nodes/{node_name}')
     node_metrics = {
       'name': node_name,
       'timestamp': response['timestamp'], # metric timestamp
