@@ -16,13 +16,13 @@ class Cluster:
     nodes = self.v1.list_node().items
     for node in self.v1.list_node().items:
       last_condition = node.status.conditions[-1]
-      if last_condition.status == "True" and last_condition.type == "Ready" and last_condition.reason == 'KubeletReady':
+      if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
         ready_nodes.append({
           'name': node.metadata.name,
           'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
           'capacity': {
-            'memory': int(node.status.capacity['memory'][:-2]),
-            'cpu': int(node.status.capacity['cpu']) * 1000000000
+            'memory': int(node.status.capacity['memory'][:-2]), # memory in KB
+            'cpu': int(node.status.capacity['cpu']) * 1000000000 # cpu in nanocores
           }
         })
     return ready_nodes
@@ -39,15 +39,23 @@ class Node:
     return self.get_metrics(self.node_name)
 
   def get_metrics(self, node_name):
-    api_client = client.ApiClient()
-    ret_metrics = api_client.call_api('/apis/metrics.k8s.io/v1beta1/nodes/'+node_name, 'GET', auth_settings=['BearerToken'], response_type='json', _preload_content=False)
-    response = json.loads(ret_metrics[0].data.decode('utf-8'))
-    node_metrics = {}
-    node_metrics['name'] = node_name
-    node_metrics['timestamp'] = response['timestamp'] # metric timestamp
-    node_metrics['usage'] = {}
-    node_metrics['usage']['memory'] = int(response['usage']['memory'][:-2]) # memory in KB
-    node_metrics['usage']['cpu'] = int(response['usage']['cpu'][:-1]) # cpu in nanocores
+    configuration = client.Configuration()
+    configuration.api_key_prefix['authorization'] = 'Bearer'
+    api_client = client.ApiClient(configuration)
+    custom_api = client.CustomObjectsApi(api_client)
+    response = custom_api.list_cluster_custom_object(
+      'metrics.k8s.io',
+      'v1beta1',
+      f'nodes/{node_name}'
+    )
+    node_metrics = {
+      'name': node_name,
+      'timestamp': response['timestamp'], # metric timestamp
+      'usage': {
+        'memory': int(response['usage']['memory'][:-2]), # memory in KB
+        'cpu': int(response['usage']['cpu'][:-1]) # cpu in nanocores
+      }
+    }
     return node_metrics
 
 class Pod:
