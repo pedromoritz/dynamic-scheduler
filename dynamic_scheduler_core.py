@@ -13,18 +13,18 @@ class Cluster:
 
   def get_nodes(self):
     ready_nodes = []
-    nodes = self.v1.list_node().items
     for node in self.v1.list_node().items:
-      last_condition = node.status.conditions[-1]
+      last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
-        ready_nodes.append({
-          'name': node.metadata.name,
-          'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
-          'capacity': {
-            'memory': int(node.status.capacity['memory'][:-2]), # memory in KB
-            'cpu': int(node.status.capacity['cpu']) * 1000000000 # cpu in nanocores
-          }
-        })
+        if 'node-role.kubernetes.io/master' not in node.metadata.labels:
+          ready_nodes.append({
+            'name': node.metadata.name,
+            'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
+            'capacity': {
+              'memory': int(node.status.capacity['memory'][:-2]), # memory in KB
+              'cpu': int(node.status.capacity['cpu']) * 1000000000 # cpu in nanocores
+            }
+          })
     return ready_nodes
 
 class Node:
@@ -57,6 +57,24 @@ class Node:
       }
     }
     return node_metrics
+
+  @property
+  def pods(self):
+    return self.get_target_pods_on_node(self.node_name)
+
+  def get_target_pods_on_node(self, node_name):
+    pods = []
+    #field_selector = 'spec.nodeName='+bad_node['name']+','+'metadata.namespace=lab1'+','+'spec.schedulerName='+scheduler_name
+    #field_selector = f'spec.nodeName={node_name},spec.schedulerName={scheduler_name}'
+    field_selector = f'spec.nodeName={node_name}'
+    pods_list = self.v1.list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
+    for item in pods_list.items:
+      pod = {
+        'name': item.metadata.name,
+        'namespace': item.metadata.namespace,
+      }
+      pods.append(pod)
+    return pods
 
 class Pod:
 
