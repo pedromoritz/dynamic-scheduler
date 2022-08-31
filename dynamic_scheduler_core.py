@@ -58,12 +58,10 @@ class Node:
 
   @property
   def pods(self):
-    return self.get_target_pods_on_node(self.node_name)
+    return self.get_pods(self.node_name)
 
-  def get_target_pods_on_node(self, node_name):
+  def get_pods(self, node_name):
     pods = []
-    #field_selector = 'spec.nodeName='+bad_node['name']+','+'metadata.namespace=lab1'+','+'spec.schedulerName='+scheduler_name
-    #field_selector = f'spec.nodeName={node_name},spec.schedulerName={scheduler_name}'
     field_selector = f'spec.nodeName={node_name}'
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
@@ -78,8 +76,10 @@ class Pod:
 
   def __init__(self):
     config.load_kube_config()
-    self.metrics = []
 
   @property
   def metrics(self):
+    return get_metrics()
+
+  def get_metrics(self):
     return []
