@@ -5,7 +5,6 @@ class Cluster:
 
   def __init__(self):
     config.load_kube_config()
-    self.v1 = client.CoreV1Api()
 
   @property
   def nodes(self):
@@ -13,7 +12,7 @@ class Cluster:
 
   def get_nodes(self):
     ready_nodes = []
-    for node in self.v1.list_node().items:
+    for node in client.CoreV1Api().list_node().items:
       last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
         if 'node-role.kubernetes.io/master' not in node.metadata.labels:
@@ -31,7 +30,6 @@ class Node:
 
   def __init__(self, node_name):
     config.load_kube_config()
-    self.v1 = client.CoreV1Api()
     self.node_name = node_name
 
   @property
@@ -67,7 +65,7 @@ class Node:
     #field_selector = 'spec.nodeName='+bad_node['name']+','+'metadata.namespace=lab1'+','+'spec.schedulerName='+scheduler_name
     #field_selector = f'spec.nodeName={node_name},spec.schedulerName={scheduler_name}'
     field_selector = f'spec.nodeName={node_name}'
-    pods_list = self.v1.list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
+    pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       pod = {
         'name': item.metadata.name,
@@ -80,9 +78,8 @@ class Pod:
 
   def __init__(self):
     config.load_kube_config()
-    self.v1 = client.CoreV1Api()
     self.metrics = []
 
   @property
   def metrics(self):
-    return []#
+    return []
