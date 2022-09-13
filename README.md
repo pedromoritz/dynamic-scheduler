@@ -1,7 +1,6 @@
 ## Dynamic Scheduler
 
-
-#### CRIAR CLUSTER KUBERNETES
+### Criar cluster Kubernetes
 minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
 minikube start --nodes 2 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
 
