@@ -46,7 +46,7 @@ class Node:
     api_client = client.ApiClient(configuration)
     custom_api = client.CustomObjectsApi(api_client)
     response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', f'nodes/{node_name}')
-    node_metrics = {
+    return {
       'name': node_name,
       'timestamp': response['timestamp'], # metric timestamp
       'usage': {
@@ -54,7 +54,6 @@ class Node:
         'cpu': int(response['usage']['cpu'][:-1]) # cpu in nanocores
       }
     }
-    return node_metrics
 
   @property
   def pods(self):
@@ -65,16 +64,19 @@ class Node:
     field_selector = 'spec.nodeName='+node_name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
-      pod = {
-        'name': item.metadata.name
-      }
-      pods.append(pod)
+      if item.metadata.deletion_timestamp is None:
+        pods.append({
+          'name': item.metadata.name,
+          'namespace': item.metadata.namespace
+        })
     return pods
 
 class Pod:
 
-  def __init__(self):
+  def __init__(self, name, namespace):
     config.load_kube_config()
+    self.name = name
+    self.namespace = namespace
 
   @property
   def metrics(self):
@@ -82,3 +84,10 @@ class Pod:
 
   def get_metrics(self):
     return []
+
+  def evict(self):
+    body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace=self.namespace))
+    try:
+      client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace=self.namespace, body=body)
+    except Exception as a:
+      print ("Exception when calling CoreV1Api->create_namespaced_pod_eviction: %s\n" % a)
