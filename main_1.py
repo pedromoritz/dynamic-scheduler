@@ -39,10 +39,22 @@ def scheduling_workflow():
   print('---> Buscando pods do node ' + node_more_used_memory['name'] + ':')
   node = dscore.Node(node_more_used_memory['name'], namespace)
   print(node.pods)
+  print('')
+
+  print('---> Buscando primeiro pod da lista:')
+  pod_to_evict = node.pods[0]
+  print(pod_to_evict)
+  print('')
+
+  print('---> Despejando pod ' + pod_to_evict['name'] + ' do respectivo node:')
+  pod = dscore.Pod(pod_to_evict['name'], pod_to_evict['namespace'])
+  pod.evict()
+  print('')
+
 
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=10)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=5)
 scheduler.start()
 
 # keeping script running
