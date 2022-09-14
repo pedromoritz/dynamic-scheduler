@@ -37,7 +37,7 @@ class Node:
     return self.get_metrics(self.node_name)
 
   def get_metrics(self, node_name):
-    configuration = client.Configuration()
+    configuration = client.Configuration().get_default_copy()
     configuration.api_key_prefix['authorization'] = 'Bearer'
     api_client = client.ApiClient(configuration)
     custom_api = client.CustomObjectsApi(api_client)
