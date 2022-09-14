@@ -15,7 +15,10 @@ class Cluster:
     for node in client.CoreV1Api().list_node().items:
       last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
-        if 'node-role.kubernetes.io/master' not in node.metadata.labels:
+        print(node.metadata.name)
+        print(node.metadata.labels)
+        print('')
+        if 'node-role.kubernetes.io/control-plane' not in node.metadata.labels:
           ready_nodes.append({
             'name': node.metadata.name,
             'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
@@ -28,9 +31,10 @@ class Cluster:
 
 class Node:
 
-  def __init__(self, node_name):
+  def __init__(self, node_name, namespace):
     config.load_kube_config()
     self.node_name = node_name
+    self.namespace = namespace
 
   @property
   def metrics(self):
@@ -54,16 +58,15 @@ class Node:
 
   @property
   def pods(self):
-    return self.get_pods(self.node_name)
+    return self.get_pods(self.node_name, self.namespace)
 
-  def get_pods(self, node_name):
+  def get_pods(self, node_name, namespace):
     pods = []
-    field_selector = f'spec.nodeName={node_name}'
+    field_selector = 'spec.nodeName='+node_name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       pod = {
-        'name': item.metadata.name,
-        'namespace': item.metadata.namespace,
+        'name': item.metadata.name
       }
       pods.append(pod)
     return pods

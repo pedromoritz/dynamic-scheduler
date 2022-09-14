@@ -4,8 +4,17 @@
 minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
 minikube start --nodes 3 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
 
-HABILITAR METRICS API
+### Habilitar metrics API
 minikube addons enable metrics-server -p ppgcc
+
+### Criar namespace lab
+kubectl create namespace lab
+
+### Remover deployments do namespace lab
+kubectl --namespace lab delete deployments `kubectl get deployments --namespace lab --no-headers -o custom-columns=":metadata.name"`
+
+### Remover pods do namespace lab
+kubectl --namespace lab delete pod `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name"`
 
 COMANDOS ÚTEIS
 
