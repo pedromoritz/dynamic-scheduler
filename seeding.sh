@@ -5,7 +5,7 @@ CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
 kubectl delete namespaces lab
 kubectl create namespace lab
 
-for i in 1 2 3 4 5 6 7 8 9; do	
+for i in 1 2 3 4; do	
 	POD_NAME=pod-$i
 	NODE_PORT=3100$i
 	template=`cat "pods/pod-deployment-template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
@@ -14,4 +14,4 @@ for i in 1 2 3 4 5 6 7 8 9; do
 	echo "$template" | kubectl apply -f -
 done
 
-./scheduler.py
+./seeding_scheduler.py
