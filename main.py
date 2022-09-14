@@ -29,3 +29,4 @@ print('')
 print('Buscando pods do node ' + node_more_used_memory['name'] + ':')
 node = dscore.Node(node_more_used_memory['name'])
 print(node.pods)
+

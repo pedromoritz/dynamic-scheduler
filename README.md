@@ -2,7 +2,7 @@
 
 ### Criar cluster Kubernetes
 minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
-minikube start --nodes 2 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
+minikube start --nodes 3 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
 
 HABILITAR METRICS API
 minikube addons enable metrics-server -p ppgcc
@@ -31,4 +31,5 @@ EXIBIR LOG DO TEST POD
 kubectl --namespace lab1 logs -f `kubectl get pods --namespace lab1 --no-headers -o custom-columns=":metadata.name" |grep scheduler`
 
 #### Para gerar os diagramas de classes e pacotes
-
+sudo apt install pylint graphviz
+pyreverse -o png .
