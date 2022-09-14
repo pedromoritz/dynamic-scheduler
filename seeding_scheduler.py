@@ -41,10 +41,17 @@ def pod_scheduler(name, node, namespace="default"):
 def main():
   nodes = get_available_nodes()
   w = watch.Watch()
+  rr_counter = 0
   for event in w.stream(v1.list_namespaced_pod, namespace):
     if event['object'].status.phase == "Pending" and event['object'].spec.scheduler_name == scheduler_name and event['object'].spec.node_name == None:
       try:
-        scheduling_workflow(event['object'], nodes[random.randrange(len(nodes))]['name'], namespace)
+        #target_node = nodes[random.randrange(len(nodes))]['name'] # RANDOM
+        target_node = nodes[rr_counter]['name'] # ROUND ROBIN
+        if rr_counter < len(nodes) - 1: 
+          rr_counter =+ 1 
+        else: 
+          rr_counter = 0  
+        scheduling_workflow(event['object'], target_node, namespace)
       except client.rest.ApiException as e:
         print(json.loads(e.body)['message'])
 

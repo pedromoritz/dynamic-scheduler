@@ -29,6 +29,11 @@ class Cluster:
           })
     return ready_nodes
 
+  def set_allocation(self, allocation):
+    for pod_allocation in allocation:
+      print(pod_allocation)
+    return True      
+
 class Node:
 
   def __init__(self, node_name, namespace):
@@ -91,3 +96,24 @@ class Pod:
       client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace=self.namespace, body=body)
     except Exception as a:
       print ("Exception when calling CoreV1Api->create_namespaced_pod_eviction: %s\n" % a)
+    return True
+
+  def schedule(self, node_name):
+    pod_to_schedule = self.name[0:-5]
+    w = watch.Watch()
+    for event in w.stream(client.CoreV1Api().list_namespaced_pod, self.namespace):
+      pod = event['object']
+      if pod.status.phase == "Pending" and pod.spec.scheduler_name == 'dynamic-scheduler' and pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
+        try:
+          target = client.V1ObjectReference(kind='Node', api_version='v1', name=node_name)
+          meta = client.V1ObjectMeta(name=pod.metadata.name)
+          body = client.V1Binding(target=target, metadata=meta)
+          try:
+            client.CoreV1Api().create_namespaced_binding(namespace=self.namespace, body=body, _preload_content=False)
+            w.stop()
+          except Exception as a:
+            print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
+        except client.rest.ApiException as e:
+          print(json.loads(e.body)['message'])
+
+    
