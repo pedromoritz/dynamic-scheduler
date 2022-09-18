@@ -14,15 +14,19 @@ def read_cluster_data_workflow():
   nodes = cluster.nodes
 
   print('----------------------------------------')
-  for node_item in nodes:
-    node = dscore.Node(node_item['name'], namespace)
-    node_item['usage'] = node.metrics['usage']
-    print(node_item['name'] + ' - ' + str(node_item['usage']['memory']))
+  for nodes_item in nodes:
+    node = dscore.Node(nodes_item['name'], namespace)
+    nodes_item['usage'] = node.metrics['usage']
+    print(nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']))
+    print('')
     pods = node.pods
-    for pod_item in pods:
-      print(pod_item['name'])
-      pod_object = dscore.Pod(pod_item['name'], namespace)
-      print(pod_object.metrics)
+    for pods_item in pods:
+      print(pods_item['name'])
+      pod_object = dscore.Pod(pods_item['name'], namespace)
+      pod_metrics = pod_object.metrics
+      for containers_item in pod_metrics['containers']:
+        print(containers_item)
+      print('')
     print('')
 
 # creating a timer for workflow trigger
