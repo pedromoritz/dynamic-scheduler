@@ -1,13 +1,20 @@
 ## Dynamic Scheduler
 
-### Criar cluster Kubernetes
-minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
+This custom scheduler target workloads within an application-class with the following characteristics:
+
+- with no volumes attached
+- stateful
+
+## Cluster setup
+
+### Create Kubernetes cluster
+#minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
 minikube start --nodes 3 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
 
-### Habilitar metrics API
+### Enabled Metrics API
 minikube addons enable metrics-server -p ppgcc
 
-### Criar namespace lab
+### Create "lab" namespace
 kubectl create namespace lab
 
 ### Remover deployments do namespace lab
@@ -22,10 +29,10 @@ LISTAR SERVIÇOS
 minikube service list -p ppgcc
 
 LISTAR INFO DOS PODS DO NAMESPACE LAB1
-kubectl get pods --namespace lab1 -o wide
+kubectl get pods --namespace lab -o wide
 
 EXIBIR RECURSOS DOS PODS DO NAMESPACE LAB1
-kubectl top node --namespace lab1
+kubectl top node --namespace lab
 
 MOSTRAR DASHBOARD
 minikube dashboard -p ppgcc

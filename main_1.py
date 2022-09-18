@@ -72,7 +72,7 @@ def scheduling_workflow():
 
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=5)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=20)
 scheduler.start()
 
 # keeping script running
