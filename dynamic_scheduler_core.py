@@ -1,6 +1,15 @@
 from kubernetes import client, config, watch
 import json
 
+class Utils:
+
+  def call_api(path):
+    configuration = client.Configuration().get_default_copy()
+    configuration.api_key_prefix['authorization'] = 'Bearer'
+    api_client = client.ApiClient(configuration)
+    custom_api = client.CustomObjectsApi(api_client)
+    return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+
 class Cluster:
 
   def __init__(self):
@@ -33,23 +42,19 @@ class Cluster:
 
 class Node:
 
-  def __init__(self, node_name, namespace):
+  def __init__(self, name, namespace):
     config.load_kube_config()
-    self.node_name = node_name
+    self.name = name
     self.namespace = namespace
 
   @property
   def metrics(self):
-    return self.get_metrics(self.node_name)
+    return self.get_metrics(self.name)
 
-  def get_metrics(self, node_name):
-    configuration = client.Configuration().get_default_copy()
-    configuration.api_key_prefix['authorization'] = 'Bearer'
-    api_client = client.ApiClient(configuration)
-    custom_api = client.CustomObjectsApi(api_client)
-    response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', f'nodes/{node_name}')
+  def get_metrics(self, name):
+    response = Utils.call_api(f'nodes/{name}')
     return {
-      'name': node_name,
+      'name': name,
       'timestamp': response['timestamp'], # metric timestamp
       'usage': {
         'memory': int(response['usage']['memory'][:-2]), # memory in KB
@@ -59,11 +64,11 @@ class Node:
 
   @property
   def pods(self):
-    return self.get_pods(self.node_name, self.namespace)
+    return self.get_pods(self.name, self.namespace)
 
-  def get_pods(self, node_name, namespace):
+  def get_pods(self, name, namespace):
     pods = []
-    field_selector = 'spec.nodeName='+node_name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
+    field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       if item.metadata.deletion_timestamp is None:
@@ -84,14 +89,10 @@ class Pod:
   def metrics(self):
     return self.get_metrics(self.name)
 
-  def get_metrics(self, pod_name):
-    configuration = client.Configuration().get_default_copy()
-    configuration.api_key_prefix['authorization'] = 'Bearer'
-    api_client = client.ApiClient(configuration)
-    custom_api = client.CustomObjectsApi(api_client)
-    response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', f'namespaces/{self.namespace}/pods/{pod_name}')
+  def get_metrics(self, name):
+    response = Utils.call_api(f'namespaces/{self.namespace}/pods/{name}')
     return {
-      'name': pod_name,
+      'name': name,
       'timestamp': response['timestamp'], # metric timestamp
       'containers': response['containers']
     }
