@@ -4,12 +4,15 @@ import json
 class Utils:
 
   def call_api(path):
-    configuration = client.Configuration().get_default_copy()
-    configuration.api_key_prefix['authorization'] = 'Bearer'
-    api_client = client.ApiClient(configuration)
-    custom_api = client.CustomObjectsApi(api_client)
-    return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
-
+    try:
+      configuration = client.Configuration().get_default_copy()
+      configuration.api_key_prefix['authorization'] = 'Bearer'
+      api_client = client.ApiClient(configuration)
+      custom_api = client.CustomObjectsApi(api_client)
+      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+    except Exception as a:
+      return {}  
+    
 class Cluster:
 
   def __init__(self):
@@ -53,14 +56,17 @@ class Node:
 
   def get_metrics(self, name):
     response = Utils.call_api(f'nodes/{name}')
-    return {
-      'name': name,
-      'timestamp': response['timestamp'], # metric timestamp
-      'usage': {
-        'memory': int(response['usage']['memory'][:-2]), # memory in KB
-        'cpu': int(response['usage']['cpu'][:-1]) # cpu in nanocores
+    if response:
+      return {
+        'name': name,
+        'timestamp': response['timestamp'], # metric timestamp
+        'usage': {
+          'memory': int(response['usage']['memory'][:-2]), # memory in KB
+          'cpu': int(response['usage']['cpu'][:-1]) # cpu in nanocores
+        }
       }
-    }
+    else:
+      return {}
 
   @property
   def pods(self):
@@ -91,11 +97,14 @@ class Pod:
 
   def get_metrics(self, name):
     response = Utils.call_api(f'namespaces/{self.namespace}/pods/{name}')
-    return {
-      'name': name,
-      'timestamp': response['timestamp'], # metric timestamp
-      'containers': response['containers']
-    }
+    if response:
+      return {
+        'name': name,
+        'timestamp': response['timestamp'], # metric timestamp
+        'containers': response['containers']
+      }
+    else:
+      return {}
 
   def evict(self):
     body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace=self.namespace))
