@@ -15,9 +15,6 @@ class Cluster:
     for node in client.CoreV1Api().list_node().items:
       last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
-        print(node.metadata.name)
-        print(node.metadata.labels)
-        print('')
         if 'node-role.kubernetes.io/control-plane' not in node.metadata.labels:
           ready_nodes.append({
             'name': node.metadata.name,
@@ -30,8 +27,8 @@ class Cluster:
     return ready_nodes
 
   def set_allocation(self, allocation):
-    for pod_allocation in allocation:
-      print(pod_allocation)
+    #for pod_allocation in allocation:
+    #  print(pod_allocation)
     return True      
 
 class Node:
@@ -85,10 +82,19 @@ class Pod:
 
   @property
   def metrics(self):
-    return get_metrics()
+    return self.get_metrics(self.name)
 
-  def get_metrics(self):
-    return []
+  def get_metrics(self, pod_name):
+    configuration = client.Configuration().get_default_copy()
+    configuration.api_key_prefix['authorization'] = 'Bearer'
+    api_client = client.ApiClient(configuration)
+    custom_api = client.CustomObjectsApi(api_client)
+    response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', f'namespaces/{self.namespace}/pods/{pod_name}')
+    return {
+      'name': pod_name,
+      'timestamp': response['timestamp'], # metric timestamp
+      'containers': response['containers']
+    }
 
   def evict(self):
     body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace=self.namespace))
