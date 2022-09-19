@@ -36,11 +36,11 @@ def scheduling_workflow():
   print(node_more_used_memory)
   print('')
 
-  print('---> Verificando se o node selecionado possui ao menos 70% de uso de memória:')
+  print('---> Verificando se o node selecionado possui ao menos 90% de uso de memória:')
   percentual_memory_usage = (node_more_used_memory['usage']['memory'] / node_more_used_memory['capacity']['memory']) * 100
-  print(round(percentual_memory_usage, 2))
+  print(str(round(percentual_memory_usage, 2)) + '%')
 
-  if percentual_memory_usage >= 70:
+  if percentual_memory_usage >= 90:
 
     print('---> Buscando pods do node ' + node_more_used_memory['name'] + ':')
     node = dscore.Node(node_more_used_memory['name'], namespace)

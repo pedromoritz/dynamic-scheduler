@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from datetime import datetime
+import csv
 import json
 import time
 import dynamic_scheduler_core as dscore
@@ -17,7 +19,8 @@ def read_cluster_data_workflow():
   for nodes_item in nodes:
     node = dscore.Node(nodes_item['name'], namespace)
     nodes_item['usage'] = node.metrics['usage']
-    print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']))
+    percentual_memory_usage = (nodes_item['usage']['memory'] / nodes_item['capacity']['memory']) * 100
+    print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']) + ' - ' + str(round(percentual_memory_usage, 2)) + '%')
     print('')
     pods = node.pods
     for pods_item in pods:
@@ -29,15 +32,27 @@ def read_cluster_data_workflow():
           print('     ' + containers_item['name'] + ' - ' + containers_item['usage']['memory'])
       print('')
 
+  ppgcc_m02, ppgcc_m03 = nodes
+  timestamp = datetime.timestamp(datetime.now()) - ts0
+  writer.writerow([round(timestamp, 3), ppgcc_m02['usage']['memory'], ppgcc_m03['usage']['memory']])
+
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
 scheduler.add_job(read_cluster_data_workflow, 'interval', seconds=10)
 scheduler.start()
+
+csvfile = open('results-' + str(datetime.now().strftime('%Y%d%m')) + '.csv', 'w', 1)
+writer = csv.writer(csvfile)
+fieldnames = ['timestamp', 'ppgcc-m02 memory', 'ppgcc-m03 memory']
+writer.writerow(fieldnames)
+
+ts0 = datetime.timestamp(datetime.now())
 
 # keeping script running
 while True:
   try:
     time.sleep(0.1)
   except KeyboardInterrupt:
+    csvfile.close()
     scheduler.shutdown()
     break
