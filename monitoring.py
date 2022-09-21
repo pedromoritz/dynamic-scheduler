@@ -47,6 +47,8 @@ writer.writerow(fieldnames)
 
 ts0 = datetime.timestamp(datetime.now())
 
+read_cluster_data_workflow()
+
 # keeping script running
 while True:
   try:
