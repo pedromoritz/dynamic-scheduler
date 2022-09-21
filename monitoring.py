@@ -18,7 +18,7 @@ def read_cluster_data_workflow():
   print('----------------------------------------')
   for nodes_item in nodes:
     percentual_memory_usage = (nodes_item['usage']['memory'] / nodes_item['capacity']['memory']) * 100
-    print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']) + ' - ' + str(round(percentual_memory_usage, 2)) + '%')
+    print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']) + 'KB - ' + str(round(percentual_memory_usage, 2)) + '%')
     print('')
     node = dscore.Node(nodes_item['name'], namespace)
     pods = node.pods
