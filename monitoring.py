@@ -17,11 +17,10 @@ def read_cluster_data_workflow():
 
   print('----------------------------------------')
   for nodes_item in nodes:
-    node = dscore.Node(nodes_item['name'], namespace)
-    nodes_item['usage'] = node.metrics['usage']
     percentual_memory_usage = (nodes_item['usage']['memory'] / nodes_item['capacity']['memory']) * 100
     print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']) + ' - ' + str(round(percentual_memory_usage, 2)) + '%')
     print('')
+    node = dscore.Node(nodes_item['name'], namespace)
     pods = node.pods
     for pods_item in pods:
       print('     ' + pods_item['name'])
