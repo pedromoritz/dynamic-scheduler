@@ -43,9 +43,13 @@ class Cluster:
           })
     return ready_nodes
 
-  def set_allocation(self, allocation):
-    #for pod_allocation in allocation:
-    #  print(pod_allocation)
+  def set_allocation_plan(self, allocation_plan):
+    for pod_allocation_plan in allocation_plan:
+      if (pod_allocation_plan['source_node'] != pod_allocation_plan['target_node']):
+        print('Rescheduling ' + pod_allocation_plan['name'] + ' on node ' + pod_allocation_plan['target_node'])
+        pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
+        pod.evict()
+        pod.schedule(pod_allocation_plan['target_node'])
     return True      
 
 class Node:

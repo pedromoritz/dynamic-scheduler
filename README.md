@@ -1,9 +1,10 @@
 ## Dynamic Scheduler
 
-The dynamic scheduler targets workloads within an application-class with the following characteristics:
+The dynamic scheduler targets application-class with the following characteristics:
 
 - no volumes attached
-- stateful
+- stateless
+- variable workloads
 
 
 ## Cluster setup
