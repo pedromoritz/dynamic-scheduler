@@ -28,12 +28,17 @@ class Cluster:
       last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
         if 'node-role.kubernetes.io/control-plane' not in node.metadata.labels:
+          node_metrics_info = Utils.call_api(f'nodes/{node.metadata.name}')
           ready_nodes.append({
             'name': node.metadata.name,
             'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
             'capacity': {
               'memory': int(node.status.capacity['memory'][:-2]), # memory in KB
               'cpu': int(node.status.capacity['cpu']) * 1000000000 # cpu in nanocores
+            },
+            'usage': {
+              'memory': int(node_metrics_info['usage']['memory'][:-2]), # memory in KB
+              'cpu': int(node_metrics_info['usage']['cpu'][:-1]) # cpu in nanocores
             }
           })
     return ready_nodes
@@ -49,24 +54,6 @@ class Node:
     config.load_kube_config()
     self.name = name
     self.namespace = namespace
-
-  @property
-  def metrics(self):
-    return self.get_metrics(self.name)
-
-  def get_metrics(self, name):
-    response = Utils.call_api(f'nodes/{name}')
-    if response:
-      return {
-        'name': name,
-        'timestamp': response['timestamp'], # metric timestamp
-        'usage': {
-          'memory': int(response['usage']['memory'][:-2]), # memory in KB
-          'cpu': int(response['usage']['cpu'][:-1]) # cpu in nanocores
-        }
-      }
-    else:
-      return {}
 
   @property
   def pods(self):

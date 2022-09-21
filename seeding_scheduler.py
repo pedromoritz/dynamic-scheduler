@@ -54,7 +54,7 @@ def main():
         scheduling_workflow(event['object'], target_node, namespace)
       except client.rest.ApiException as e:
         print(json.loads(e.body)['message'])
-
+        
 if __name__ == '__main__':
   main()
 
