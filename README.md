@@ -1,6 +1,6 @@
 ## Dynamic Scheduler
 
-The dynamic scheduler targets application-class with the following characteristics:
+The dynamic scheduler targets an application class of pods with the following characteristics:
 
 - no volumes attached
 - stateless
