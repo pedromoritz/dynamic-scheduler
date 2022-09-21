@@ -33,7 +33,7 @@ def scheduling_workflow():
   print('---> Verificando se a diferença entre os nodes selecionados é maior que 10% da capacidade máxima:')
   absolute_delta = (node_more_used_memory['usage']['memory'] - node_less_used_memory['usage']['memory'])
   percentual_delta = round((absolute_delta / node_more_used_memory['capacity']['memory']) * 100, 2)
-  print('absolute delta: ' + str(absolute_delta) + ' | ' + 'percentual delta: ' + str(percentual_delta) + '%', end="\n\n")
+  print('absolute delta: ' + str(absolute_delta) + 'KB | ' + 'percentual delta: ' + str(percentual_delta) + '%', end="\n\n")
 
   if (percentual_delta > 10):
 
@@ -53,12 +53,21 @@ def scheduling_workflow():
 
     allocation_plan = []
     print('---> Criando uma lista de alocação')
+
+    rr_counter = 0
+
     for item in all_pods:
+      target_node = nodes[rr_counter]['name'] # ROUND ROBIN
+      if rr_counter < len(nodes) - 1: 
+        rr_counter =+ 1 
+      else: 
+        rr_counter = 0  
+
       allocation_plan.append({
         'name': item['name'],
         'namespace': item['namespace'],
         'source_node': item['source_node'],
-        'target_node': node_less_used_memory['name'] # AQUI VAI O CRITÉRIO DE ALOCAÇÃO
+        'target_node': target_node['name'] # AQUI VAI O CRITÉRIO DE ALOCAÇÃO
       })
 
     for allocation_plan_item in allocation_plan:
