@@ -11,6 +11,7 @@ The dynamic scheduler targets an application class of pods with the following ch
 
 #### Create Kubernetes cluster
 #minikube start --nodes 4 -p ppgcc --cpus 2 --memory 4096 --vm --kubernetes-version=v1.24.3
+
 minikube start --nodes 3 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
 
 #### Enable Metrics API
@@ -45,4 +46,5 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 
 #### Generate class and packages diagram
 sudo apt install pylint graphviz
+
 pyreverse -o png .
