@@ -5,6 +5,7 @@ The dynamic scheduler targets an application class of pods with the following ch
 - no volumes attached
 - stateless
 - variable workloads
+- long-lived containers
 
 
 ## Cluster setup

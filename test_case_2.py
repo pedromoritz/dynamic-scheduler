@@ -67,7 +67,7 @@ def scheduling_workflow():
         'name': item['name'],
         'namespace': item['namespace'],
         'source_node': item['source_node'],
-        'target_node': target_node['name'] # AQUI VAI O CRITÉRIO DE ALOCAÇÃO
+        'target_node': target_node # AQUI VAI O CRITÉRIO DE ALOCAÇÃO
       })
 
     for allocation_plan_item in allocation_plan:
