@@ -23,14 +23,14 @@ def read_cluster_data_workflow():
     node = dscore.Node(nodes_item['name'], namespace)
     pods = node.pods
     for pods_item in pods:
-      print('     ' + pods_item['name'])
+      print('     ' + pods_item['name'], end=' ')
       pod_object = dscore.Pod(pods_item['name'], namespace)
       pod_metrics = pod_object.metrics
       if 'containers' in pod_metrics:
         for containers_item in pod_metrics['containers']:
-          print('     ' + containers_item['name'] + ' - ' + containers_item['usage']['memory'])
+          print(' -> ' + containers_item['name'] + ' - ' + containers_item['usage']['memory'][:-2] + 'KB')
       print('')
-
+    print('')  
   ppgcc_m02, ppgcc_m03 = nodes
   timestamp = datetime.timestamp(datetime.now()) - ts0
   writer.writerow([round(timestamp, 3), ppgcc_m02['usage']['memory'], ppgcc_m03['usage']['memory']])
