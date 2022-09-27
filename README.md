@@ -8,6 +8,20 @@ The dynamic scheduler targets an application class of pods with the following ch
 - long-lived containers
 
 
+This repository is organized as follows:
+
+#### customapp
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+
+#### experiments
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+
+#### pods
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+
+#### results
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+
 ## Cluster setup
 
 #### Create Kubernetes cluster
@@ -48,4 +62,4 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 #### Generate class and packages diagram
 sudo apt install pylint graphviz
 
-pyreverse -o png .
+pyreverse -p Dynamic-Scheduler -o png -d results experiments
