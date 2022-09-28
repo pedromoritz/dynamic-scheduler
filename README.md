@@ -7,20 +7,20 @@ The dynamic scheduler targets an application class of pods with the following ch
 - variable workloads
 - long-lived containers
 
-
 This repository is organized as follows:
 
 #### customapp
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+This folders stores the assets responsible for generating the customapp application, which is responsible for play the customer container role in the Kubernetes environment.
 
 #### experiments
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+In this folder we have the Dynamic Scheduler core, the testing scenarios and all the artifacts required to run the experiments related to this work.
 
 #### pods
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+Here we have templates to create the pods into the Kubernetes cluster.
 
 #### results
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet neque aliquet, finibus diam eu, sollicitudin sapien.
+All the experiments results such as logs, diagrams and graphs are stored in this folder.
+
 
 ## Cluster setup
 
