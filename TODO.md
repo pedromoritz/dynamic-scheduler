@@ -1,6 +1,6 @@
 TODO
 
-- salva os momentos em que as transições ocorrem
-- modificar o timestamp dos logs do monitoring.py para timstamp absoluto
-- permitir pasasr parâmetros nos test cases
 - passar apenas os nós destino na lista de alocação
+- salvar as transições com timestamp
+- modificar o timestamp dos logs do monitoring.py para timestamp absoluto
+- permitir passar parâmetros nos test cases
