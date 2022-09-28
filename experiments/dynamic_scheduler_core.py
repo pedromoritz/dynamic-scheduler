@@ -45,12 +45,15 @@ class Cluster:
 
   def set_allocation_plan(self, allocation_plan):
     for pod_allocation_plan in allocation_plan:
+      #print(pod_allocation_plan)
+      #current_pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
+      #print(current_pod.metrics)
       if (pod_allocation_plan['source_node'] != pod_allocation_plan['target_node']):
         print('Rescheduling ' + pod_allocation_plan['name'] + ' on node ' + pod_allocation_plan['target_node'])
         pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
         pod.evict()
         pod.schedule(pod_allocation_plan['target_node'])
-    return True      
+    return True
 
 class Node:
 
