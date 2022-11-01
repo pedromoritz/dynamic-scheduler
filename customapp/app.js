@@ -7,6 +7,12 @@ const HOST = '0.0.0.0';
 const app = express();
 let dataStructure = [];
 
+app.get('/memory/set', (req, res) => {
+  let item = randomString(100000);
+  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  res.send(`${Math.round(used * 100) / 100} MB`);
+});
+
 app.get('/memory/increase', (req, res) => {
   let item = randomString(100000);
   dataStructure.push(item);

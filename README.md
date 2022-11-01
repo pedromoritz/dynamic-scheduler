@@ -25,8 +25,7 @@ All the experiments results such as logs, diagrams and graphs are stored in this
 ## Cluster setup
 
 #### Create Kubernetes cluster
-#minikube start --nodes 4 -p ppgcc --cpus 2 --memory 2000 --vm --kubernetes-version=v1.24.3
-minikube start --nodes 3 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.24.3
+minikube start --nodes 4 -p ppgcc --cpus 2 --memory 1900 --vm --kubernetes-version=v1.25.2
 
 #### Enable Metrics API
 minikube addons enable metrics-server -p ppgcc

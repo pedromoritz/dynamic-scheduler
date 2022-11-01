@@ -68,7 +68,8 @@ class Node:
 
   def get_pods(self, name, namespace):
     pods = []
-    field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
+#    field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
+    field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       if item.metadata.deletion_timestamp is None:
