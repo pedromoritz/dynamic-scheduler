@@ -31,13 +31,18 @@ def read_cluster_data_workflow():
           print(' -> ' + containers_item['name'] + ' - ' + containers_item['usage']['memory'][:-2] + 'KB')
       print('')
     print('')  
-  ppgcc_m02, ppgcc_m03 = nodes
-  timestamp = datetime.timestamp(datetime.now()) - ts0
-  writer.writerow([round(timestamp, 3), ppgcc_m02['usage']['memory'], ppgcc_m03['usage']['memory']])
+  #ppgcc_m02, ppgcc_m03 = nodes
+  #ppgcc_m02 = nodes
+  #timestamp = datetime.timestamp(datetime.now()) - ts0
+  #writer.writerow(ppgcc_m02)
+  #writer.writerow([round(timestamp, 3), ppgcc_m02['usage']['memory'], ppgcc_m03['usage']['memory']])
+  #writer.writerow([round(timestamp, 3), ppgcc_m02['usage']['memory']])
+  #ppgcc_m02_usage_memory = ppgcc_m02['usage']['memory']
+  #writer.writerow([ppgcc_m02_usage_memory])
 
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(read_cluster_data_workflow, 'interval', seconds=10)
+scheduler.add_job(read_cluster_data_workflow, 'interval', seconds=5)
 scheduler.start()
 
 csvfile = open('results-' + str(datetime.now().strftime('%Y%d%m')) + '.csv', 'w', 1)
