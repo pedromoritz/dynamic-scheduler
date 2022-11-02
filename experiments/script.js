@@ -1,34 +1,22 @@
 import http from 'k6/http';
-import { sleep, check } from 'k6';
-import { Counter } from 'k6/metrics';
-
-// A simple counter for http requests
-
-export const requests = new Counter('http_reqs');
-
-// you can specify stages of your test (ramp up/down patterns) through the options object
-// target is the number of VUs you are aiming for
+import { sleep } from 'k6';
 
 export const options = {
   stages: [
-    { target: 10, duration: '30s' },
-    { target: 20, duration: '30s' },
-    { target: 30, duration: '30s' },
+    { duration: '2s', target: 10 },
+    { duration: '10s', target: 100 },
+    { duration: '2s', target: 10 },
   ],
-  thresholds: {
-    http_reqs: ['count < 100'],
-  },
 };
 
-export default function () {
-  // our HTTP request, note that we are saving the response to res, which can be accessed later
+const API_BASE_URL = 'http://192.168.59.150';
 
-  const res = http.get('http://test.k6.io');
+export default function () {
+  http.batch([
+    ['GET', `${API_BASE_URL}:31001/stress`]
+  ]);
 
   sleep(1);
-
-  const checkRes = check(res, {
-    'status is 200': (r) => r.status === 200,
-    'response body': (r) => r.body.indexOf('Feel free to browse') !== -1,
-  });
 }
+
+

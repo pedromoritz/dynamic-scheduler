@@ -18,7 +18,7 @@ def read_cluster_data_workflow():
   print('----------------------------------------')
   for nodes_item in nodes:
     percentual_memory_usage = (nodes_item['usage']['memory'] / nodes_item['capacity']['memory']) * 100
-    print('---> ' + nodes_item['name'] + ' - ' + str(nodes_item['usage']['memory']) + 'KB - ' + str(round(percentual_memory_usage, 2)) + '%')
+    print('---> ' + nodes_item['name'] + ' - ' + str(round(nodes_item['usage']['memory'] / 1000, 1)) + 'MB - ' + str(round(percentual_memory_usage, 2)) + '%')
     print('')
     node = dscore.Node(nodes_item['name'], namespace)
     pods = node.pods
@@ -28,7 +28,7 @@ def read_cluster_data_workflow():
       pod_metrics = pod_object.metrics
       if 'containers' in pod_metrics:
         for containers_item in pod_metrics['containers']:
-          print(' -> ' + containers_item['name'] + ' - ' + containers_item['usage']['memory'][:-2] + 'KB')
+          print('-> ' + containers_item['name'] + ' - ' + str(round(int(containers_item['usage']['memory'][:-2]) / 1000, 1)) + 'MB')
       print('')
     print('')  
   #ppgcc_m02, ppgcc_m03 = nodes
