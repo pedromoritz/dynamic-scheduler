@@ -29,8 +29,8 @@ spec:
         app: {{POD_NAME}}
     spec:
       containers:
-      - name: customapp
-        image: pedromoritz/customapp:latest
+      - name: workloadapp
+        image: pedromoritz/workloadapp:latest
         ports:
           - name: http
             containerPort: 3000
