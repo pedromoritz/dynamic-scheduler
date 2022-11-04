@@ -1,7 +1,14 @@
-FROM node:18.12.0-alpine3.16
+FROM mhart/alpine-node:16.4.2
+
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
-COPY app.js .
+
+FROM mhart/alpine-node:slim-16.4.2 
+
+WORKDIR /app
+COPY --from=0 /app .
+COPY . .
+
 EXPOSE 3000
-CMD [ "node", "--max-old-space-size=8192", "--expose_gc", "app.js" ]
+CMD [ "node", "--max-old-space-size=2048", "--expose_gc", "app.js" ]
