@@ -1,11 +1,11 @@
 {
-  "name": "customap",
+  "name": "workloadapp",
   "version": "1.0.0",
-  "description": "Custom App",
+  "description": "Workload Application",
   "author": "Pedro Moritz de Carvalho Neto <pmoritz@yahoo.com>",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node --max-old-space-size=2048 --expose_gc app.js"
   },
   "dependencies": {
     "express": "^4.18.2"

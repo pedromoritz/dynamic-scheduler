@@ -1,2 +1,2 @@
 apscheduler==3.9.1
-kubernetes==24.2.0
+kubernetes==25.3.0
