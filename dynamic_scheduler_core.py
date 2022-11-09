@@ -43,16 +43,34 @@ class Cluster:
           })
     return ready_nodes
 
+  @property
+  def pending_pods(self):
+    return self.get_pending_pods()
+
+  def get_pending_pods(self):
+    pending_pods = []
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
+      if pod.status.phase == "Pending" and pod.spec.scheduler_name == 'dynamic-scheduler' and pod.spec.node_name == None:
+        pending_pods.append({
+          'name': pod.metadata.generate_name,
+          'namespace': 'lab'
+        })
+    return pending_pods
+
   def set_allocation_plan(self, allocation_plan):
-    for pod_allocation_plan in allocation_plan:
+    for item in allocation_plan:
+      host_node = '' #get_pod_host_node(item)
+      if host_node == '':
+        pod = Pod(item['pod_name'], item['namespace'])
+        pod.schedule(item['target_node']) 
       #print(pod_allocation_plan)
       #current_pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
       #print(current_pod.metrics)
-      if (pod_allocation_plan['source_node'] != pod_allocation_plan['target_node']):
-        print('Rescheduling ' + pod_allocation_plan['name'] + ' on node ' + pod_allocation_plan['target_node'])
-        pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
-        pod.evict()
-        pod.schedule(pod_allocation_plan['target_node'])
+#      if (pod_allocation_plan['source_node'] != pod_allocation_plan['target_node']):
+#        print('Rescheduling ' + pod_allocation_plan['name'] + ' on node ' + pod_allocation_plan['target_node'])
+#        pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
+#        pod.evict()
+#        pod.schedule(pod_allocation_plan['target_node'])
     return True
 
 class Node:
@@ -110,7 +128,8 @@ class Pod:
     return True
 
   def schedule(self, node_name):
-    pod_to_schedule = self.name[0:-5]
+    pod_to_schedule = self.name[0:15]
+    print(pod_to_schedule)
     w = watch.Watch()
     for event in w.stream(client.CoreV1Api().list_namespaced_pod, self.namespace):
       pod = event['object']
