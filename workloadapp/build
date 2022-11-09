@@ -1,0 +1,2 @@
+docker build --no-cache --progress=plain --rm -t pedromoritz/workloadapp:latest .
+docker push pedromoritz/workloadapp:latest

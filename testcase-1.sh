@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
-CUSTOM_SCHEDULER=""
+# defining scheduler
+CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
 
 # removing all workloads
 kubectl delete namespaces lab
@@ -18,7 +18,7 @@ for i in 1 2 3 4 5 6; do
 done
 
 # scheduling workloads for initial state (round robin)
-#./seeding_scheduler.py
+./round_robin_scheduler.py
 
 # starting dynamic scheduling
 
