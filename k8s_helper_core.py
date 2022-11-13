@@ -57,20 +57,24 @@ class Cluster:
         })
     return pending_pods
 
+  def get_node_from_pod(self, pod_name):
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
+      if pod.metadata.generate_name == pod_name:
+        return pod.spec.node_name
+    return ''
+
   def set_allocation_plan(self, allocation_plan):
     for item in allocation_plan:
-      host_node = '' #get_pod_host_node(item)
-      if host_node == '':
+      host_node = self.get_node_from_pod(item['pod_name'])
+      if host_node == None:
         pod = Pod(item['pod_name'], item['namespace'])
-        pod.schedule(item['target_node']) 
-      #print(pod_allocation_plan)
-      #current_pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
-      #print(current_pod.metrics)
-#      if (pod_allocation_plan['source_node'] != pod_allocation_plan['target_node']):
-#        print('Rescheduling ' + pod_allocation_plan['name'] + ' on node ' + pod_allocation_plan['target_node'])
-#        pod = Pod(pod_allocation_plan['name'], pod_allocation_plan['namespace'])
-#        pod.evict()
-#        pod.schedule(pod_allocation_plan['target_node'])
+        pod.schedule(item['target_node'])
+      else:
+        print(item)
+        if (item['target_node'] != host_node):
+          pod = Pod(item['pod_name'], item['namespace'])
+          pod.evict()
+          pod.schedule(item['target_node'])
     return True
 
 class Node:
@@ -128,7 +132,7 @@ class Pod:
     return True
 
   def schedule(self, node_name):
-    pod_to_schedule = self.name[0:15]
+    pod_to_schedule = self.name
     print(pod_to_schedule)
     w = watch.Watch()
     for event in w.stream(client.CoreV1Api().list_namespaced_pod, self.namespace):
