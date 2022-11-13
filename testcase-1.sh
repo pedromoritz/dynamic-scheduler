@@ -22,6 +22,8 @@ done
 ./round_robin_scheduler.py
 
 # starting dynamic scheduling
-#./dynamic-scheduler-GreddyLB.py
+#./dynamic-scheduler-GreddyLB.py &
 
 # starting testset
+#k6 run k6_script.js 
+
