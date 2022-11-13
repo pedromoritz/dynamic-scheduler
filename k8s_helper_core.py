@@ -90,14 +90,18 @@ class Node:
 
   def get_pods(self, name, namespace):
     pods = []
-#    field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace+','+'spec.schedulerName=dynamic-scheduler'
     field_selector = 'spec.nodeName='+name+','+'metadata.namespace='+namespace
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       if item.metadata.deletion_timestamp is None:
+        response = Utils.call_api(f'namespaces/{namespace}/pods/{item.metadata.name}')
         pods.append({
           'name': item.metadata.name,
-          'namespace': item.metadata.namespace
+          'namespace': item.metadata.namespace,
+          'usage': {
+            'memory': int(response['containers'][0]['usage']['memory'][:-2] if response and response['containers'] else 0), # memory in KB
+            'cpu': int(response['containers'][0]['usage']['cpu'][:-1] if response and response['containers'] else 0) # cpu in nanocores
+          }
         })
     return pods
 
@@ -115,6 +119,7 @@ class Pod:
   def get_metrics(self, name):
     response = Utils.call_api(f'namespaces/{self.namespace}/pods/{name}')
     if response:
+      print(response)
       return {
         'name': name,
         'timestamp': response['timestamp'], # metric timestamp

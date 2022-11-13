@@ -55,30 +55,22 @@ def scheduling_workflow():
     print('---> Criando uma lista de alocação')
 
     rr_counter = 0
-
-    for item in all_pods:
-      target_node = nodes[rr_counter]['name'] # ROUND ROBIN
-      if rr_counter < len(nodes) - 1: 
-        rr_counter =+ 1 
-      else: 
-        rr_counter = 0  
-
+    for pod in all_pods:
       allocation_plan.append({
-        'pod_name': item['name'],
-        'namespace': item['namespace'],
-        'target_node': target_node # AQUI VAI O CRITÉRIO DE ALOCAÇÃO
+        'pod_name': pod['name'],
+        'namespace': pod['namespace'],
+        'target_node': nodes[rr_counter]['name']
       })
+      rr_counter = rr_counter + 1 if rr_counter < len(nodes) - 1 else 0
 
     for allocation_plan_item in allocation_plan:
       print(allocation_plan_item)
 
     cluster.set_allocation_plan(allocation_plan)
 
-scheduling_workflow()
-
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=120)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=30)
 scheduler.start()
 
 # keeping script running
