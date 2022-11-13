@@ -4,6 +4,7 @@
 CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
 
 # removing all workloads
+kubectl delete pods --all -n lab --grace-period 0 --force
 kubectl delete namespaces lab
 kubectl create namespace lab
 
@@ -21,5 +22,6 @@ done
 ./round_robin_scheduler.py
 
 # starting dynamic scheduling
+#./dynamic-scheduler-GreddyLB.py
 
 # starting testset

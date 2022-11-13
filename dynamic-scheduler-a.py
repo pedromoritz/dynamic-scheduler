@@ -2,7 +2,7 @@
 
 import json
 import time
-import dynamic_scheduler_core as dscore
+import k8s_helper_core as khc
 from apscheduler.schedulers.background import BackgroundScheduler
 
 namespace = 'lab'
@@ -12,7 +12,7 @@ def scheduling_workflow():
   print('##########################################')
   print('Iniciando workflow', end="\n\n")
 
-  cluster = dscore.Cluster()
+  cluster = khc.Cluster()
   print('---> Buscando nodes do cluster:')
   nodes = cluster.nodes
 
@@ -32,7 +32,7 @@ def scheduling_workflow():
   if percentual_memory_usage >= 30:
 
     print('---> Buscando pods do node ' + node_more_used_memory['name'] + ':')
-    node = dscore.Node(node_more_used_memory['name'], namespace)
+    node = khc.Node(node_more_used_memory['name'], namespace)
     print(node.pods, end="\n\n")
 
     print('---> Verifica Se há ao menos um pod no node selecionado:', end="\n\n")
@@ -43,7 +43,7 @@ def scheduling_workflow():
       print(pod_to_evict, end="\n\n")
 
       print('---> Despejando pod ' + pod_to_evict['name'] + ' do respectivo node:')
-      pod = dscore.Pod(pod_to_evict['name'], pod_to_evict['namespace'])
+      pod = khc.Pod(pod_to_evict['name'], pod_to_evict['namespace'])
       pod.evict()
       print('')
 
