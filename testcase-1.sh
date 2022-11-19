@@ -4,9 +4,7 @@
 CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
 
 # removing all workloads
-kubectl delete pods --all -n lab --grace-period 0 --force
-kubectl delete namespaces lab
-kubectl create namespace lab
+kubectl delete pods --all -n default --grace-period 0 --force
 
 # creating workloads
 for i in 1 2 3 4 5 6; do	
@@ -21,9 +19,12 @@ done
 # scheduling workloads for initial state (round robin)
 ./round_robin_scheduler.py
 
-# starting dynamic scheduling
-#./dynamic-scheduler-GreddyLB.py &
+# waiting for ready containers
+#sleep 30
 
 # starting testset
-#k6 run k6_script.js 
+#k6 run -q --out csv=testcase-1_results.csv k6_script.js & 
+
+# starting dynamic scheduling
+#./dynamic-scheduler-GreddyLB.py
 

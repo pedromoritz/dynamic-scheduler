@@ -5,7 +5,15 @@ import time
 import k8s_helper_core as khc
 from apscheduler.schedulers.background import BackgroundScheduler
 
-namespace = 'lab'
+def get_round_robin_plan(pods, nodes):
+  allocation_plan = {} 
+  rr_counter = 0
+  for pod in pods:
+    allocation_plan[pod['name']] = nodes[rr_counter]['name']
+    rr_counter = rr_counter + 1 if rr_counter < len(nodes) - 1 else 0
+  return allocation_plan  
+
+#def get_greedylb_plan(chare_objects, processors, background_load):
 
 # workflow definitions
 def scheduling_workflow():
@@ -20,6 +28,12 @@ def scheduling_workflow():
     print(node_item)
   print('')
 
+  not_ready_pods = cluster.not_ready_pods
+  print('not_ready_pods')
+  print(not_ready_pods)
+  if len(not_ready_pods) > 0:
+    return 
+
   print('---> Buscando node com maior uso absoluto de memória:')
   nodes_sorted_by_used_memory = sorted(nodes, key=lambda d: d['usage']['memory'])
   node_more_used_memory = nodes_sorted_by_used_memory[-1]
@@ -30,18 +44,18 @@ def scheduling_workflow():
   node_less_used_memory = nodes_sorted_by_used_memory_reverse[-1]
   print(node_less_used_memory, end="\n\n")
 
-  print('---> Verificando se a diferença entre os nodes selecionados é maior que 10% da capacidade máxima:')
+  print('---> Verificando se a diferença entre os nodes selecionados é maior que 20% da capacidade máxima:')
   absolute_delta = (node_more_used_memory['usage']['memory'] - node_less_used_memory['usage']['memory'])
   percentual_delta = round((absolute_delta / node_more_used_memory['capacity']['memory']) * 100, 2)
   print('absolute delta: ' + str(absolute_delta) + 'KB | ' + 'percentual delta: ' + str(percentual_delta) + '%', end="\n\n")
 
-  if (percentual_delta > 10):
+  if (percentual_delta > 20):
 
     all_pods = []
 
     for node_item in nodes:
       print('---> Buscando pods do node ' + node_item['name'] + ':')
-      node = khc.Node(node_item['name'], namespace)
+      node = khc.Node(node_item['name'])
       pods_temp = node.pods
 
       for pod_temp in pods_temp:
@@ -51,17 +65,8 @@ def scheduling_workflow():
 
       print('')
 
-    allocation_plan = []
     print('---> Criando uma lista de alocação')
-
-    rr_counter = 0
-    for pod in all_pods:
-      allocation_plan.append({
-        'pod_name': pod['name'],
-        'namespace': pod['namespace'],
-        'target_node': nodes[rr_counter]['name']
-      })
-      rr_counter = rr_counter + 1 if rr_counter < len(nodes) - 1 else 0
+    allocation_plan = get_round_robin_plan(all_pods, nodes) 
 
     for allocation_plan_item in allocation_plan:
       print(allocation_plan_item)
