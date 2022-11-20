@@ -28,7 +28,7 @@ done
 
 # scheduling workloads for initial state (round robin)
 if [ "$1" = "dynamic-scheduler-GreedyLB" ]; then
-  ./round_robin_scheduler.py
+  ./round-robin-scheduler.py
 fi
 
 # waiting for ready containers
@@ -40,5 +40,6 @@ if [ "$1" = "dynamic-scheduler-GreedyLB" ]; then
 fi
 
 # starting testset
-k6 run -q --out csv=testcase-1_results.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
+#k6 run -q --out csv=testcase-1_results.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
+k6 run -q -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
 
