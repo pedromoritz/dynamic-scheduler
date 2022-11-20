@@ -54,7 +54,7 @@ class Cluster:
 
   def get_pending_pods(self):
     pending_pods = []
-    for pod in client.CoreV1Api().list_namespaced_pod('default').items:
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
       if pod.status.phase == "Pending" and pod.spec.node_name == None:
         pending_pods.append({
           'name': pod.metadata.generate_name
@@ -67,7 +67,7 @@ class Cluster:
 
   def get_not_ready_pods(self):
     not_ready_pods = []
-    for pod in client.CoreV1Api().list_namespaced_pod('default').items:
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
       if pod.status.phase != 'Running':
         not_ready_pods.append({
           'name': pod.metadata.generate_name,
@@ -76,7 +76,7 @@ class Cluster:
     return not_ready_pods
 
   def get_node_from_pod(self, pod_name):
-    for pod in client.CoreV1Api().list_namespaced_pod('default').items:
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
       if pod.metadata.name == pod_name or pod.metadata.generate_name == pod_name:
         return pod.spec.node_name
     return ''
@@ -109,11 +109,11 @@ class Node:
 
   def get_pods(self, name):
     pods = []
-    field_selector = 'spec.nodeName='+name+','+'metadata.namespace=default'
+    field_selector = 'spec.nodeName='+name+','+'metadata.namespace=lab'
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       if item.metadata.deletion_timestamp is None:
-        response = Utils.call_api(f'namespaces/default/pods/{item.metadata.name}')
+        response = Utils.call_api(f'namespaces/lab/pods/{item.metadata.name}')
         pod_memory = 0
         pod_cpu = 0
         if response and response['containers']:
@@ -139,7 +139,7 @@ class Pod:
     return self.get_metrics(self.name)
 
   def get_metrics(self, name):
-    response = Utils.call_api(f'namespaces/default/pods/{name}')
+    response = Utils.call_api(f'namespaces/lab/pods/{name}')
     if response:
       print(response)
       return {
@@ -151,9 +151,9 @@ class Pod:
       return {}
 
   def evict(self):
-    body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace='default'))
+    body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace='lab'))
     try:
-      client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace='default', body=body)
+      client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace='lab', body=body)
     except Exception as a:
       print ("Exception when calling CoreV1Api->create_namespaced_pod_eviction: %s\n" % a)
     return True
@@ -162,7 +162,7 @@ class Pod:
     pod_to_schedule = self.name
     print(pod_to_schedule)
     w = watch.Watch()
-    for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'default'):
+    for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'lab'):
       pod = event['object']
       if pod.status.phase == "Pending" and pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
         try:
@@ -170,7 +170,7 @@ class Pod:
           meta = client.V1ObjectMeta(name=pod.metadata.name)
           body = client.V1Binding(target=target, metadata=meta)
           try:
-            client.CoreV1Api().create_namespaced_binding(namespace='default', body=body, _preload_content=False)
+            client.CoreV1Api().create_namespaced_binding(namespace='lab', body=body, _preload_content=False)
             w.stop()
           except Exception as a:
             print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
