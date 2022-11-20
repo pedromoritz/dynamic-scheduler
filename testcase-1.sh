@@ -20,10 +20,10 @@ done
 ./round_robin_scheduler.py
 
 # waiting for ready containers
-#sleep 30
+sleep 30
 
 # starting testset
-#k6 run -q --out csv=testcase-1_results.csv k6_script.js & 
+k6 run -q --out csv=testcase-1_results.csv k6_script-testcase-1.js > /dev/null 2>&1
 
 # starting dynamic scheduling
 #./dynamic-scheduler-GreddyLB.py
