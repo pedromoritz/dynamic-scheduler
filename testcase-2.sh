@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # defining scheduler
-CUSTOM_SCHEDULER=""
+CUSTOM_SCHEDULER="schedulerName: dynamic-scheduler"
 
 # removing all workloads
 kubectl delete pods --all -n default --grace-period 0 --force
@@ -23,5 +23,8 @@ done
 sleep 30
 
 # starting testset
-k6 run -q --out csv=testcase-1_results.csv k6_script-testcase-1.js &
+k6 run -q --out csv=testcase-2_results.csv k6_script-testcase-2.js &
+
+# starting dynamic scheduling
+./dynamic-scheduler-GreddyLB.py
 
