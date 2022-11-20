@@ -4,12 +4,13 @@
 CUSTOM_SCHEDULER=""
 
 # removing all workloads
-kubectl delete pods --all -n lab --grace-period 0 --force
-kubectl delete namespace lab
-kubectl create namespace lab
+kubectl delete pods --all -n default --grace-period 0 --force
+
+# waiting for ready containers
+sleep 30
 
 # creating workloads
-for i in $(seq 12); do	
+for i in $(seq $1); do	
 	POD_NAME=pod-$i
 	NODE_PORT=3100$i
 	template=`cat "pod-deployment-template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
