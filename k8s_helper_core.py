@@ -55,7 +55,7 @@ class Cluster:
   def get_pending_pods(self):
     pending_pods = []
     for pod in client.CoreV1Api().list_namespaced_pod('default').items:
-      if pod.status.phase == "Pending" and pod.spec.scheduler_name == 'dynamic-scheduler' and pod.spec.node_name == None:
+      if pod.status.phase == "Pending" and """pod.spec.scheduler_name == 'dynamic-scheduler' and""" pod.spec.node_name == None:
         pending_pods.append({
           'name': pod.metadata.generate_name
         })
@@ -68,7 +68,7 @@ class Cluster:
   def get_not_ready_pods(self):
     not_ready_pods = []
     for pod in client.CoreV1Api().list_namespaced_pod('default').items:
-      if pod.status.phase != 'Running' and pod.spec.scheduler_name == 'dynamic-scheduler':
+      if pod.status.phase != 'Running' """and pod.spec.scheduler_name == 'dynamic-scheduler'""":
         not_ready_pods.append({
           'name': pod.metadata.generate_name,
           'status': pod.status.phase
@@ -164,7 +164,7 @@ class Pod:
     w = watch.Watch()
     for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'default'):
       pod = event['object']
-      if pod.status.phase == "Pending" and pod.spec.scheduler_name == 'dynamic-scheduler' and pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
+      if pod.status.phase == "Pending" and """pod.spec.scheduler_name == 'dynamic-scheduler' and""" pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
         try:
           target = client.V1ObjectReference(kind='Node', api_version='v1', name=node_name)
           meta = client.V1ObjectMeta(name=pod.metadata.name)
