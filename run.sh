@@ -34,12 +34,11 @@ fi
 # waiting for ready containers
 sleep 30
 
+# starting testset
+k6 run -q --out csv=temp_results.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
+
 # scheduling workloads for initial state (round robin)
 if [ "$1" = "dynamic-scheduler-GreedyLB" ]; then
   ./dynamic-scheduler-GreedyLB.py
 fi
-
-# starting testset
-#k6 run -q --out csv=testcase-1_results.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
-k6 run -q -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js &
 

@@ -5,7 +5,7 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 export const options = {
   stages: [
     { duration: '30s', target: 10 },
-    { duration: '1m', target: 200 },
+    { duration: '5m', target: 200 },
     { duration: '30s', target: 10 },
   ],
 };
