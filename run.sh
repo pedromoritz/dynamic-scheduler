@@ -13,6 +13,7 @@ else
 fi
 
 # removing all workloads
+kubectl delete pods --all -n lab --grace-period 0 --force
 kubectl delete namespace lab
 kubectl create namespace lab
 

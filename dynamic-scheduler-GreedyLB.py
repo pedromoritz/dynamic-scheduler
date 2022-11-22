@@ -23,14 +23,12 @@ def get_greedylb_plan(chare_objects, processors, background_load):
   heapify(heap)
   for pod in transformed_chare_objects:
     heappush(heap, pod)
-print("The Head value of heap is : "+str(-1 * heap[0]))
-print("Heap elements are : ")
-for i in heap:
+    print("The Head value of heap is : "+str(-1 * heap[0]))
+    print("Heap elements are : ")
+  for i in heap:
     print(-1 * i, end = ' ')
-print("\n")
-element = heappop(heap)
-
-
+    print("\n")
+    element = heappop(heap)
 
   for pod in transformed_chare_objects:
     print(pod)
@@ -105,8 +103,8 @@ def scheduling_workflow():
       all_pods = all_pods + node.pods
 
     print('---> Criando uma lista de alocação')
-#    allocation_plan = get_round_robin_plan(all_pods, nodes) 
-    allocation_plan = get_greedylb_plan(all_pods, nodes, 1000)
+    allocation_plan = get_round_robin_plan(all_pods, nodes) 
+#    allocation_plan = get_greedylb_plan(all_pods, nodes, 1000)
 
     for allocation_plan_item in allocation_plan:
       print(allocation_plan_item)
@@ -116,7 +114,7 @@ def scheduling_workflow():
 scheduling_workflow()
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=10)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=60)
 scheduler.start()
 
 # keeping script running
