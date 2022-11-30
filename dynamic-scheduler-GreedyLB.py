@@ -16,21 +16,18 @@ def get_round_robin_plan(pods, nodes):
 def get_greedylb_plan(chare_objects, processors, background_load):
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
   heapq._heapify_max(objHeap)
-
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
   heapq.heapify(nodeHeap)
-
   allocation_plan = {}
-
-  objHeapSize = len(objHeap.copy())
-  for i in range(objHeapSize):
+  #objHeapSize = len(objHeap.copy())
+#  for i in range(objHeapSize):
+  for i in objHeap:
     c = heapq._heappop_max(objHeap)
     donor = heapq.heappop(nodeHeap)
     allocation_plan[c[1]] = donor[1]
     new_donor = list(donor)
     new_donor[0] += c[0]
     heapq.heappush(nodeHeap, tuple(new_donor))
-
   return allocation_plan
 
 # workflow definitions
@@ -82,7 +79,7 @@ def scheduling_workflow():
     for allocation_plan_item in allocation_plan:
       print('{' + allocation_plan_item + ': ' + allocation_plan[allocation_plan_item] + '}')
 
-#    cluster.set_allocation_plan(allocation_plan)
+    cluster.set_allocation_plan(allocation_plan)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
