@@ -5,7 +5,7 @@
   "author": "Pedro Moritz de Carvalho Neto <pmoritz@yahoo.com>",
   "main": "app.js",
   "scripts": {
-    "start": "node --max-old-space-size=2048 --expose_gc app.js"
+    "start": "node --max-old-space-size=4096 --expose_gc app.js"
   },
   "dependencies": {
     "express": "^4.18.2"

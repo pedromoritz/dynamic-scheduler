@@ -6,7 +6,7 @@ import { reportHTML } from "https://raw.githubusercontent.com/fziviello/k6-repor
 export const options = {
   stages: [
     { duration: '30s', target: 10 },
-    { duration: '5m', target: 200 },
+    { duration: '5m', target: 400 },
     { duration: '30s', target: 10 },
   ],
 };
@@ -21,7 +21,7 @@ export function handleSummary(data) {
 
 export default function () {
   http.batch([
-    ['GET', `${API_BASE_URL}:31001/memory/increase?load=10&duration=10`]
+    ['GET', `${API_BASE_URL}:31001/memory/increase`]
   ]);
 
   sleep(1);

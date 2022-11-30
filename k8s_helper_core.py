@@ -85,9 +85,6 @@ class Cluster:
     for pod_name in allocation_plan:
       target_node = allocation_plan[pod_name]      
       host_node = self.get_node_from_pod(pod_name)
-      print('------------------')
-      print('pod_name: ' + pod_name)
-      print('host_node: ' + str(host_node))
       if (target_node != host_node):
         pod = Pod(pod_name)
         if host_node != None:
@@ -171,6 +168,7 @@ class Pod:
           body = client.V1Binding(target=target, metadata=meta)
           try:
             client.CoreV1Api().create_namespaced_binding(namespace='lab', body=body, _preload_content=False)
+            print("Binding pod " + pod.metadata.name + " to node " + node_name)
             w.stop()
           except Exception as a:
             print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
