@@ -15,18 +15,21 @@ def get_round_robin_plan(pods, nodes):
 
 def get_greedylb_plan(chare_objects, processors, background_load):
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
+  print(objHeap)
   heapq._heapify_max(objHeap)
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
+  print(nodeHeap)
   heapq.heapify(nodeHeap)
   allocation_plan = {}
-  #objHeapSize = len(objHeap.copy())
-#  for i in range(objHeapSize):
   for i in objHeap:
     c = heapq._heappop_max(objHeap)
     donor = heapq.heappop(nodeHeap)
     allocation_plan[c[1]] = donor[1]
     new_donor = list(donor)
     new_donor[0] += c[0]
+    print('---------')
+    print('pod: ' + c[1])
+    print('node: ' + new_donor[1])
     heapq.heappush(nodeHeap, tuple(new_donor))
   return allocation_plan
 
@@ -86,7 +89,8 @@ scheduling_workflow()
 scheduler = BackgroundScheduler()
 scheduler.add_job(scheduling_workflow, 'interval', seconds=30)
 scheduler.start()
-
+#timestamp;pod1;pod2;pod3;pod4;node1;node2
+#000000000;  40;  40; 100;  20;1,2,3;4
 # keeping script running
 while True:
   try:
