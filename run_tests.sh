@@ -39,9 +39,11 @@ test()
   # scheduling workloads for initial state (round robin)
   if [ "$1" = "dynamic_scheduler_GreedyLB" ]; then
     ./dynamic_scheduler_GreedyLB.py
+  else
+    ./metrics_monitoring.py
   fi
 }
 
-#test default_scheduler 6
-#sleep 600
+test default_scheduler 6
+sleep 600
 test dynamic_scheduler_GreedyLB 6
