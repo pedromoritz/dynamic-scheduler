@@ -90,7 +90,6 @@ class Cluster:
         if host_node != None:
           pod.evict()
           pod = Pod(pod_name[:-5])
-        print('target_node: ' + target_node)
         pod.schedule(target_node)
     return True
 
@@ -138,7 +137,6 @@ class Pod:
   def get_metrics(self, name):
     response = Utils.call_api(f'namespaces/lab/pods/{name}')
     if response:
-      print(response)
       return {
         'name': name,
         'timestamp': response['timestamp'], # metric timestamp
@@ -157,7 +155,6 @@ class Pod:
 
   def schedule(self, node_name):
     pod_to_schedule = self.name
-    print(pod_to_schedule)
     w = watch.Watch()
     for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'lab'):
       pod = event['object']
@@ -168,7 +165,6 @@ class Pod:
           body = client.V1Binding(target=target, metadata=meta)
           try:
             client.CoreV1Api().create_namespaced_binding(namespace='lab', body=body, _preload_content=False)
-            print("Binding pod " + pod.metadata.name + " to node " + node_name)
             w.stop()
           except Exception as a:
             print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
