@@ -5,7 +5,7 @@ import k8s_scheduling_extension as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 
-def get_greedylb_plan(chare_objects, processors, background_load):
+def get_refinelb_plan(chare_objects, processors):
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
   heapq._heapify_max(objHeap)
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
@@ -32,7 +32,7 @@ def scheduling_workflow():
   for node_item in nodes:
     node = kse.Node(node_item['name'])
     pods = pods + node.pods
-  allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
+  allocation_plan = get_refinelb_plan(pods, nodes, 1000000)
   cluster.set_allocation_plan(allocation_plan)
 
 #metrics_file = open('metrics_dynamic_scheduler_memory.csv', mode='w')
