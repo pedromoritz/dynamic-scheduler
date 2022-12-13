@@ -112,7 +112,6 @@ class Cluster:
       pods = pods + node.pods 
     for pod in pods:
       info.append(pod['usage']['memory'])
-    for pod in pods:
       info.append(self.get_node_from_pod(pod['name']))
     return info
 
