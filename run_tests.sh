@@ -3,15 +3,14 @@
 test()
 {
   # defining scheduler
-  if [ "$1" = "dynamic_scheduler_GreedyLB" ]; then
-    CUSTOM_SCHEDULER="schedulerName: dynamic_scheduler"
-  else
-    CUSTOM_SCHEDULER=""
-  fi
+  case $1 in
+    dynamic_scheduler_GreedyLB|dynamic_scheduler_RefineLB) CUSTOM_SCHEDULER="schedulerName: dynamic_scheduler" ;;
+    *) CUSTOM_SCHEDULER="" ;;
+  esac
 
   # removing all workloads
-  kubectl delete pods --all -n lab --grace-period 0 --force
-  sleep 30  
+  #kubectl delete pods --all -n lab --grace-period 0 --force
+  #sleep 30  
   kubectl delete namespace lab
   kubectl create namespace lab
 
@@ -26,7 +25,7 @@ test()
   done
 
   # scheduling workloads for initial state (round robin)
-  if [ "$1" = "dynamic_scheduler_GreedyLB" ]; then
+  if [[ "$1" =~ ^(dynamic_scheduler_GreedyLB|dynamic_scheduler_RefineLB)$ ]]; then
     ./round_robin_scheduler.py
   fi
 
@@ -37,13 +36,13 @@ test()
   k6 run -q --out csv=results_$1_$2.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js >/dev/null 2>&1 &
 
   # scheduling workloads for initial state (round robin)
-  if [ "$1" = "dynamic_scheduler_GreedyLB" ]; then
-    ./dynamic_scheduler_GreedyLB.py
-  else
-    ./metrics_monitoring.py
-  fi
+  case $1 in
+    dynamic_scheduler_GreedyLB) ./dynamic_scheduler_GreedyLB.py ;;
+    dynamic_scheduler_RefineLB) ./dynamic_scheduler_RefineLB.py ;;
+    *) ./metrics_monitoring.py ;;
+  esac
 }
 
-test default_scheduler 6
-sleep 600
+#test default_scheduler 6
+#sleep 600
 test dynamic_scheduler_GreedyLB 6
