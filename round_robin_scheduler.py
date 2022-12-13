@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import k8s_helper_core as khc
+import k8s_scheduling_extension as kse
 
 def scheduling_workflow():
-  cluster = khc.Cluster()
+  cluster = kse.Cluster()
   nodes = cluster.nodes
   pending_pods = cluster.pending_pods
   allocation_plan = {}

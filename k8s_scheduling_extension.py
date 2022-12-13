@@ -1,5 +1,8 @@
+# Kubernetes Scheduling Extension
+
 from kubernetes import client, config, watch
 import json
+import time
 
 class Utils:
 
@@ -92,6 +95,26 @@ class Cluster:
           pod = Pod(pod_name[:-5])
         pod.schedule(target_node)
     return True
+
+  @property
+  def info(self):
+    return self.get_info()
+
+  def get_info(self):
+    nodes = self.get_nodes()
+    pods = []
+    info = []
+    info.append(int(time.time()))
+    for node in nodes:
+      print(node)
+      info.append(node['usage']['memory'])
+      node = Node(node['name'])
+      pods = pods + node.pods 
+    for pod in pods:
+      info.append(pod['usage']['memory'])
+    for pod in pods:
+      info.append(self.get_node_from_pod(pod['name']))
+    return info
 
 class Node:
 

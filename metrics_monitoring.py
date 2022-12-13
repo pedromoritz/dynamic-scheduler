@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-import k8s_helper_core as khc
+import k8s_scheduling_extension as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 
 def save_log_record(nodes, pods):
@@ -21,11 +21,11 @@ def save_log_record(nodes, pods):
 
 # workflow definitions
 def scheduling_workflow():
-  cluster = khc.Cluster()
+  cluster = kse.Cluster()
   nodes = cluster.nodes
   pods = []
   for node_item in nodes:
-    node = khc.Node(node_item['name'])
+    node = kse.Node(node_item['name'])
     pods = pods + node.pods
   save_log_record(nodes, pods)
 

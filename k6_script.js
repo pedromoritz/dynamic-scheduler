@@ -1,6 +1,5 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
-//import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { reportHTML } from "https://raw.githubusercontent.com/fziviello/k6-report-html/main/dist/reportHtml.min.js";
 
 export const options = {
@@ -21,7 +20,9 @@ export function handleSummary(data) {
 
 export default function () {
   http.batch([
-    ['GET', `${API_BASE_URL}:31001/memory/increase`]
+    ['GET', `${API_BASE_URL}:31001/memory/increase`],
+    ['GET', `${API_BASE_URL}:31002/memory/increase`],
+    ['GET', `${API_BASE_URL}:31003/memory/increase`]
   ]);
 
   sleep(1);
