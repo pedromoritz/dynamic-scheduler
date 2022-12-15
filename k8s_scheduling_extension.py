@@ -106,7 +106,7 @@ class Cluster:
     info = []
     info.append(int(time.time()))
     for node in nodes:
-      print(node)
+      #print(node)
       info.append(node['usage']['memory'])
       node = Node(node['name'])
       pods = pods + node.pods 
