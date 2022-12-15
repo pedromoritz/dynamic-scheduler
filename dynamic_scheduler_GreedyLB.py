@@ -6,6 +6,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 
 def get_greedylb_plan(chare_objects, processors, background_load):
+  print(chare_objects)
+  print(processors)
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
   heapq._heapify_max(objHeap)
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
@@ -27,7 +29,7 @@ def scheduling_workflow():
   nodes = cluster.nodes
   if len(cluster.not_ready_pods) > 0:
     return 
-  print(cluster.info)
+#  print(cluster.info)
   pods = []
   for node_item in nodes:
     node = kse.Node(node_item['name'])
