@@ -31,12 +31,14 @@ class Cluster:
       last_condition = node.status.conditions[-1]     
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
         if 'node-role.kubernetes.io/control-plane' not in node.metadata.labels:
-          response = Utils.call_api(f'nodes/{node.metadata.name}')
+          response = Utils.call_api('nodes/'+node.metadata.name)
           node_memory = 0
           node_cpu = 0
           if response and response['usage']:
             node_memory = int(response['usage']['memory'][:-2]) 
             node_cpu = int(response['usage']['cpu'][:-1])
+          this_node = Node(node.metadata.name)
+          pods = this_node.pods
           ready_nodes.append({
             'name': node.metadata.name,
             'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
@@ -47,7 +49,8 @@ class Cluster:
             'usage': {
               'memory': node_memory, # memory in KB
               'cpu': node_cpu # cpu in nanocores
-            }
+            },
+            'pods': pods
           })
     return ready_nodes
 
@@ -131,7 +134,7 @@ class Node:
     pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
     for item in pods_list.items:
       if item.metadata.deletion_timestamp is None:
-        response = Utils.call_api(f'namespaces/lab/pods/{item.metadata.name}')
+        response = Utils.call_api('namespaces/lab/pods/'+item.metadata.name)
         pod_memory = 0
         pod_cpu = 0
         if response and response['containers']:
@@ -157,7 +160,7 @@ class Pod:
     return self.get_metrics(self.name)
 
   def get_metrics(self, name):
-    response = Utils.call_api(f'namespaces/lab/pods/{name}')
+    response = Utils.call_api('namespaces/lab/pods/'+name)
     if response:
       return {
         'name': name,

@@ -4,23 +4,35 @@ import time
 import k8s_scheduling_extension as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
+from functools import reduce
 
-def get_refinelb_plan(chare_objects, processors):
+def get_refinelb_plan(processors):
   allocation_plan = {}
   heavyProcs = []
   lightProcs = []
-  res = list(map(lambda n: n['usage']['memory'], processors))
-  print(res)
-  threshold = 1000000   
+  # calculating threshold
+  procs_memory_values = list(map(lambda n: n['usage']['memory'], processors))
+  procs_memory_average = round(reduce(lambda x, y: x + y, procs_memory_values) / len(procs_memory_values), 0) 
+  margin = 1.0 # >= 1.0
+  threshold = procs_memory_average * margin
+  print(threshold)
+  # defining heavyProcs and lightProcs based on threshold
   for processor in processors:
-    print(processor)
     if int(processor['usage']['memory']) > threshold:
       heavyProcs.append(processor)
     else:
       lightProcs.append(processor)
-  print()
+  heapq._heapify_max(heavyProcs)
   print(heavyProcs)
   print(lightProcs)
+  while len(heavyProcs) > 0:
+    print('iteracao a')
+    donor = heapq._heappop_max(heavyProcs)
+    print(donor) 
+#    while len(lightProcs) > 0:
+    print('iteracao b')
+    node = kse.Node(donor['name'])
+    print(node.pods)
 
 #  objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
 #  heapq._heapify_max(objHeap)
@@ -37,11 +49,9 @@ def get_refinelb_plan(chare_objects, processors):
 #    heapq.heappush(nodeHeap, tuple(new_donor))
   return dict(sorted(allocation_plan.items()))
 
-chare_objects = [{'name': 'pod-3-77d6d49bb7-f4bqj', 'usage': {'memory': 1283696, 'cpu': 1103796284}}, {'name': 'pod-5-678bc6fd77-k9qp2', 'usage': {'memory': 44472, 'cpu': 6495}}, {'name': 'pod-1-858599d969-rm9dk', 'usage': {'memory': 1045672, 'cpu': 1095626655}}, {'name': 'pod-4-6f77646f66-kt4q6', 'usage': {'memory': 45768, 'cpu': 5503}}, {'name': 'pod-2-6dcc4fc5bd-x7phd', 'usage': {'memory': 894916, 'cpu': 1052973996}}, {'name': 'pod-6-675c8855d4-m6ln5', 'usage': {'memory': 45892, 'cpu': 5283}}]
+processors = [{'name': 'ppgcc-m02', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 1980396, 'cpu': 1119789161}, 'pods': [{'name': 'pod-1-858599d969-rm9dk', 'usage': {'memory': 1045672, 'cpu': 1095626655}}, {'name': 'pod-4-6f77646f66-kt4q6', 'usage': {'memory': 45768, 'cpu': 5503}}]},	{'name': 'ppgcc-m03', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 2025424, 'cpu': 972677352}, 'pods': [{'name': 'pod-3-77d6d49bb7-f4bqj', 'usage': {'memory': 1283696, 'cpu': 1103796284}}, {'name': 'pod-5-678bc6fd77-k9qp2', 'usage': {'memory': 44472, 'cpu': 6495}}]}, {'name': 'ppgcc-m04', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 2147112, 'cpu': 977669603}, 'pods': [{'name': 'pod-2-6dcc4fc5bd-x7phd', 'usage': {'memory': 894916, 'cpu': 1052973996}}, {'name': 'pod-6-675c8855d4-m6ln5', 'usage': {'memory': 45892, 'cpu': 5283}}]}]
 
-processors = [{'name': 'ppgcc-m02', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 1980396, 'cpu': 1119789161}}, {'name': 'ppgcc-m03', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 2025424, 'cpu': 972677352}}, {'name': 'ppgcc-m04', 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 2147112, 'cpu': 977669603}}]
-
-result = get_refinelb_plan(chare_objects, processors)
+result = get_refinelb_plan(processors)
 print(result)
 
 # workflow definitions
