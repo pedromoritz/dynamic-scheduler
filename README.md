@@ -61,3 +61,5 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 sudo apt install pylint graphviz
 
 pyreverse -p Dynamic-Scheduler -o png -d results experiments
+
+pyreverse -o png -p KSE .
