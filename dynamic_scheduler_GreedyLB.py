@@ -26,8 +26,8 @@ def get_greedylb_plan(chare_objects, processors, background_load):
 # workflow definitions
 def scheduling_workflow():
   cluster = kse.Cluster()
-  nodes = cluster.nodes
-  if len(cluster.not_ready_pods) > 0:
+  nodes = cluster.get_nodes()
+  if len(cluster.get_unready_pods()) > 0:
     return 
 #  print(cluster.info)
   pods = []
