@@ -32,8 +32,9 @@ def scheduling_workflow():
 #  print(cluster.info)
   pods = []
   for node_item in nodes:
-    node = kse.Node(node_item['name'])
-    pods = pods + node.pods
+    this_node_pods = cluster.get_pods_from_node(node_item['name'])
+
+    pods = pods + this_node_pods
   allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
   cluster.set_allocation_plan(allocation_plan)
 
