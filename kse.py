@@ -4,87 +4,6 @@ from kubernetes import client, config, watch
 import json
 import time
 
-# Utils class
-class Utils:
-  def call_api(path):
-    try:
-      configuration = client.Configuration().get_default_copy()
-      configuration.api_key_prefix['authorization'] = 'Bearer'
-      api_client = client.ApiClient(configuration)
-      custom_api = client.CustomObjectsApi(api_client)
-      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
-    except Exception as a:
-      return {}
-
-# Pod class
-class Pod:
-  def __init__(self, name):
-    config.load_kube_config()
-    self.name = name
-
-  def get_metrics(self, name):
-    response = Utils.call_api('namespaces/lab/pods/'+name)
-    if response:
-      return {
-        'name': name,
-        'timestamp': response['timestamp'], # metric timestamp
-        'containers': response['containers']
-      }
-    else:
-      return {}
-
-  def evict(self):
-    body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace='lab'))
-    try:
-      client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace='lab', body=body)
-    except Exception as a:
-      print ("Exception when calling CoreV1Api->create_namespaced_pod_eviction: %s\n" % a)
-    return True
-
-  def schedule(self, node_name):
-    pod_to_schedule = self.name
-    w = watch.Watch()
-    for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'lab'):
-      pod = event['object']
-      if pod.status.phase == "Pending" and pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
-        try:
-          target = client.V1ObjectReference(kind='Node', api_version='v1', name=node_name)
-          meta = client.V1ObjectMeta(name=pod.metadata.name)
-          body = client.V1Binding(target=target, metadata=meta)
-          try:
-            client.CoreV1Api().create_namespaced_binding(namespace='lab', body=body, _preload_content=False)
-            w.stop()
-          except Exception as a:
-            print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
-        except client.rest.ApiException as e:
-          print(json.loads(e.body)['message'])
-
-# Node class
-class Node:
-  def __init__(self):
-    print('')
-
-  def get_pods(self, name):
-    pods = []
-    field_selector = 'spec.nodeName='+name+','+'metadata.namespace=lab'
-    pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
-    for item in pods_list.items:
-      if item.metadata.deletion_timestamp is None:
-        response = Utils.call_api('namespaces/lab/pods/'+item.metadata.name)
-        pod_memory = 0
-        pod_cpu = 0
-        if response and response['containers']:
-          pod_memory = int(response['containers'][0]['usage']['memory'][:-2])
-          pod_cpu = int(response['containers'][0]['usage']['cpu'][:-1])
-        pods.append({
-          'name': item.metadata.name,
-          'usage': {
-            'memory': pod_memory, # memory in KB
-            'cpu': pod_cpu # cpu in nanocores
-          }
-        })
-    return pods
- 
 # Cluster class 
 class Cluster:
   def __init__(self):
@@ -150,6 +69,93 @@ class Cluster:
           pod = Pod(pod_name[:-5])
         pod.schedule(target_node)
     return True
+
+  def get_node_from_pod(self, pod_name):
+    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
+      if pod.metadata.name == pod_name or pod.metadata.generate_name == pod_name:
+        return pod.spec.node_name
+    return ''
+
+# Node class
+class Node:
+  def __init__(self):
+    print('')
+
+  def get_pods(self, name):
+    pods = []
+    field_selector = 'spec.nodeName='+name+','+'metadata.namespace=lab'
+    pods_list = client.CoreV1Api().list_pod_for_all_namespaces(watch=False, field_selector=field_selector)
+    for item in pods_list.items:
+      if item.metadata.deletion_timestamp is None:
+        response = Utils.call_api('namespaces/lab/pods/'+item.metadata.name)
+        pod_memory = 0
+        pod_cpu = 0
+        if response and response['containers']:
+          pod_memory = int(response['containers'][0]['usage']['memory'][:-2])
+          pod_cpu = int(response['containers'][0]['usage']['cpu'][:-1])
+        pods.append({
+          'name': item.metadata.name,
+          'usage': {
+            'memory': pod_memory, # memory in KB
+            'cpu': pod_cpu # cpu in nanocores
+          }
+        })
+    return pods
+
+# Pod class
+class Pod:
+  def __init__(self, name):
+    config.load_kube_config()
+    self.name = name
+
+  def get_metrics(self, name):
+    response = Utils.call_api('namespaces/lab/pods/'+name)
+    if response:
+      return {
+        'name': name,
+        'timestamp': response['timestamp'], # metric timestamp
+        'containers': response['containers']
+      }
+    else:
+      return {}
+
+  def evict(self):
+    body = client.V1Eviction(metadata=client.V1ObjectMeta(name=self.name, namespace='lab'))
+    try:
+      client.CoreV1Api().create_namespaced_pod_eviction(name=self.name, namespace='lab', body=body)
+    except Exception as a:
+      print ("Exception when calling CoreV1Api->create_namespaced_pod_eviction: %s\n" % a)
+    return True
+
+  def schedule(self, node_name):
+    pod_to_schedule = self.name
+    w = watch.Watch()
+    for event in w.stream(client.CoreV1Api().list_namespaced_pod, 'lab'):
+      pod = event['object']
+      if pod.status.phase == "Pending" and pod.spec.node_name == None and pod.metadata.generate_name == pod_to_schedule:
+        try:
+          target = client.V1ObjectReference(kind='Node', api_version='v1', name=node_name)
+          meta = client.V1ObjectMeta(name=pod.metadata.name)
+          body = client.V1Binding(target=target, metadata=meta)
+          try:
+            client.CoreV1Api().create_namespaced_binding(namespace='lab', body=body, _preload_content=False)
+            w.stop()
+          except Exception as a:
+            print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
+        except client.rest.ApiException as e:
+          print(json.loads(e.body)['message'])
+ 
+# Utils class
+class Utils:
+  def call_api(path):
+    try:
+      configuration = client.Configuration().get_default_copy()
+      configuration.api_key_prefix['authorization'] = 'Bearer'
+      api_client = client.ApiClient(configuration)
+      custom_api = client.CustomObjectsApi(api_client)
+      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+    except Exception as a:
+      return {}
 
 # Testing classes
 

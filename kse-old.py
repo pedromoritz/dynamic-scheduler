@@ -81,23 +81,23 @@ class Cluster:
   #       })
   #   return not_ready_pods
 
-  def get_node_from_pod(self, pod_name):
-    for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
-      if pod.metadata.name == pod_name or pod.metadata.generate_name == pod_name:
-        return pod.spec.node_name
-    return ''
+  # def get_node_from_pod(self, pod_name):
+  #   for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
+  #     if pod.metadata.name == pod_name or pod.metadata.generate_name == pod_name:
+  #       return pod.spec.node_name
+  #   return ''
 
-  def set_allocation_plan(self, allocation_plan):
-    for pod_name in allocation_plan:
-      target_node = allocation_plan[pod_name]      
-      host_node = self.get_node_from_pod(pod_name)
-      if (target_node != host_node):
-        pod = Pod(pod_name)
-        if host_node != None:
-          pod.evict()
-          pod = Pod(pod_name[:-5])
-        pod.schedule(target_node)
-    return True
+  # def set_allocation_plan(self, allocation_plan):
+  #   for pod_name in allocation_plan:
+  #     target_node = allocation_plan[pod_name]      
+  #     host_node = self.get_node_from_pod(pod_name)
+  #     if (target_node != host_node):
+  #       pod = Pod(pod_name)
+  #       if host_node != None:
+  #         pod.evict()
+  #         pod = Pod(pod_name[:-5])
+  #       pod.schedule(target_node)
+  #   return True
 
   @property
   def info(self):
