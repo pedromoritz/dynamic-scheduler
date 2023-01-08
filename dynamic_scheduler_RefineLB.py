@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-import k8s_scheduling_extension as kse
+import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 from functools import reduce

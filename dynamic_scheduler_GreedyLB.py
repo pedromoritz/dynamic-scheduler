@@ -5,9 +5,9 @@ import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 
+CSV_FILENAME = 'metrics_dynamic_scheduler_GreedyLB_memory.csv'
+
 def get_greedylb_plan(chare_objects, processors, background_load):
-  print(chare_objects)
-  print(processors)
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
   heapq._heapify_max(objHeap)
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
@@ -29,21 +29,25 @@ def scheduling_workflow():
   cluster = kse.Cluster()
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
-    print('haviam pods...')
-    print(len(cluster.get_unready_pods()))
     return 
-#  print(cluster.info)
+  print(cluster.get_info())
+  kse.Utils.write_file(
+    CSV_FILENAME,
+    ','.join(map(str, cluster.get_info()))
+  )
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
-
     pods = pods + this_node_pods
   allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
   cluster.set_allocation_plan(allocation_plan)
 
-#metrics_file = open('metrics_dynamic_scheduler_memory.csv', mode='w')
-#metrics_file.write('timestamp,node1,node2,node3,pod1,pod2,pod3,pod4,pod5,pod6' + '\n')
-#metrics_file.close()
+cluster = kse.Cluster()
+kse.Utils.write_file(
+  CSV_FILENAME,
+  ','.join(map(str, cluster.get_info_header())),
+  'w'
+)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
