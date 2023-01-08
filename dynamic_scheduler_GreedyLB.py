@@ -30,11 +30,8 @@ def scheduling_workflow():
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
-  print(cluster.get_info())
-  kse.Utils.write_file(
-    CSV_FILENAME,
-    ','.join(map(str, cluster.get_info()))
-  )
+  info = cluster.get_info() 
+  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['data'])))
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
@@ -43,16 +40,13 @@ def scheduling_workflow():
   cluster.set_allocation_plan(allocation_plan)
 
 cluster = kse.Cluster()
-kse.Utils.write_file(
-  CSV_FILENAME,
-  ','.join(map(str, cluster.get_info_header())),
-  'w'
-)
+info = cluster.get_info()
+kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['header'])), 'w')
 
 scheduling_workflow()
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=30)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=10)
 scheduler.start()
 
 # keeping script running

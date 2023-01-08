@@ -76,26 +76,17 @@ class Cluster:
         return pod.spec.node_name
     return ''
 
-  def get_info_header(self):
-    nodes = self.get_nodes()
-    info = []
-    info.append('timestamp')
-    for node in nodes:
-      info.append(node['name'])
-    return info
-
   def get_info(self):
     nodes = self.get_nodes()
-    pods = []
-    info = []
-    info.append(int(time.time()))
+    info = {
+      'header': [],
+      'data': []
+    }
+    info['header'].append('timestamp')
+    info['data'].append(int(time.time()))
     for node in nodes:
-      info.append(node['usage']['memory'])
-      this_node_pods = self.get_pods_from_node(node['name'])
-    #  pods = pods + this_node_pods
-    #for pod in pods:
-    #  info.append(pod['usage']['memory'])
-    #  info.append(self.get_node_from_pod(pod['name']))
+      info['header'].append(node['name'])
+      info['data'].append(node['usage']['memory'])
     return info
 
 # Node class
@@ -175,7 +166,7 @@ class Utils:
       configuration.api_key_prefix['authorization'] = 'Bearer'
       api_client = client.ApiClient(configuration)
       custom_api = client.CustomObjectsApi(api_client)
-      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', self.path)
+      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
     except Exception as a:
       return {}
 
