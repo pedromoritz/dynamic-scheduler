@@ -52,7 +52,7 @@ class Cluster:
     unready_pods = []
     for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
       if pod.status.phase != 'Running':
-        not_ready_pods.append({
+        unready_pods.append({
           'name': pod.metadata.generate_name,
           'status': pod.status.phase
         })
@@ -159,18 +159,18 @@ class Utils:
 
 # Testing classes
 
-cluster = Cluster()
-nodes = cluster.get_nodes()
-print(nodes)
+#cluster = Cluster()
+#nodes = cluster.get_nodes()
+#print(nodes)
 
-pending_pods = cluster.get_pending_pods()
-print(pending_pods)
+#pending_pods = cluster.get_pending_pods()
+#print(pending_pods)
 
-unready_pods = cluster.get_unready_pods()
-print(unready_pods)
+#unready_pods = cluster.get_unready_pods()
+#print(unready_pods)
 
-pods = cluster.get_pods_from_node(nodes[0]['name'])
-print(pods)
+#pods = cluster.get_pods_from_node(nodes[0]['name'])
+#print(pods)
 
 
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import k8s_scheduling_extension as kse
+import kse as kse
 
 def scheduling_workflow():
   cluster = kse.Cluster()
-  nodes = cluster.nodes
-  pending_pods = cluster.pending_pods
+  nodes = cluster.get_nodes()
+  pending_pods = cluster.get_pending_pods()
   allocation_plan = {}
   rr_counter = 0
   for pod in pending_pods:
