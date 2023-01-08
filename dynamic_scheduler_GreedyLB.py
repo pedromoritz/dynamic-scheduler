@@ -26,12 +26,12 @@ def get_greedylb_plan(chare_objects, processors, background_load):
 # workflow definitions
 def scheduling_workflow():
   print('scheduling_workflow...')
+  info = cluster.get_info()
+  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['data'])))
   cluster = kse.Cluster()
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
-  info = cluster.get_info() 
-  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['data'])))
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
@@ -46,7 +46,7 @@ kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['header'])), 'w')
 scheduling_workflow()
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=10)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=60)
 scheduler.start()
 
 # keeping script running
