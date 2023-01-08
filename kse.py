@@ -76,6 +76,28 @@ class Cluster:
         return pod.spec.node_name
     return ''
 
+  def get_info_header(self):
+    nodes = self.get_nodes()
+    info = []
+    info.append('timestamp')
+    for node in nodes:
+      info.append(node['name'])
+    return info
+
+  def get_info(self):
+    nodes = self.get_nodes()
+    pods = []
+    info = []
+    info.append(int(time.time()))
+    for node in nodes:
+      info.append(node['usage']['memory'])
+      this_node_pods = self.get_pods_from_node(node['name'])
+    #  pods = pods + this_node_pods
+    #for pod in pods:
+    #  info.append(pod['usage']['memory'])
+    #  info.append(self.get_node_from_pod(pod['name']))
+    return info
+
 # Node class
 class Node:
   def __init__(self):
@@ -153,24 +175,11 @@ class Utils:
       configuration.api_key_prefix['authorization'] = 'Bearer'
       api_client = client.ApiClient(configuration)
       custom_api = client.CustomObjectsApi(api_client)
-      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', self.path)
     except Exception as a:
       return {}
 
-# Testing classes
-
-#cluster = Cluster()
-#nodes = cluster.get_nodes()
-#print(nodes)
-
-#pending_pods = cluster.get_pending_pods()
-#print(pending_pods)
-
-#unready_pods = cluster.get_unready_pods()
-#print(unready_pods)
-
-#pods = cluster.get_pods_from_node(nodes[0]['name'])
-#print(pods)
-
-
-
+  def write_file(filename, record, type = 'a'):
+    output_file = open(filename, mode=type)
+    output_file.write(record + '\n')
+    output_file.close()
