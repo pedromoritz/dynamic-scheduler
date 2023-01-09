@@ -43,7 +43,7 @@ test()
   esac
 }
 
-test default_scheduler 3
+test default_scheduler 6
 sleep 600
 test dynamic_scheduler_GreedyLB 6
 sleep 600

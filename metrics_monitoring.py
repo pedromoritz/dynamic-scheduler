@@ -1,42 +1,34 @@
 #!/usr/bin/env python3
 
 import time
-import k8s_scheduling_extension as kse
+import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
+import heapq
+import sys
 
-def save_log_record(nodes, pods):
-  csv_record = str(int(time.time())) + ',' \
-    + str(nodes[0]['usage']['memory']) + ',' \
-    + str(nodes[1]['usage']['memory']) + ',' \
-    + str(nodes[2]['usage']['memory']) + ',' \
-    + str(pods[0]['usage']['memory']) + ',' \
-    + str(pods[1]['usage']['memory']) + ',' \
-    + str(pods[2]['usage']['memory']) + ',' \
-    + str(pods[3]['usage']['memory']) + ',' \
-    + str(pods[4]['usage']['memory']) + ',' \
-    + str(pods[5]['usage']['memory'])
-  metrics_file = open('metrics_default_scheduler_memory.csv', mode='a')
-  metrics_file.write(csv_record + '\n')
-  metrics_file.close()
+CSV_FILENAME = 'metrics_default_scheduler_'+sys.argv[1]+'_pods.csv'
+INTERVAL = 10
+COUNTER = 0
 
 # workflow definitions
 def scheduling_workflow():
+  global COUNTER
+  global INTERVAL
+  global CSV_FILENAME 
+  print('scheduling_workflow...')
+  COUNTER += INTERVAL
   cluster = kse.Cluster()
-  nodes = cluster.nodes
-  pods = []
-  for node_item in nodes:
-    node = kse.Node(node_item['name'])
-    pods = pods + node.pods
-  save_log_record(nodes, pods)
+  kse.Utils.write_file(CSV_FILENAME, str(COUNTER)+','+','.join(map(str, cluster.get_info()['data'])))
 
-metrics_file = open('metrics_default_scheduler_memory.csv', mode='w')
-metrics_file.write('timestamp,node1,node2,node3,pod1,pod2,pod3,pod4,pod5,pod6' + '\n')
-metrics_file.close()
+cluster = kse.Cluster()
+kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, cluster.get_info()['header'])), 'w')
+kse.Utils.write_file(CSV_FILENAME, str(COUNTER)+','+','.join(map(str, cluster.get_info()['data'])))
 
 scheduling_workflow()
+
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=60)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
 scheduler.start()
 
 # keeping script running
