@@ -86,10 +86,9 @@ class Cluster:
     info['header'].append('timestamp')
     for node in nodes:
       info['header'].append(node['name'])
-      info['header'].append(node['name']+'_pods') 
+      info['header'].append(node['name']+' pod amount') 
       info['data'].append(node['usage']['memory']) 
-      pods_on_node = ';'.join(map(lambda x: x['name'], self.get_pods_from_node(node['name'])))
-      info['data'].append(pods_on_node)
+      info['data'].append(len(self.get_pods_from_node(node['name'])))
     return info
 
 # Node class
