@@ -37,9 +37,9 @@ test()
 
   # scheduling workloads for initial state (round robin)
   case $1 in
-    dynamic_scheduler_GreedyLB) ./dynamic_scheduler_GreedyLB.py ;;
-    dynamic_scheduler_RefineLB) ./dynamic_scheduler_RefineLB.py ;;
-    *) ./metrics_monitoring.py ;;
+    dynamic_scheduler_GreedyLB) ./dynamic_scheduler_GreedyLB.py $2;;
+    dynamic_scheduler_RefineLB) ./dynamic_scheduler_RefineLB.py $2;;
+    *) ./metrics_monitoring.py $2;;
   esac
 }
 
