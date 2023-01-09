@@ -6,6 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 
 CSV_FILENAME = 'metrics_dynamic_scheduler_GreedyLB_memory.csv'
+INTERVAL = 10
 
 def get_greedylb_plan(chare_objects, processors, background_load):
   objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
@@ -26,9 +27,8 @@ def get_greedylb_plan(chare_objects, processors, background_load):
 # workflow definitions
 def scheduling_workflow():
   print('scheduling_workflow...')
-  info = cluster.get_info()
-  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['data'])))
   cluster = kse.Cluster()
+  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, cluster.get_info()['data'])))
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
@@ -40,13 +40,13 @@ def scheduling_workflow():
   cluster.set_allocation_plan(allocation_plan)
 
 cluster = kse.Cluster()
-info = cluster.get_info()
-kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['header'])), 'w')
+#info = cluster.get_info()
+kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, cluster.get_info()['header'])), 'w')
 
 scheduling_workflow()
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=60)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
 scheduler.start()
 
 # keeping script running
