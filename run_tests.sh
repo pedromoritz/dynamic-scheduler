@@ -30,7 +30,7 @@ test()
   fi
 
   # waiting for ready containers
-  sleep 30
+  sleep 60
 
   # starting testset
   k6 run -q --out csv=results_$1_$2.csv -e SCHEDULER_TYPE=$1 -e POD_AMOUNT=$2 k6_script.js >/dev/null 2>&1 &
@@ -44,7 +44,7 @@ test()
 }
 
 test default_scheduler 6
-sleep 600
-test dynamic_scheduler_GreedyLB 6
-sleep 600
-./graphics_generator.py
+#sleep 600
+#test dynamic_scheduler_GreedyLB 6
+#sleep 600
+#./graphics_generator.py

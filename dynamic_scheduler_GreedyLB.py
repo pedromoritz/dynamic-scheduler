@@ -32,9 +32,9 @@ def scheduling_workflow():
   global INTERVAL
   global CSV_FILENAME 
   print('scheduling_workflow...')
-  COUNTER += INTERVAL
   cluster = kse.Cluster()
-  kse.Utils.write_file(CSV_FILENAME, str(COUNTER)+','+','.join(map(str, cluster.get_info()['data'])))
+  cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
+  COUNTER += INTERVAL
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
@@ -45,12 +45,7 @@ def scheduling_workflow():
   allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
   cluster.set_allocation_plan(allocation_plan)
 
-cluster = kse.Cluster()
-kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, cluster.get_info()['header'])), 'w')
-kse.Utils.write_file(CSV_FILENAME, str(COUNTER)+','+','.join(map(str, cluster.get_info()['data'])))
-
 scheduling_workflow()
-
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
 scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
