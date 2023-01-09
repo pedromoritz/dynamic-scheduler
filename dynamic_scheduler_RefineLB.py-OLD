@@ -4,11 +4,8 @@ import time
 import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
-import sys
 
-CSV_FILENAME = 'metrics_dynamic_scheduler_RefineLB_'+sys.argv[1]+'_pods.csv'
-INTERVAL = 10
-COUNTER = 0
+CSV_FILENAME = 'metrics_dynamic_scheduler_RefineLB_memory.csv'
 
 def get_refinelb_plan(chare_objects, processors):
   allocation_plan = {}
@@ -41,27 +38,28 @@ def get_refinelb_plan(chare_objects, processors):
 
 # workflow definitions
 def scheduling_workflow():
-  global COUNTER
-  global INTERVAL
-  global CSV_FILENAME 
   print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
-  COUNTER += INTERVAL
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
+  info = cluster.get_info() 
+  kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['data'])))
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
     pods = pods + this_node_pods
-  allocation_plan = get_refinelb_plan(pods, nodes, 1000000)
+  allocation_plan = get_refinelb_plan(pods, nodes)
   cluster.set_allocation_plan(allocation_plan)
+
+cluster = kse.Cluster()
+info = cluster.get_info()
+kse.Utils.write_file(CSV_FILENAME, ','.join(map(str, info['header'])), 'w')
 
 scheduling_workflow()
 # creating a timer for workflow trigger
 scheduler = BackgroundScheduler()
-scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
+scheduler.add_job(scheduling_workflow, 'interval', seconds=10)
 scheduler.start()
 
 # keeping script running

@@ -76,7 +76,7 @@ class Cluster:
         return pod.spec.node_name
     return ''
 
-  def get_info(self):
+  def do_info_snapshot(self, csv_filename, timestamp):
     nodes = self.get_nodes()
     pods = []
     info = {
@@ -89,7 +89,10 @@ class Cluster:
       info['header'].append(node['name']+' pod amount') 
       info['data'].append(node['usage']['memory']) 
       info['data'].append(len(self.get_pods_from_node(node['name'])))
-    return info
+    if timestamp == 0:
+      Utils.write_file(csv_filename, ','.join(map(str, info['header'])), 'w')
+    Utils.write_file(csv_filename, str(timestamp)+','+','.join(map(str, info['data'])))
+    return True
 
 # Node class
 class Node:
