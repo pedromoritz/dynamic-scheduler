@@ -7,7 +7,7 @@ import heapq
 import sys
 
 CSV_FILENAME = 'metrics_default_scheduler_'+sys.argv[1]+'_pods.csv'
-INTERVAL = 10
+INTERVAL = 60
 COUNTER = 0
 
 # workflow definitions

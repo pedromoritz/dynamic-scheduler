@@ -4,13 +4,11 @@ import { reportHTML } from "https://raw.githubusercontent.com/fziviello/k6-repor
 
 export const options = {
   stages: [
-    { duration: '30s', target: 10 },
-    { duration: '5m', target: 1000 },
-    { duration: '30s', target: 10 },
+    { duration: '10m', target: 1000 },
   ],
 };
 
-const API_BASE_URL = 'http://192.168.59.100';
+const API_BASE_URL = 'http://192.168.59.104';
 
 export function handleSummary(data) {
   return {
