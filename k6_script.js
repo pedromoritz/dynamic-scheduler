@@ -12,7 +12,7 @@ const API_BASE_URL = 'http://192.168.59.104';
 
 export function handleSummary(data) {
   return {
-    [`summary_${__ENV.SCHEDULER_TYPE}_${__ENV.POD_AMOUNT}.html`]: reportHTML(data, {title:`${__ENV.SCHEDULER_TYPE} - ${__ENV.POD_AMOUNT} pods`})
+    [`summary_${__ENV.SCHEDULER_TYPE}_${__ENV.POD_AMOUNT}_pods.html`]: reportHTML(data, {title:`${__ENV.SCHEDULER_TYPE} - ${__ENV.POD_AMOUNT} pods`})
   };
 }
 
