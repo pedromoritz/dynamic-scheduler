@@ -3,11 +3,10 @@
 import time
 import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
-import heapq
 import sys
 
-CSV_FILENAME = 'metrics_default_scheduler_'+sys.argv[1]+'_pods.csv'
-INTERVAL = 60
+CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_pods.csv'
+INTERVAL = 10
 COUNTER = 0
 
 # workflow definitions

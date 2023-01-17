@@ -2,6 +2,9 @@
 
 test()
 {
+  ST=$1 # scheduler type
+  PA=$2 # pod amount
+
   # defining scheduler
   SCHEDULER=""
 
@@ -10,7 +13,7 @@ test()
   kubectl create namespace lab
 
   # creating workloads
-  for i in $(seq $1); do	
+  for i in $(seq $PA); do	
     POD_NAME=pod-$i
     NODE_PORT=31$(printf %03d $i)
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
@@ -23,10 +26,10 @@ test()
   sleep 30
 
   # starting testset
-  k6 run -q --out csv=results_kube-scheduler_$1_pods.csv -e SCHEDULER_TYPE=kube-scheduler -e POD_AMOUNT=$1 k6_script.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results_${ST}_${PA}_pods.csv" -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA k6_script.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./metrics_monitoring.py $1
+  ./metrics_monitoring.py $ST $PA >/dev/null 2>&1 &
 }
 
-test $1
+test kube-scheduler $1

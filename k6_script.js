@@ -4,7 +4,7 @@ import { reportHTML } from "https://raw.githubusercontent.com/fziviello/k6-repor
 
 export const options = {
   stages: [
-    { duration: '60m', target: 1000 },
+    { duration: '60s', target: 1000 },
   ],
 };
 
