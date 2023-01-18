@@ -4,6 +4,7 @@ test()
 {
   ST=$1 # scheduler type
   PA=$2 # pod amount
+  VU=$3 # virtual users
 
   # defining scheduler
   SCHEDULER=""
@@ -23,13 +24,13 @@ test()
   done
 
   # waiting for ready containers
-  sleep 30
+  sleep 60
 
   # starting testset
-  k6 run -q --out csv="results_${ST}_${PA}_pods.csv" -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA k6_script.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results_${ST}_${PA}_${VU}.csv" -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./metrics_monitoring.py $ST $PA >/dev/null 2>&1 &
+  ./metrics_monitoring.py $ST $PA $VU
 }
 
-test kube-scheduler $1
+test kube-scheduler $1 $2

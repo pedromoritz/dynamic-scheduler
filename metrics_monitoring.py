@@ -5,8 +5,8 @@ import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import sys
 
-CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_pods.csv'
-INTERVAL = 10
+CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
+INTERVAL = 60
 COUNTER = 0
 
 # workflow definitions
