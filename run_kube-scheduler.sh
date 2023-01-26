@@ -31,6 +31,8 @@ test()
 
   # metrics monitoring
   ./metrics_monitoring.py $ST $PA $VU
+
+  kubectl delete namespace lab
 }
 
 test kube-scheduler $1 $2

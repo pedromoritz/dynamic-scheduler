@@ -34,6 +34,8 @@ test()
 
   # metrics monitoring
   ./kse-GreedyLB.py $ST $PA $VU
+
+  kubectl delete namespace lab
 }
 
 test kse-GreedyLB $1 $2
