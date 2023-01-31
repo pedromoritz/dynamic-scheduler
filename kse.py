@@ -23,6 +23,7 @@ class Cluster:
           node_memory = 0
           node_cpu = 0
           if response and response['usage']:
+            print(response)
             node_memory = int(response['usage']['memory'][:-2]) 
             node_cpu = int(response['usage']['cpu'][:-1])
           ready_nodes.append({
