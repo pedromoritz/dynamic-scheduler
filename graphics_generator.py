@@ -12,7 +12,6 @@ for path in Path("./").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
   print("Reading " + str(path))
   timestamp, m_node1, pa_node1, m_node2, pa_node2, m_node3, pa_node3 = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)
-
   m_node1_mb = list(map(lambda n: n/1024, m_node1))
   m_node2_mb = list(map(lambda n: n/1024, m_node2))
   m_node3_mb = list(map(lambda n: n/1024, m_node3))
@@ -26,3 +25,6 @@ for path in Path("./").glob("metrics_*.csv"):
   plt.legend(loc="upper left")
   print("Generating " + FILE_NAME + ".png")
   plt.savefig(FILE_NAME + '.png', dpi=300, transparent=False, bbox_inches='tight')
+  plt.close()
+  plt.cla()
+  plt.clf()
