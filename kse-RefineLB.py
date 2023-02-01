@@ -6,8 +6,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 import sys
 
-CSV_FILENAME = 'metrics_kse-RefineLB_'+sys.argv[1]+'_pods.csv'
-INTERVAL = 10
+CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
+INTERVAL = 60
 COUNTER = 0
 
 def get_refinelb_plan(chare_objects, processors):
@@ -55,7 +55,7 @@ def scheduling_workflow():
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
     pods = pods + this_node_pods
-  allocation_plan = get_refinelb_plan(pods, nodes, 1000000)
+  allocation_plan = get_refinelb_plan(pods, nodes)
   cluster.set_allocation_plan(allocation_plan)
 
 scheduling_workflow()
