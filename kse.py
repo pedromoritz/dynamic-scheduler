@@ -23,14 +23,13 @@ class Cluster:
           node_memory = 0
           node_cpu = 0
           if response and response['usage']:
-            print(response)
-            node_memory = int(response['usage']['memory'][:-2]) 
+            node_memory = Utils.get_memory_integer(response['usage']['memory'])
             node_cpu = int(response['usage']['cpu'][:-1])
           ready_nodes.append({
             'name': node.metadata.name,
             'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
             'capacity': {
-              'memory': int(node.status.capacity['memory'][:-2]), # memory in KB
+              'memory': Utils.get_memory_integer(node.status.capacity['memory']), # memory in KB
               'cpu': int(node.status.capacity['cpu']) * 1000000000 # cpu in nanocores
             },
             'usage': {
@@ -110,7 +109,7 @@ class Node:
         pod_memory = 0
         pod_cpu = 0
         if response and response['containers']:
-          pod_memory = int(response['containers'][0]['usage']['memory'][:-2])
+          pod_memory = Utils.get_memory_integer(response['containers'][0]['usage']['memory'])
           pod_cpu = int(response['containers'][0]['usage']['cpu'][:-1])
         pods.append({
           'name': item.metadata.name,
@@ -181,3 +180,13 @@ class Utils:
     output_file = open(filename, mode=type)
     output_file.write(record + '\n')
     output_file.close()
+
+  def get_memory_integer(memory_string):
+    memory_integer = 0
+    unit = memory_string[-2:]
+    if unit == 'Ki':
+      memory_integer = int(memory_string[:-2])
+    if unit == 'Mi':
+      memory_integer = int(memory_string[:-2]) * 1024
+    return memory_integer
+
