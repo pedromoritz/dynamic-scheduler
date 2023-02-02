@@ -5,6 +5,7 @@ import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 import sys
+from functools import reduce
 
 CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
 INTERVAL = 60
@@ -17,7 +18,7 @@ def get_refinelb_plan(chare_objects, processors):
   # calculating threshold
   procs_memory_values = list(map(lambda n: n['usage']['memory'], processors))
   procs_memory_average = round(reduce(lambda x, y: x + y, procs_memory_values) / len(procs_memory_values), 0) 
-  margin = 1.0 # >= 1.0
+  margin = 1.05 # >= 1.05
   threshold = procs_memory_average * margin
   print(threshold)
   # defining heavyProcs and lightProcs based on threshold
@@ -56,6 +57,7 @@ def scheduling_workflow():
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
     pods = pods + this_node_pods
   allocation_plan = get_refinelb_plan(pods, nodes)
+  print(allocation_plan)
   cluster.set_allocation_plan(allocation_plan)
 
 scheduling_workflow()
