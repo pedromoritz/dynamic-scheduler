@@ -27,6 +27,7 @@ class Cluster:
             node_cpu = int(response['usage']['cpu'][:-1])
           ready_nodes.append({
             'name': node.metadata.name,
+            'pods': self.get_pods_from_node(node.metadata.name),
             'type': 'master' if 'node-role.kubernetes.io/master' in node.metadata.labels else 'worker',
             'capacity': {
               'memory': Utils.get_memory_integer(node.status.capacity['memory']), # memory in KB
