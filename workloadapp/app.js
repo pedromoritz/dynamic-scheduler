@@ -29,21 +29,19 @@ app.get('/memory/increase', (req, res) => {
   memoryLeakAllocations.push(allocation);
   const memoryUsage = process.memoryUsage();
   const gbNow = memoryUsage['heapUsed'] / 1024 / 1024 / 1024;
-  const gbRounded = Math.round(gbNow * 100) / 100;
- 
-  console.log(`1 -> Heap allocated ${gbRounded} GB\n`);
-  setTimeout(function() {
-    memoryLeakAllocations.length = 0;
-    global.gc();
-    console.log(`Deallocating memory...`);
-    res.send(`Heap allocated ${gbRounded} GB\n`);
-  }, 10000);
-  // console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+  const gbRounded = Math.round(gbNow * 1000) / 100;
+  res.send(`Heap allocated ${gbRounded} GB\n`);
+});
+
+app.get('/memory/current', (req, res) => {
+  const memoryUsage = process.memoryUsage();
+  const gbNow = memoryUsage['heapUsed'] / 1024 / 1024 / 1024;
+  const gbRounded = Math.round(gbNow * 1000) / 100;
+  res.send(`Heap allocated ${gbRounded} GB\n`);
 });
 
 app.get('/memory/purge', (req, res) => {
   memoryPurge();
-  console.log('purge');
   res.send('purge\n');
 });
 
