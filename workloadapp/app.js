@@ -6,7 +6,7 @@ const HOST = '0.0.0.0';
 const app = express();
 
 const memoryLeakAllocations = [];
-const allocationStep = 10000 * 1024;
+const allocationStep = 100000 * 1024;
 
 function allocateMemory(size) {
   const numbers = size / 8;
