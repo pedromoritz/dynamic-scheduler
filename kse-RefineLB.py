@@ -31,17 +31,21 @@ def get_refinelb_plan(chare_objects, processors):
   heapq._heapify_max(heavyProcs)
   print('heavyProcs')
   print(heavyProcs)
+  print('')
   print('lightProcs')
   print(lightProcs)
+  print('')
   while len(heavyProcs) > 0:
     donor = heapq._heappop_max(heavyProcs)
     print('donor')
     print(donor) 
+    print('')
     counterSec = 0
     while len(lightProcs) > counterSec:
       lightProc = lightProcs[counterSec]
       print('ligthProc')
       print(lightProc)
+      print('')
       counterSec += 1
       pods_from_donor = cluster.get_pods_from_node(donor['name'])
       print(pods_from_donor)
@@ -62,11 +66,11 @@ def scheduling_workflow():
   global CSV_FILENAME 
   print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
-  COUNTER += INTERVAL
+  #cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
+  #COUNTER += INTERVAL
   nodes = cluster.get_nodes()
-  if len(cluster.get_unready_pods()) > 0:
-    return 
+  #if len(cluster.get_unready_pods()) > 0:
+  #  return 
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
