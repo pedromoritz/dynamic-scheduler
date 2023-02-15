@@ -12,6 +12,12 @@ INTERVAL = 60
 COUNTER = 0
 
 def get_refinelb_plan(chare_objects, processors):
+  print('chare_objects')
+  print(chare_objects)
+  print('')
+  print('processors')
+  print(processors)
+  print('')
   cluster = kse.Cluster()
   allocation_plan = {}
   heavyProcs = []
@@ -25,38 +31,49 @@ def get_refinelb_plan(chare_objects, processors):
   # defining heavyProcs and lightProcs based on threshold
   for processor in processors:
     if int(processor['usage']['memory']) > threshold:
+      print('heavy')
+      print(processor)
       heavyProcs.append(processor)
     else:
+      print('light')
+      print(processor)
       lightProcs.append(processor)
-  heapq._heapify_max(heavyProcs)
-  print('heavyProcs')
+  print('heavyProcs before heapify')
   print(heavyProcs)
+  heavyProcsMapped = list(map(lambda n: (n['usage']['memory'], n['name']), heavyProcs))
+  heapq._heapify_max(heavyProcsMapped)
+  print('heavyProcsMapped')
+  print(heavyProcsMapped)
   print('')
   print('lightProcs')
   print(lightProcs)
   print('')
+  finalProcs = []
   while len(heavyProcs) > 0:
+    print('starting 1st while')
     donor = heapq._heappop_max(heavyProcs)
     print('donor')
     print(donor) 
     print('')
-    counterSec = 0
-    while len(lightProcs) > counterSec:
-      lightProc = lightProcs[counterSec]
-      print('ligthProc')
+    while len(lightProcs) > 0:
+      print('starting 2nd while')
+      lightProc = lightProcs.pop()
+      print('ligthProc choosen')
       print(lightProc)
       print('')
-      counterSec += 1
       pods_from_donor = cluster.get_pods_from_node(donor['name'])
+      print('pods from donor')
       print(pods_from_donor)
       pods_from_donor_sorted = list(map(lambda n: (n['usage']['memory'], n['name']), pods_from_donor))
       donor_best_pod = pods_from_donor_sorted[-1]
+      print('donor_best_pod')
       print(donor_best_pod)
       if donor_best_pod[0] + lightProc['usage']['memory'] < procs_memory_average:
+        print('break')
         break
-    allocation_plan[lightProc['name']] = donor_best_pod[1]
     #deAssign(obj, donor)
     #assign(obj, lightProc)
+    allocation_plan[donor_best_pod[1]] = donor['name']
   return dict(sorted(allocation_plan.items()))
 
 # workflow definitions
@@ -77,7 +94,7 @@ def scheduling_workflow():
     pods = pods + this_node_pods
   allocation_plan = get_refinelb_plan(pods, nodes)
   print(allocation_plan)
-  #cluster.set_allocation_plan(allocation_plan)
+  cluster.set_allocation_plan(allocation_plan)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
