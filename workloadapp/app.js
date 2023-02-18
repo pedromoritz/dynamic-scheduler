@@ -17,7 +17,7 @@ app.get('/do', (req, res) => {
   showHeapUsage('initial');
   let array = [];
 
-  for (let i = 0; i < 100000; i++) {
+  for (let i = 0; i < 50000; i++) {
     array.push(
       sha512(
         (Date.now() + Math.random()).toString()
