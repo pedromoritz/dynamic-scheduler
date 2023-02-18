@@ -25,13 +25,13 @@ app.get('/do', (req, res) => {
     );
   }
 
-  showHeapUsage('filled memory');
+  //showHeapUsage('filled memory');
 
-  while(array.length > 0) {
-    array.pop();
-  }
+  //while(array.length > 0) {
+  //  array.pop();
+  //}
 
-  showHeapUsage('after purge');
+  //showHeapUsage('after purge');
   res.send('done');
 });
 
