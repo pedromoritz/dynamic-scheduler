@@ -2,12 +2,11 @@
 
 const express = require('express');
 const sha512 = require('crypto-js/sha512');
-const Base64 = require('crypto-js/enc-base64');
 const PORT = 3000;
 const HOST = '0.0.0.0';
 const app = express();
 
-function getHeapUsage(step) {
+function showHeapUsage(step) {
   global.gc();
   let memoryUsage = process.memoryUsage();
   let headUsed = `${Math.round(memoryUsage['heapUsed'] / 1024 / 1024 * 100) / 100}`;
@@ -15,7 +14,7 @@ function getHeapUsage(step) {
 }
 
 app.get('/do', (req, res) => {  
-  getHeapUsage('initial');
+  showHeapUsage('initial');
   let array = [];
 
   for (let i = 0; i < 100000; i++) {
@@ -25,13 +24,14 @@ app.get('/do', (req, res) => {
       ).toString()
     );
   }
-  getHeapUsage('filled memory');
+
+  showHeapUsage('filled memory');
 
   while(array.length > 0) {
     array.pop();
   }
-  getHeapUsage('after purge');
 
+  showHeapUsage('after purge');
   res.send('done');
 });
 
