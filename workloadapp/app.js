@@ -1,47 +1,38 @@
 'use strict';
 
 const express = require('express');
+const sha512 = require('crypto-js/sha512');
+const Base64 = require('crypto-js/enc-base64');
 const PORT = 3000;
 const HOST = '0.0.0.0';
 const app = express();
 
-const memoryLeakAllocations = [];
-const allocationStep = 10000 * 1024;
-
-function allocateMemory(size) {
-  const numbers = size / 8;
-  const arr = [];
-  arr.length = numbers;
-  for (let i = 0; i < numbers; i++) {
-    arr[i] = i;
-  }
-  return arr;
-}
-
-function memoryPurge() {
-  memoryLeakAllocations.length = 0;
+function getHeapUsage(step) {
   global.gc();
+  let memoryUsage = process.memoryUsage();
+  let headUsed = `${Math.round(memoryUsage['heapUsed'] / 1024 / 1024 * 100) / 100}`;
+  console.log(`Heap allocated ${step}: ${headUsed} MB\n`);  
 }
 
-app.get('/memory/increase', (req, res) => {
-  const allocation = allocateMemory(allocationStep);
-  const memoryLeakAllocations = [];
-  memoryLeakAllocations.push(allocation);
-  const memoryUsage = process.memoryUsage();
-  const gbNow = memoryUsage['heapUsed'] / 1024 / 1024 / 1024;
-  const gbRounded = Math.round(gbNow * 100) / 100;
- 
-  setTimeout(function() {
-    memoryLeakAllocations.length = 0;
-    global.gc();
-    res.send(`Heap allocated ${gbRounded} GB\n`);
-  }, 5000);
-});
+app.get('/do', (req, res) => {  
+  getHeapUsage('initial');
+  let array = [];
 
-app.get('/memory/purge', (req, res) => {
-  memoryPurge();
-  console.log('purge');
-  res.send('purge\n');
+  for (let i = 0; i < 100000; i++) {
+    array.push(
+      sha512(
+        (Date.now() + Math.random()).toString()
+      ).toString()
+    );
+  }
+  getHeapUsage('filled memory');
+
+  while(array.length > 0) {
+    array.pop();
+  }
+  getHeapUsage('after purge');
+
+  res.send('done');
 });
 
 process.on('SIGINT', function() {
