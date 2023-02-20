@@ -1,2 +1,2 @@
-docker build --no-cache --progress=plain --rm -t pedromoritz/workloadapp:1.0.1 .
-docker push pedromoritz/workloadapp:1.0.1
+docker build --no-cache --progress=plain --rm -t pedromoritz/workloadapp:1.0.2 .
+docker push pedromoritz/workloadapp:1.0.2
