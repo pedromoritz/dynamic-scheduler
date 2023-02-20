@@ -30,9 +30,9 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        image: k8s.gcr.io/hpa-example
+        image: pedromoritz/workloadapp:1.0.0
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
-            containerPort: 80
+            containerPort: 3000
       {{SCHEDULER}}
