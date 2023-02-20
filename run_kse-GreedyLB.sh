@@ -27,7 +27,7 @@ test()
   ./round_robin_scheduler.py
 
   # waiting for ready containers
-  sleep 60
+  sleep 30
 
   # retrieving service IP
   SVCIP=`minikube ip -p ppgcc`
