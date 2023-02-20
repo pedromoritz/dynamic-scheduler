@@ -15,23 +15,20 @@ function showHeapUsage(step) {
 
 app.get('/do', (req, res) => {  
   showHeapUsage('initial');
+
   let array = [];
 
-  for (let i = 0; i < 50000; i++) {
-    array.push(
-      sha512(
-        (Date.now() + Math.random()).toString()
-      ).toString()
-    );
+  for (let i = 0; i < 200000; i++) {
+    array.push(sha512((Date.now() + Math.random()).toString()).toString());
   }
 
-  //showHeapUsage('filled memory');
+  showHeapUsage('filled memory');
 
-  //while(array.length > 0) {
-  //  array.pop();
-  //}
+  while(array.length > 0) {
+    array.pop();
+  }
 
-  //showHeapUsage('after purge');
+  showHeapUsage('after purge');
   res.send('done');
 });
 
