@@ -8,7 +8,7 @@ import numpy as np
 from pylab import cm
 import sys
 
-for path in Path("./").glob("metrics_*.csv"):
+for path in Path("results/").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
   print("Reading " + str(path))
   timestamp, m_node1, pa_node1, m_node2, pa_node2, m_node3, pa_node3 = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)

@@ -186,7 +186,7 @@ class Utils:
       return {}
 
   def write_file(filename, record, type = 'a'):
-    output_file = open(filename, mode=type)
+    output_file = open('results/'+filename, mode=type)
     output_file.write(record + '\n')
     output_file.close()
 
