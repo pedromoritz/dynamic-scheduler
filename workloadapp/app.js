@@ -12,23 +12,23 @@ function showHeapUsage(step) {
   let headUsed = `${Math.round(memoryUsage['heapUsed'] / 1024 / 1024 * 100) / 100}`;
   console.log(`Heap allocated ${step}: ${headUsed} MB\n`);  
 }
-
+let array = [];
 app.get('/do', (req, res) => {  
-  showHeapUsage('initial');
+//  showHeapUsage('initial');
 
-  let array = [];
+//  let array = [];
 
-  for (let i = 0; i < 500000; i++) {
+  for (let i = 0; i < 200000; i++) {
     array.push(sha512((Date.now() + Math.random()).toString()).toString());
   }
 
-  showHeapUsage('filled memory');
+//  showHeapUsage('filled memory');
 
-  while(array.length > 0) {
-    array.pop();
-  }
+//  while(array.length > 0) {
+//    array.pop();
+//  }
 
-  showHeapUsage('after purge');
+//  showHeapUsage('after purge');
   res.send('done');
 });
 
