@@ -6,7 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 import sys
 
-CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
+CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
 INTERVAL = 60
 COUNTER = 0
 
@@ -30,10 +30,10 @@ def get_greedylb_plan(chare_objects, processors, background_load):
 def scheduling_workflow():
   global COUNTER
   global INTERVAL
-  global CSV_FILENAME 
+  global CSV_FILENAME_BASE 
   print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
+  cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
   COUNTER += INTERVAL
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
@@ -47,7 +47,7 @@ def scheduling_workflow():
   print('')
   print(nodes)
   allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
-  cluster.set_allocation_plan(allocation_plan)
+  cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
 
 scheduling_workflow()
 # creating a timer for workflow trigger

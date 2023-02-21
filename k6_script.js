@@ -5,7 +5,7 @@ import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
   stages: [
-    { duration: '60m', target: parseInt(__ENV.VIRTUAL_USERS)},
+    { duration: '30m', target: parseInt(__ENV.VIRTUAL_USERS)},
   ],
 };
 

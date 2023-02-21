@@ -19,12 +19,19 @@ for path in Path("./").glob("metrics_*.csv"):
   plt.xlabel('time (s)')
   plt.ylim(0, 4096)
   plt.ylabel('memory (MB)')
-  plt.plot(timestamp, m_node1_mb, label='node 1')
-  plt.plot(timestamp, m_node2_mb, label='node 2')
-  plt.plot(timestamp, m_node3_mb, label='node 3')
+  plt.plot(timestamp, m_node1_mb, label='node 1', linewidth='2')
+  plt.plot(timestamp, m_node2_mb, label='node 2', linewidth='2')
+  plt.plot(timestamp, m_node3_mb, label='node 3', linewidth='2')
+  
+  if 'kse' in FILE_NAME:
+    MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
+    timestamps = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)  
+    for ts in timestamps:
+      plt.axvline(x = ts, color = 'red', linewidth='1', linestyle='dashed')
+
   plt.legend(loc="upper left")
   print("Generating " + FILE_NAME + ".png")
-  plt.savefig(FILE_NAME + '.png', dpi=300, transparent=False, bbox_inches='tight')
+  plt.savefig(FILE_NAME + '.png', dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
   plt.clf()
