@@ -13,7 +13,6 @@ const API_BASE_URL = `http://${__ENV.SVC_IP}`
 
 const urls = []
 
-//for (let i = 0; i < Math.ceil(parseInt(__ENV.POD_AMOUNT)/2); i++) {
 for (let i = 0; i < parseInt(__ENV.POD_AMOUNT); i++) {
   urls.push(`${API_BASE_URL}:31${String(i+1).padStart(3, '0')}/do`)
 }
