@@ -7,7 +7,7 @@ import heapq
 import sys
 from functools import reduce
 
-CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
+CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
 INTERVAL = 60
 COUNTER = 0
 
@@ -80,21 +80,21 @@ def get_refinelb_plan(chare_objects, processors):
 def scheduling_workflow():
   global COUNTER
   global INTERVAL
-  global CSV_FILENAME 
+  global CSV_FILENAME_BASE 
   print('scheduling_workflow...')
   cluster = kse.Cluster()
-  #cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
-  #COUNTER += INTERVAL
+  cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
+  COUNTER += INTERVAL
   nodes = cluster.get_nodes()
-  #if len(cluster.get_unready_pods()) > 0:
-  #  return 
+  if len(cluster.get_unready_pods()) > 0:
+    return 
   pods = []
   for node_item in nodes:
     this_node_pods = cluster.get_pods_from_node(node_item['name'])
     pods = pods + this_node_pods
   allocation_plan = get_refinelb_plan(pods, nodes)
   print(allocation_plan)
-  cluster.set_allocation_plan(allocation_plan)
+  cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
