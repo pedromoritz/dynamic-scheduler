@@ -32,6 +32,7 @@ for path in Path("results/").glob("metrics_*.csv"):
   plt.legend(loc="upper left")
   print("Generating " + FILE_NAME + ".png")
   plt.savefig(FILE_NAME + '.png', dpi=400, transparent=False, bbox_inches='tight')
+  plt.legend(loc="upper left")
   plt.close()
   plt.cla()
   plt.clf()
