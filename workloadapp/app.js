@@ -16,19 +16,19 @@ function showHeapUsage(step) {
 let array = [];
 
 app.get('/do', (req, res) => {
-  showHeapUsage('initial');
+//  showHeapUsage('initial');
 
   for (let i = 0; i < 200000; i++) {
     array.push(sha512(Math.random().toString()).toString());
   }
 
-  showHeapUsage('filled memory');
+//  showHeapUsage('filled memory');
 
   while(array.length > 0) {
     array.pop();
   }
 
-  showHeapUsage('after purge');
+//  showHeapUsage('after purge');
   res.send('done');
 });
 
