@@ -5,9 +5,7 @@ import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
   stages: [
-    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS)},
-    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 1},
-    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 2},
+    { duration: '60m', target: parseInt(__ENV.VIRTUAL_USERS)},
   ],
 };
 
@@ -15,8 +13,8 @@ const API_BASE_URL = `http://${__ENV.SVC_IP}`
 
 const urls = []
 
-//for (let i = 0; i < Math.ceil(parseInt(__ENV.POD_AMOUNT)/2); i++) {
-for (let i = 0; i < parseInt(__ENV.POD_AMOUNT); i++) {
+for (let i = 0; i < Math.ceil(parseInt(__ENV.POD_AMOUNT)/2); i++) {
+//for (let i = 0; i < parseInt(__ENV.POD_AMOUNT); i++) {
   urls.push(`${API_BASE_URL}:31${String(i+1).padStart(3, '0')}/do`)
 }
 
