@@ -175,6 +175,7 @@ class Utils:
       return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
     except Exception as a:
       print(json.loads(a.body)['message'])
+      print(a.body)
       return {}
 
   def write_file(filename, record, type = 'a'):
