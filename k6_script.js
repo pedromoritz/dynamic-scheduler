@@ -5,7 +5,12 @@ import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
   stages: [
-    { duration: '30m', target: parseInt(__ENV.VIRTUAL_USERS)},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS)},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 2},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 3},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 3},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 4},
+    { duration: '5m', target: parseInt(__ENV.VIRTUAL_USERS) * 5},
   ],
 };
 
@@ -26,5 +31,5 @@ export function handleSummary(data) {
 export default function () {
   const url = urls[randomIntBetween(0, urls.length - 1)]
   const res = http.get(url)
-  sleep(1);
+  sleep(0.5);
 }
