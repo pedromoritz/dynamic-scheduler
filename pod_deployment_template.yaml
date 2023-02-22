@@ -30,9 +30,9 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        image: pedromoritz/workloadapp:1.0.8
+        image: registry.k8s.io/hpa-example
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
-            containerPort: 3000
+            containerPort: 80
       {{SCHEDULER}}
