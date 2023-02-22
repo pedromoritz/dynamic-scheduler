@@ -36,7 +36,7 @@ test()
   k6 run -q --out csv="results/results_${ST}_${PA}_${VU}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script.js >/dev/null 2>&1 &
 
   # metrics monitoring
-#  ./kse-RefineLB.py $ST $PA $VU
+  ./kse-RefineLB.py $ST $PA $VU
 }
 
 test kse-RefineLB $1 $2

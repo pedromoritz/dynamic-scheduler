@@ -25,7 +25,7 @@ for path in Path("results/").glob("metrics_*.csv"):
   
   if 'kse' in FILE_NAME:
     MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-    timestamps = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)  
+    timestamps = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0)  
     for ts in timestamps:
       plt.axvline(x = ts, color = 'red', linewidth='1', linestyle='dashed')
 
