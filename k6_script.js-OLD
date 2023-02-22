@@ -4,14 +4,9 @@ import { reportHTML } from "https://raw.githubusercontent.com/fziviello/k6-repor
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-  scenarios: {
-    pod: {
-      executor: 'constant-vus',
-      exec: 'pod',
-      vus: parseInt(__ENV.VIRTUAL_USERS),
-      duration: '10m',
-    },
-  }
+  stages: [
+    { duration: '30m', target: parseInt(__ENV.VIRTUAL_USERS)},
+  ],
 };
 
 const API_BASE_URL = `http://${__ENV.SVC_IP}`
@@ -28,7 +23,8 @@ export function handleSummary(data) {
   };
 }
 
-export function pod() {
+export default function () {
   const url = urls[randomIntBetween(0, urls.length - 1)]
   const res = http.get(url)
+  sleep(0.5);
 }
