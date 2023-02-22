@@ -14,7 +14,7 @@ const API_BASE_URL = `http://${__ENV.SVC_IP}`
 const urls = []
 
 for (let i = 0; i < parseInt(__ENV.POD_AMOUNT); i++) {
-  urls.push(`${API_BASE_URL}:31${String(i+1).padStart(3, '0')}`)
+  urls.push(`${API_BASE_URL}:31${String(i+1).padStart(3, '0')}/do`)
 }
 
 export function handleSummary(data) {
