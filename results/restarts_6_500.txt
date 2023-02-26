@@ -1,0 +1,9 @@
+pod-1-7555948954-fgxpj   1/1     Running   4 (24m ago)   52m   10.244.2.189   ppgcc-m03   <none>           <none>
+pod-2-65bcfb6589-fhds2   1/1     Running   4 (24m ago)   52m   10.244.3.189   ppgcc-m04   <none>           <none>
+pod-3-84989cc8c6-rmlt7   1/1     Running   4 (28m ago)   52m   10.244.3.190   ppgcc-m04   <none>           <none>
+pod-4-65898b77f-7k6bx    1/1     Running   3 (25m ago)   52m   10.244.1.111   ppgcc-m02   <none>           <none>
+pod-5-5954957dbb-kw4sd   1/1     Running   5 (20m ago)   52m   10.244.2.190   ppgcc-m03   <none>           <none>
+pod-6-55754df47c-tgfpp   1/1     Running   4 (21m ago)   52m   10.244.1.112   ppgcc-m02   <none>           <none>
+
+
+
