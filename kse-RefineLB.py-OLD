@@ -20,23 +20,45 @@ def get_refinelb_plan(processors):
   procs_memory_average = round(reduce(lambda x, y: x + y, procs_memory_values) / len(procs_memory_values), 0) 
   margin = 1.002 # >= 1.002
   threshold = procs_memory_average * margin
+  print(threshold)
   # defining heavyProcs and lightProcs based on threshold
   for processor in processors:
     if int(processor['usage']['memory']) > threshold:
       heavyProcs.append(processor)
     else:
       lightProcs.append(processor)
+  print('heavyProcs before heapify')
+  print(heavyProcs)
   heavyProcsMapped = list(map(lambda n: (n['usage']['memory'], n['name']), heavyProcs))
   heapq._heapify_max(heavyProcsMapped)
+  print('heavyProcsMapped')
+  print(heavyProcsMapped)
+  print('')
+  print('lightProcs')
+  print(lightProcs)
+  print('')
   finalProcs = []
   while len(heavyProcs) > 0:
+    print('starting 1st while')
     donor = heapq._heappop_max(heavyProcs)
+    print('donor')
+    print(donor) 
+    print('')
     while len(lightProcs) > 0:
+      print('starting 2nd while')
       lightProc = lightProcs.pop()
+      print('ligthProc choosen')
+      print(lightProc)
+      print('')
       pods_from_donor = donor['pods']
+      print('pods from donor')
+      print(pods_from_donor)
       pods_from_donor_sorted = list(map(lambda n: (n['usage']['memory'], n['name']), pods_from_donor))
       donor_best_pod = pods_from_donor_sorted[-1]
+      print('donor_best_pod')
+      print(donor_best_pod)
       if donor_best_pod[0] + lightProc['usage']['memory'] < procs_memory_average:
+        print('break')
         break
     donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
     finalProcs.append(donor)
@@ -44,6 +66,8 @@ def get_refinelb_plan(processors):
     lightProcPods.append({'name': donor_best_pod[1]})
     lightProc['pods'] = lightProcPods
     finalProcs.append(lightProc)
+  print('finalProcs')
+  print(finalProcs)
   for node in finalProcs:
     for pod in node['pods']:
       allocation_plan[pod['name']] = node['name'] 
@@ -57,12 +81,15 @@ def scheduling_workflow():
   print('scheduling_workflow...')
   cluster = kse.Cluster()
   cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
-  nodes = cluster.get_nodes()
+  COUNTER += INTERVAL
   if len(cluster.get_unready_pods()) > 0:
     return 
+
+  #nodes = [{'name': 'ppgcc-m02', 'pods': [{'name': 'pod-1-9dc86b49d-snz6k', 'usage': {'memory': 129256, 'cpu': 47474876}}, {'name': 'pod-4-7b699966b7-ngd44', 'usage': {'memory': 88452, 'cpu': 80833568}}], 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 1038372, 'cpu': 203905727}}, {'name': 'ppgcc-m03', 'pods': [{'name': 'pod-2-595595f665-v9lx7', 'usage': {'memory': 119068, 'cpu': 50038718}}, {'name': 'pod-5-c45cfd9f4-cj5r8', 'usage': {'memory': 93560, 'cpu': 101884462}}], 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 984432, 'cpu': 168151939}}, {'name': 'ppgcc-m04', 'pods': [{'name': 'pod-3-6c8575488-xrg6b', 'usage': {'memory': 142528, 'cpu': 83090882}}, {'name': 'pod-6-5d9f974c89-7fmps', 'usage': {'memory': 68348, 'cpu': 45351798}}], 'type': 'worker', 'capacity': {'memory': 4012876, 'cpu': 2000000000}, 'usage': {'memory': 983928, 'cpu': 172164950}}]
+
   allocation_plan = get_refinelb_plan(nodes)
+  print(allocation_plan)
   cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
-  COUNTER += INTERVAL
 
 scheduling_workflow()
 # creating a timer for workflow trigger

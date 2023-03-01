@@ -69,14 +69,12 @@ class Cluster:
           pod.evict()
           pod = Pod(pod_name[:-5])
           if csv_filename != '':
-            self.do_info_migrations(csv_filename, timestamp)
+            self.do_info_migrations(csv_filename, [timestamp, pod_name, host_node, target_node])
         pod.schedule(target_node)
     return True
 
-  def do_info_migrations(self, csv_filename, timestamp):
-    if timestamp == 0:
-      Utils.write_file(csv_filename, 'timestamp', 'w')
-    Utils.write_file(csv_filename, str(timestamp))
+  def do_info_migrations(self, csv_filename, data):
+    Utils.write_file(csv_filename, ','.join(map(str, data)))
 
   def get_node_from_pod(self, pod_name):
     for pod in client.CoreV1Api().list_namespaced_pod('lab').items:
