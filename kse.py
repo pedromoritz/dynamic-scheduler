@@ -69,7 +69,7 @@ class Cluster:
           pod.evict()
           pod = Pod(pod_name[:-5])
           if csv_filename != '':
-            self.do_info_migrations(csv_filename, [timestamp, pod_name, host_node, target_node])
+            self.do_info_migrations(csv_filename, [timestamp, pod_name[:-6], host_node, target_node])
         pod.schedule(target_node)
     return True
 
