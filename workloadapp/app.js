@@ -6,9 +6,9 @@ const PORT = 3000;
 const HOST = '0.0.0.0';
 const app = express();
 
-let array = [];
-
 app.get('/do', (req, res) => {
+  let array = [];
+
   for (let i = 0; i < 10000; i++) {
     array.push(sha512(Math.random().toString()).toString());
   }
