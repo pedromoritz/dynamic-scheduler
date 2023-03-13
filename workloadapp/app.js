@@ -9,7 +9,7 @@ const app = express();
 app.get('/do', (req, res) => {
   let array = [];
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 100000; i++) {
     array.push(sha512(Math.random().toString()).toString());
   }
 
