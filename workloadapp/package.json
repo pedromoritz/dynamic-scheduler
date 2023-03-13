@@ -1,6 +1,6 @@
 {
   "name": "workloadapp",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Workload Application",
   "author": "Pedro Moritz de Carvalho Neto <pmoritz@yahoo.com>",
   "main": "app.js",
