@@ -60,8 +60,9 @@ def scheduling_workflow():
   nodes = cluster.get_nodes()
   if len(cluster.get_unready_pods()) > 0:
     return 
-  allocation_plan = get_refinelb_plan(nodes)
-  cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
+  if COUNTER > 0:
+    allocation_plan = get_refinelb_plan(nodes)
+    cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
   COUNTER += INTERVAL
 
 scheduling_workflow()
