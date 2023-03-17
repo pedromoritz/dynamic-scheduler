@@ -14,7 +14,7 @@ function showHeapUsage(step) {
 
 app.get('/do', (req, res) => {
   showHeapUsage('before');
-  const array = Array.from({length: 1000000}, () => Math.random() * 10);
+  const array = Array.from({length: 10000000}, () => Math.random() * 10);
   //const arr = new Array(10000000).fill(1);
   showHeapUsage('after');
   res.send('done');
