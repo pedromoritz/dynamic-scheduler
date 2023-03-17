@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        image: yeasy/simple-web:latest
+        image: pedromoritz/workloadapp:2.0.0
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
