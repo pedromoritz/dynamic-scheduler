@@ -1,8 +1,2 @@
-FROM node:18.12.1-alpine3.16
-WORKDIR /usr/src/app
-COPY package*.json .
-COPY app.js .
-RUN npm install -g npm@9.6.2
-RUN npm install
-EXPOSE 3000
-CMD [ "npm", "start" ]
+FROM php:7.2-apache
+COPY index.php /var/www/html/

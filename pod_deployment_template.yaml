@@ -10,7 +10,7 @@ spec:
   ports:
     - protocol: TCP
       nodePort: {{NODE_PORT}}
-      port: 3000
+      port: 80
       targetPort: http 
 ---
 apiVersion: apps/v1
@@ -30,9 +30,9 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        image: pedromoritz/workloadapp:2.0.2
+        image: pedromoritz/workloadapp:3.0.1
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
-            containerPort: 3000
+            containerPort: 80
       {{SCHEDULER}}
