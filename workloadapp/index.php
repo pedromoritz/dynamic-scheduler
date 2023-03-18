@@ -1,9 +1,11 @@
-<?php 
+<?php
+ini_set('memory_limit', '2048M');
+
 $array = array();
 
 foreach (range(0, 1000000) as $number) {
 	array_push($array, $number);
 }
 
-echo '<pre>'.print_r($array, 1).'</pre>';
+echo '<pre>'.count($array).'</pre>';
 ?>
