@@ -3,7 +3,7 @@ ini_set('memory_limit', '1024M');
 
 $array = array();
 
-foreach (range(0, 200000) as $number) {
+foreach (range(0, 100000) as $number) {
 	array_push($array, $number);
 }
 
