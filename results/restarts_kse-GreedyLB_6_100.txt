@@ -1,8 +1,0 @@
-NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE        NOMINATED NODE   READINESS GATES
-pod-1-7f9d5d97fb-lh7wb   1/1     Running   0          69s   10.244.3.36   ppgcc-m04   <none>           <none>
-pod-2-554c554c5c-s6bws   1/1     Running   0          69s   10.244.3.37   ppgcc-m04   <none>           <none>
-pod-3-7b788b9b78-nksjz   1/1     Running   0          12m   10.244.1.22   ppgcc-m02   <none>           <none>
-pod-4-6cbf55dd5f-gbm4x   1/1     Running   0          9s    10.244.2.43   ppgcc-m03   <none>           <none>
-pod-5-8676c8897b-9n6n6   1/1     Running   0          9s    10.244.3.39   ppgcc-m04   <none>           <none>
-pod-6-6cc78477-2crrf     1/1     Running   0          68s   10.244.3.38   ppgcc-m04   <none>           <none>
-
