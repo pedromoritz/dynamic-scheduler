@@ -1,5 +1,5 @@
 <?php
-ini_set('memory_limit', '4096M');
+ini_set('memory_limit', '1024M');
 
 $array = array();
 
