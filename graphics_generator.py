@@ -17,7 +17,7 @@ for path in Path("results/").glob("metrics_*.csv"):
   m_node3_mb = list(map(lambda n: n/1024, m_node3))
 
   plt.xlabel('time (s)')
-  plt.ylim(0, 4096)
+  plt.ylim(0, 2048)
   plt.ylabel('memory (MB)')
   plt.plot(timestamp, m_node1_mb, label='node 1', linewidth='2')
   plt.plot(timestamp, m_node2_mb, label='node 2', linewidth='2')
