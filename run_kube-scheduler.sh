@@ -7,7 +7,7 @@ test()
   VU=$3 # virtual users
 
   # defining scheduler
-  SCHEDULER="schedulerName: scheduler-round-robin"
+  SCHEDULER=""
 
   # removing all workloads
   kubectl delete namespace lab
@@ -22,6 +22,9 @@ test()
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
     echo "$template" | kubectl apply -f -
   done
+
+  # round robin scheduler
+  ./round_robin_scheduler.py
 
   # waiting for ready containers
   sleep 30
