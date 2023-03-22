@@ -1,2 +1,2 @@
-docker build --progress=plain --rm -t pedromoritz/workloadapp:3.1.0 .
-docker push pedromoritz/workloadapp:3.1.0
+docker build --progress=plain --rm -t pmoritz/workloadapp:1.0.0 .
+docker push pmoritz/workloadapp:1.0.0

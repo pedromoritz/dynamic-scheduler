@@ -7,7 +7,7 @@ test()
   VU=$3 # virtual users
 
   # defining scheduler
-  SCHEDULER=""
+  SCHEDULER="schedulerName: scheduler-round-robin"
 
   # removing all workloads
   kubectl delete namespace lab
