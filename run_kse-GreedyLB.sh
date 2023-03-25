@@ -6,6 +6,9 @@ test()
   PA=$2 # pod amount
   VU=$3 # virtual users
 
+  # purging old files
+  rm results/*_${ST}_${PA}_${VU}.*
+
   # defining scheduler
   SCHEDULER="schedulerName: kse"
   NODE_NAME=""
