@@ -1,6 +1,4 @@
 <?php
-$array = array();
-foreach (range(0, 50000) as $number) {
-	array_push($array, bin2hex(random_bytes(20)));
-}
+$hash = '796777f4d71406b83b36fc2a6304e0d523e99c0b2d0fc4b44c0da7a5784a7bb95f363f05a135b86cee36b0a22f406823b134d8c21d855c529c6846372816b108';
+$array = array_fill(0, 10000, $hash);
 ?>
