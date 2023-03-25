@@ -7,7 +7,7 @@ test()
   VU=$3 # virtual users
 
   # defining scheduler
-  SCHEDULER="schedulerName: kse"
+  SCHEDULER="kse"
 
   # removing all workloads
   kubectl delete namespace lab
@@ -19,7 +19,7 @@ test()
     NODE_PORT=31$(printf %03d $i)
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
-    template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
+    template=`echo "$template" | sed "s/{{SCHEDULER}}/schedulerName: $SCHEDULER/g"`
     echo "$template" | kubectl apply -f -
   done
 

@@ -13,6 +13,9 @@ test()
   kubectl delete namespace lab
   kubectl create namespace lab
 
+  NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04")
+  ROUND_ROBIN_COUNTER=0
+
   # creating workloads
   for i in $(seq $PA); do	
     POD_NAME=pod-$i
@@ -20,11 +23,15 @@ test()
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
+    template=`echo "$template" | sed "s/{{NODENAME}}/nodeName: ${NODES[$ROUND_ROBIN_COUNTER]}/g"`
+    if [ $ROUND_ROBIN_COUNTER -lt $(( ${#NODES[@]} - 1 )) ]
+    then
+      ROUND_ROBIN_COUNTER=$((ROUND_ROBIN_COUNTER+1)) 
+    else
+      ROUND_ROBIN_COUNTER=0
+    fi
     echo "$template" | kubectl apply -f -
   done
-
-  # round robin scheduler
-  ./round_robin_scheduler.py
 
   # waiting for ready containers
   sleep 30
