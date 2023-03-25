@@ -4,10 +4,10 @@ test()
 {
   ST=$1 # scheduler type
   PA=$2 # pod amount
-  VU=$3 # virtual users
+  RR=$3 # requests rate
 
   # purging old files
-  rm results/*_${ST}_${PA}_${VU}.*
+  rm results/*_${ST}_${PA}_${RR}.*
 
   # defining scheduler
   SCHEDULER=""
@@ -43,10 +43,10 @@ test()
   SVCIP=`minikube ip -p ppgcc`
 
   # starting testset
-  k6 run -q --out csv="results/results_${ST}_${PA}_${VU}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script-cr.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results/results_${ST}_${PA}_${RR}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e REQUESTS_RATE=$RR k6_script-cr.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./metrics_monitoring.py $ST $PA $VU
+  ./metrics_monitoring.py $ST $PA $RR
 }
 
 test kube-scheduler $1 $2

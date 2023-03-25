@@ -7,7 +7,7 @@ export const options = {
   scenarios: {
     constant_request_rate: {
       executor: 'constant-arrival-rate',
-      rate: 10,
+      rate: __ENV.REQUESTS_RATE,
       timeUnit: '1s',
       duration: '10m',
       preAllocatedVUs: 100,
@@ -26,7 +26,7 @@ for (let i = 0; i < parseInt(__ENV.POD_AMOUNT); i++) {
 
 export function handleSummary(data) {
   return {
-    [`results/summary_${__ENV.SCHEDULER_TYPE}_${__ENV.POD_AMOUNT}_${__ENV.VIRTUAL_USERS}.html`]: reportHTML(data, {title:`${__ENV.SCHEDULER_TYPE} - ${__ENV.POD_AMOUNT} pods - ${__ENV.VIRTUAL_USERS} virtual users`})
+    [`results/summary_${__ENV.SCHEDULER_TYPE}_${__ENV.POD_AMOUNT}_${__ENV.REQUESTS_RATE}.html`]: reportHTML(data, {title:`${__ENV.SCHEDULER_TYPE} - ${__ENV.POD_AMOUNT} pods - ${__ENV.REQUESTS_RATE} requests/second`})
   };
 }
 
