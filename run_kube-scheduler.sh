@@ -23,7 +23,7 @@ test()
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
-    template=`echo "$template" | sed "s/{{NODENAME}}/nodeName: ${NODES[$ROUND_ROBIN_COUNTER]}/g"`
+    template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${NODES[$ROUND_ROBIN_COUNTER]}/g"`
     if [ $ROUND_ROBIN_COUNTER -lt $(( ${#NODES[@]} - 1 )) ]
     then
       ROUND_ROBIN_COUNTER=$((ROUND_ROBIN_COUNTER+1)) 

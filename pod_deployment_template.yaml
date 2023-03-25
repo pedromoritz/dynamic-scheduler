@@ -36,4 +36,4 @@ spec:
           - name: http
             containerPort: 80
       {{SCHEDULER}}
-      {{NODENAME}}
+      {{NODE_NAME}}
