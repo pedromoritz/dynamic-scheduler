@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        image: pmoritz/workloadapp:1.0.7
+        image: pmoritz/workloadapp:1.0.8
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
