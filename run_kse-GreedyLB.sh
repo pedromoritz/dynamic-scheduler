@@ -38,7 +38,7 @@ test()
   SVCIP=`minikube ip -p ppgcc`
   
   # starting testset
-  k6 run -q --out csv="results/results_${ST}_${PA}_${VU}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results/results_${ST}_${PA}_${VU}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script-full.js >/dev/null 2>&1 &
 
   # metrics monitoring
   ./kse-GreedyLB.py $ST $PA $VU
