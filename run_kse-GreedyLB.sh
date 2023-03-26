@@ -4,7 +4,7 @@ test()
 {
   ST=$1 # scheduler type
   PA=$2 # pod amount
-  VU=$3 # virtual users
+  VU=$3 # target virtual users
 
   # purging old files
   rm results/*_${ST}_${PA}_${VU}.*

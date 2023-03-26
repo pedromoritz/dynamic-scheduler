@@ -4,13 +4,14 @@ test()
 {
   ST=$1 # scheduler type
   PA=$2 # pod amount
-  VU=$3 # virtual users
+  VU=$3 # target virtual users
 
   # purging old files
   rm results/*_${ST}_${PA}_${VU}.*
 
   # defining scheduler
-  SCHEDULER="kse"
+  SCHEDULER="schedulerName: kse"
+  NODE_NAME=""
 
   # removing all workloads
   kubectl delete namespace lab
@@ -22,7 +23,8 @@ test()
     NODE_PORT=31$(printf %03d $i)
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
-    template=`echo "$template" | sed "s/{{SCHEDULER}}/schedulerName: $SCHEDULER/g"`
+    template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
+    template=`echo "$template" | sed "s/{{NODE_NAME}}/$NODE_NAME/g"`
     echo "$template" | kubectl apply -f -
   done
 
