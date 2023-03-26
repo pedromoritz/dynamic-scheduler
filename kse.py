@@ -167,6 +167,7 @@ class Pod:
           except Exception as a:
             print ("Exception when calling CoreV1Api->create_namespaced_binding: %s\n" % a)
         except client.rest.ApiException as e:
+          print("schedule exception:")
           print(json.loads(e.body)['message'])
  
 # Utils class
@@ -179,6 +180,7 @@ class Utils:
       custom_api = client.CustomObjectsApi(api_client)
       return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
     except Exception as a:
+      print("call_api exception: %s\n" % path)
       print(a.body)
       return {}
 
