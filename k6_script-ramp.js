@@ -10,7 +10,7 @@ export const options = {
       executor: 'ramping-vus',
       startVUs: 0,
       stages: [
-        { duration: '30m', target: __ENV.VIRTUAL_USERS },
+        { duration: '30m', target: parseInt(__ENV.VIRTUAL_USERS)},
       ],
       gracefulRampDown: '0s',
     },
