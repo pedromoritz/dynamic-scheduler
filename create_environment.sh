@@ -6,3 +6,4 @@ minikube addons enable metrics-server -p ppgcc # add metrics-server to master no
 minikube node add -p ppgcc # add 1st worker node
 minikube node add -p ppgcc # add 2nd worker node
 minikube node add -p ppgcc # add 3rd worker node
+minikube node add -p ppgcc # add 4th worker node
