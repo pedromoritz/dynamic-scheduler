@@ -11,10 +11,11 @@ import sys
 for path in Path("results/").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
   print("Reading " + str(path))
-  timestamp, m_node1, pa_node1, m_node2, pa_node2, m_node3, pa_node3 = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)
+  timestamp, m_node1, pa_node1, m_node2, pa_node2, m_node3, pa_node3, m_node4, pa_node4 = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)
   m_node1_mb = list(map(lambda n: n/1024, m_node1))
   m_node2_mb = list(map(lambda n: n/1024, m_node2))
   m_node3_mb = list(map(lambda n: n/1024, m_node3))
+  m_node4_mb = list(map(lambda n: n/1024, m_node4))
 
   plt.xlabel('time (s)')
   plt.ylim(0, 2048)
@@ -22,6 +23,7 @@ for path in Path("results/").glob("metrics_*.csv"):
   plt.plot(timestamp, m_node1_mb, label='node 1', linewidth='2')
   plt.plot(timestamp, m_node2_mb, label='node 2', linewidth='2')
   plt.plot(timestamp, m_node3_mb, label='node 3', linewidth='2')
+  plt.plot(timestamp, m_node4_mb, label='node 4', linewidth='2')
   
   if 'kse' in FILE_NAME:
     MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')

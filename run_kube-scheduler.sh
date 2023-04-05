@@ -16,7 +16,7 @@ test()
   kubectl delete namespace lab
   kubectl create namespace lab
 
-  NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04")
+  NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
   ROUND_ROBIN_COUNTER=0
 
   # creating workloads
