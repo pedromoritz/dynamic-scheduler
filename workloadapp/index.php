@@ -5,7 +5,7 @@ ignore_user_abort(true);
 set_time_limit(0);
 
 $array = array();
-for ($i = 0; $i < 500000; $i++) {
+for ($i = 0; $i < 200000; $i++) {
    array_push($array, md5(microtime(true).mt_Rand()));
 }
 
