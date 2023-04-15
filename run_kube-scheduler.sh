@@ -37,7 +37,7 @@ test()
   done
 
   # waiting for ready containers
-  sleep 90
+  sleep 60
 
   # retrieving service IP
   SVCIP=`minikube ip -p ppgcc`

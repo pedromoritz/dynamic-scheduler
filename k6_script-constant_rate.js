@@ -30,10 +30,12 @@ export function handleSummary(data) {
 }
 
 export default function () {
-  const rnorm_output = PD.rnorm(1, Math.round(urls.length / 2), 1)
+  const pods = urls.length;
+  const mu = Math.round(pods / 2);
+  const sigma = mu / 3;
+  const rnorm_output = PD.rnorm(1, mu, sigma)
   const round_rnorm_output = Math.round(rnorm_output)
-  const limited_round_rnorm_output = Math.min(urls.length, Math.max(1, round_rnorm_output))
-  console.log(limited_round_rnorm_output);
+  const limited_round_rnorm_output = Math.min(pods, Math.max(1, round_rnorm_output))
   const url = urls[limited_round_rnorm_output - 1]
   http.get(url)
 }
