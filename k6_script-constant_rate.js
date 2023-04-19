@@ -36,5 +36,6 @@ export default function () {
   while (round_rnorm_output < 0 || round_rnorm_output > (urls.length - 1)) {
     round_rnorm_output = Math.round(PD.rnorm(1, mu, sigma));
   }
+  const url = urls[round_rnorm_output];
   http.get(url);
 }
