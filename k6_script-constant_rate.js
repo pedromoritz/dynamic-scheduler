@@ -30,12 +30,20 @@ export function handleSummary(data) {
 }
 
 export default function () {
+  const pods = 32;
+  const rate = 5 / pods;
+  let round_rexp_output = -1;
+  while (round_rexp_output < 0 || round_rexp_output > (pods - 1)) {
+    round_rexp_output = Math.round(PD.rexp(1, rate));
+  }
+  /*
   const mu = (urls.length - 1) / 2;
   const sigma = mu / 3;
   let round_rnorm_output = -1;
   while (round_rnorm_output < 0 || round_rnorm_output > (urls.length - 1)) {
     round_rnorm_output = Math.round(PD.rnorm(1, mu, sigma));
   }
-  const url = urls[round_rnorm_output];
+  */
+  const url = urls[round_rexp_output];
   http.get(url);
 }
