@@ -32,22 +32,13 @@ export function handleSummary(data) {
 export default function () {
   const pods = urls.length;
 
-  // exponential distribution
-  const rate = 5 / pods;
-  let round_rexp_output = pods;
-  while (round_rexp_output > (pods - 1)) {
-    round_rexp_output = Math.round(PD.rexp(1, rate));
+  let distribution_output = -1;
+  while (distribution_output < 1 || distribution_output > pods) {
+    distribution_output = Math.round(PD.rexp(1, 5 / pods)); // exponential distribution
+//  distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 5)); // normal distribution
   }
-  const url = urls[round_rexp_output];
-  /*
-  // normal distribution
-  const mu = (pods - 1) / 2;
-  const sigma = mu / 5;
-  let round_rnorm_output = -1;
-  while (round_rnorm_output < 0 || round_rnorm_output > (pods - 1)) {
-    round_rnorm_output = Math.round(PD.rnorm(1, mu, sigma));
-  }
-  const url = urls[round_rnorm_output];
-  */  
+
+  const url = urls[distribution_output];
   http.get(url);
 }
+
