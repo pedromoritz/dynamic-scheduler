@@ -40,7 +40,7 @@ export default function () {
 //  distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 5)); // normal distribution
   }
 
-  const url = urls[distribution_output];
+  const url = urls[distribution_output - 1];
   http.get(url);
   sleep(0.5);
 }
