@@ -19,6 +19,11 @@ test()
   NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
   ROUND_ROBIN_COUNTER=0
 
+  DISTRIBUTION_ARRAY=()
+  for i in $(seq $(expr $1 / ${#NODES[@]})); do
+    DISTRIBUTION_ARRAY+=( $(shuf -e "${NODES[@]}") )
+  done
+
   # creating workloads
   for i in $(seq $PA); do	
     POD_NAME=pod-$i
