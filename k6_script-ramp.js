@@ -32,12 +32,26 @@ export function handleSummary(data) {
 }
 
 export default function () {
-  const mu = (urls.length - 1) / 2;
-  const sigma = mu / 3;
+  const pods = urls.length;
+
+  // exponential distribution
+  const rate = 5 / pods;
+  let round_rexp_output = pods;
+  while (round_rexp_output > (pods - 1)) {
+    round_rexp_output = Math.round(PD.rexp(1, rate));
+  }
+  const url = urls[round_rexp_output];
+  /*
+  // normal distribution
+  const mu = (pods - 1) / 2;
+  const sigma = mu / 5;
   let round_rnorm_output = -1;
-  while (round_rnorm_output < 0 || round_rnorm_output > (urls.length - 1)) {
+  while (round_rnorm_output < 0 || round_rnorm_output > (pods - 1)) {
     round_rnorm_output = Math.round(PD.rnorm(1, mu, sigma));
   }
+  const url = urls[round_rnorm_output];
+  */ 
   http.get(url);
   sleep(0.5);
 }
+
