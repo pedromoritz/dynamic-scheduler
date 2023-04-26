@@ -17,11 +17,10 @@ test()
   kubectl create namespace lab
 
   NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
-  ROUND_ROBIN_COUNTER=0
 
   DISTRIBUTION_ARRAY=()
-  for i in $(seq $(expr $1 / ${#NODES[@]})); do
-    DISTRIBUTION_ARRAY+=( $(shuf -e "${NODES[@]}") )
+  for i in $(seq $(expr $PA / ${#NODES[@]})); do
+    DISTRIBUTION_ARRAY+=($(shuf -e "${NODES[@]}"))
   done
 
   # creating workloads
@@ -31,13 +30,7 @@ test()
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
-    template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${NODES[$ROUND_ROBIN_COUNTER]}/g"`
-    if [ $ROUND_ROBIN_COUNTER -lt $(( ${#NODES[@]} - 1 )) ]
-    then
-      ROUND_ROBIN_COUNTER=$((ROUND_ROBIN_COUNTER+1)) 
-    else
-      ROUND_ROBIN_COUNTER=0
-    fi
+    template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${DISTRIBUTION_ARRAY[i]}/g"`
     echo "$template" | kubectl apply -f -
   done
 
