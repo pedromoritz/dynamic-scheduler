@@ -28,8 +28,8 @@ test()
     echo "$template" | kubectl apply -f -
   done
 
-  # round robin scheduler
-  ./round_robin_scheduler.py
+  # shuffle scheduler
+  ./shuffle_scheduler.py
 
   # waiting for ready containers
   sleep 60
