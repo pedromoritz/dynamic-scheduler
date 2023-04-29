@@ -35,7 +35,7 @@ export default function () {
   let distribution_output = -1;
   while (distribution_output < 1 || distribution_output > pods) {
     distribution_output = Math.round(PD.rexp(1, 5 / pods)); // exponential distribution
-//  distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 5)); // normal distribution
+  //distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 3)); // normal distribution
   }
 
   const url = urls[distribution_output - 1];
