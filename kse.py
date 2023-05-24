@@ -90,13 +90,13 @@ class Cluster:
     }
     info['header'].append('timestamp')
     for node in nodes:
+      info['header'].append(node['name']+'_pod_amount') # amount of pods on node
+      info['header'].append(node['name']+'_memory') # usage of memory on node
+      info['header'].append(node['name']+'_cpu') # usage of cpu on node
       info['data'].append(len(self.get_pods_from_node(node['name'])))
       info['data'].append(node['usage']['memory'])
       info['data'].append(node['usage']['cpu'])
     if timestamp == 0:
-      info['header'].append(node['name']+'_pod_amount') # amount of pods on node
-      info['header'].append(node['name']+'_memory') # usage of memory on node
-      info['header'].append(node['name']+'_cpu') # usage of cpu on node
       Utils.write_file(csv_filename, ','.join(map(str, info['header'])), 'w')
     Utils.write_file(csv_filename, str(timestamp)+','+','.join(map(str, info['data'])))
     return True
