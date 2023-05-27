@@ -5,7 +5,7 @@ import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
 import sys
 
-CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.csv'
+CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'_'+sys.argv[6]+'.csv'
 INTERVAL = 60
 COUNTER = 0
 

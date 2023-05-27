@@ -6,12 +6,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 import sys
 
-CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.csv'
+CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'_'+sys.argv[6]+'.csv'
 INTERVAL = 60
 COUNTER = 0
+METRIC = sys.argv[6]
 
 def get_greedylb_plan(chare_objects, processors, background_load):
-  objHeap = list(map(lambda n: (n['usage']['memory'], n['name']), chare_objects))
+  objHeap = list(map(lambda n: (n['usage'][METRIC], n['name']), chare_objects))
   heapq._heapify_max(objHeap)
   nodeHeap = list(map(lambda n: (background_load, n['name']), processors))
   heapq.heapify(nodeHeap)
