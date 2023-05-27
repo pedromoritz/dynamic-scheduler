@@ -4,10 +4,12 @@ test()
 {
   ST=$1 # scheduler type
   PA=$2 # pod amount
-  VU=$3 # target virtual users
+  TA=$3 # target
+  RT=$4 # rate type
+  DI=$5 # distribution
 
   # purging old files
-  rm results/*_${ST}_${PA}_${VU}.*
+  rm results/*_${ST}_${PA}_${TA}_${RT}_${DI}.*
 
   # defining scheduler
   SCHEDULER="schedulerName: kse"
@@ -35,13 +37,26 @@ test()
   sleep 60
 
   # retrieving service IP
-  SVCIP=`minikube ip -p ppgcc`
-  
+  IP=`minikube ip -p ppgcc`
+
   # starting testset
-  k6 run -q --out csv="results/results_${ST}_${PA}_${VU}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e VIRTUAL_USERS=$VU k6_script-constant_rate.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results/results_${ST}_${PA}_${TA}_${RT}_${DI}.gz" -e IP=$IP -e ST=$ST -e PA=$PA -e TA=$TA -e RT=$RT -e DI=$DI k6_script-${RT}.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./kse-GreedyLB.py $ST $PA $VU
+  ./kse-GreedyLB.py $ST $PA $TA $RT $DI
 }
 
-test kse-GreedyLB $1 $2
+for ARGUMENT in "$@"
+do
+  KEY=$(echo $ARGUMENT | cut -f1 -d=)
+  KEY_LENGTH=${#KEY}
+  VALUE="${ARGUMENT:$KEY_LENGTH+1}"
+  export "$KEY"="$VALUE"
+done
+
+if [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ])
+then
+  echo "usage: ./run_kse-GreedyLB.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION>"
+else
+  test kse-GreedyLB $pod_amount $target $rate_type $distribution
+fi

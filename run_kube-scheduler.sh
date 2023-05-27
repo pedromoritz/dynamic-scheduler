@@ -6,9 +6,10 @@ test()
   PA=$2 # pod amount
   TA=$3 # target
   RT=$4 # rate type
+  DI=$5 # distribution
 
   # purging old files
-  rm results/*_${ST}_${PA}_${TA}_${RT}.*
+  rm results/*_${ST}_${PA}_${TA}_${RT}_${DI}.*
 
   # defining scheduler
   SCHEDULER=""
@@ -39,13 +40,13 @@ test()
   sleep 60
 
   # retrieving service IP
-  SVCIP=`minikube ip -p ppgcc`
+  IP=`minikube ip -p ppgcc`
 
   # starting testset
-  k6 run -q --out csv="results/results_${ST}_${PA}_${TA}_${RT}.gz" -e SVC_IP=$SVCIP -e SCHEDULER_TYPE=$ST -e POD_AMOUNT=$PA -e TARGET=$TA k6_script-${RT}.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results/results_${ST}_${PA}_${TA}_${RT}_${DI}.gz" -e IP=$IP -e ST=$ST -e PA=$PA -e TA=$TA -e RT=$RT -e DI=$DI k6_script-${RT}.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./metrics_monitoring.py $ST $PA $TA $RT
+  ./metrics_monitoring.py $ST $PA $TA $RT $DI
 }
 
 for ARGUMENT in "$@"
@@ -56,10 +57,9 @@ do
   export "$KEY"="$VALUE"
 done
 
-if [ -z "$pod_amount" ] || [ -z "$target" ] || [ "$rate_type" != "ramp" ] || [ "$rate_type" != "constant_rate" ]
+if [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) 
 then
-  echo "usage: ./run_kube-scheduler.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE>"
+  echo "usage: ./run_kube-scheduler.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION>"
 else
-  echo "ok"
- # test kube-scheduler $pod_amount $target $rate_type
+  test kube-scheduler $pod_amount $target $rate_type $distribution
 fi

@@ -6,7 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import heapq
 import sys
 
-CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'.csv'
+CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.csv'
 INTERVAL = 60
 COUNTER = 0
 
