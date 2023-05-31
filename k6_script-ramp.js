@@ -27,7 +27,7 @@ for (let i = 0; i < parseInt(__ENV.PA); i++) {
 
 export function handleSummary(data) {
   return {
-    [`results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}.html`]: reportHTML(data, {title:`${__ENV.ST} - ${__ENV.PA} pods - ramping from 0 to ${__ENV.TA} maximum virtual users with ${__ENV.DI} distribution`})
+    [`results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}_${__ENV.ME}.html`]: reportHTML(data, {title:`${__ENV.ST} - ${__ENV.PA} pods - ${__ENV.TA} requests per second with ${__ENV.DI} distribution (${__ENV.ME} as metric)`})
   };
 }
 
