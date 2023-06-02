@@ -43,7 +43,7 @@ for path in Path("results/").glob("metrics_*.csv"):
     ylim = 2048
     ylabel = 'memory (MB)'
     final_filename = FILE_NAME + '_memory.png'
-    save_graphic(timestamp, data2, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+    save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
     # generating cpu graphics
     data1 = list(map(lambda n: n/1000000, node1_cpu))
     data2 = list(map(lambda n: n/1000000, node2_cpu))
@@ -53,7 +53,7 @@ for path in Path("results/").glob("metrics_*.csv"):
     ylim = 2000
     ylabel = 'CPU (millicpu)'
     final_filename = FILE_NAME + '_cpu.png'
-    save_graphic(timestamp, data2, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+    save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
   elif 'kse' in FILE_NAME:
     if 'memory' in FILE_NAME:
       # generating memory graphics
@@ -65,6 +65,9 @@ for path in Path("results/").glob("metrics_*.csv"):
       ylim = 2048
       ylabel = 'memory (MB)'
       final_filename = FILE_NAME + '.png'
+      MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
+      migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+      save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
     elif 'cpu' in FILE_NAME:
       # generating cpu graphics
       data1 = list(map(lambda n: n/1000000, node1_cpu))
@@ -75,6 +78,6 @@ for path in Path("results/").glob("metrics_*.csv"):
       ylim = 2000
       ylabel = 'CPU (millicpu)'
       final_filename = FILE_NAME + '.png'
-    MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-    migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
-    save_graphic(timestamp, data2, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+      MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
+      migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+      save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)

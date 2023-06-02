@@ -10,8 +10,8 @@ test()
   ME=$6 # metric
 
   # purging old files
-  rm results/*_${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.*
-  touch results/metrics_${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.csv
+  rm results/*_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.*
+  touch results/metrics_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.csv
 
   # defining scheduler
   SCHEDULER="schedulerName: kse"
@@ -42,10 +42,10 @@ test()
   IP=`minikube ip -p ppgcc`
 
   # starting testset
-  k6 run -q --out csv="results/results_${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.gz" -e IP=$IP -e ST=$ST -e PA=$PA -e TA=$TA -e RT=$RT -e DI=$DI -e ME=$ME k6_script-${RT}.js >/dev/null 2>&1 &
+  k6 run -q --out csv="results/results_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.gz" -e IP=$IP -e ST=kse-$ST -e PA=$PA -e TA=$TA -e RT=$RT -e DI=$DI -e ME=$ME k6_script-${RT}.js >/dev/null 2>&1 &
 
   # metrics monitoring
-  ./kse-GreedyLB.py $ST $PA $TA $RT $DI $ME
+  ./${ST}.py kse-$ST $PA $TA $RT $DI $ME
 }
 
 for ARGUMENT in "$@"
@@ -56,9 +56,9 @@ do
   export "$KEY"="$VALUE"
 done
 
-if [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ])
+if ([ "$scheduler" != "GreedyLB" ] && [ "$scheduler" != "RefineLB" ]) || [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ])
 then
-  echo "usage: ./run_kse-GreedyLB.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC>"
+  echo "usage: ./run_kse.sh scheduler=<SCHEDULER> pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC>"
 else
-  test kse-GreedyLB $pod_amount $target $rate_type $distribution $metric
+  test $scheduler $pod_amount $target $rate_type $distribution $metric
 fi
