@@ -13,7 +13,7 @@ def save_graphic(value1, value2, value3, metric, filename):
     plt.ylabel('CPU (millicpu)')
 
   x = np.arange(1)
-  y1 = [34, 56, 12, 89, 67]
+  y1 = [float(value1), 56, 12, 89, 67]
   y2 = [12, 56, 78, 45, 90]
   y3 = [14, 23, 45, 25, 89]
   width = 0.2
