@@ -22,9 +22,9 @@ def save_graphic(value1, value2, value3, metric, filename):
   y3 = [14, 23, 45, 25, 89]
   width = 0.2
   
-  plt.bar(x-0.2, y1, width, color='cyan')
-  plt.bar(x, y2, width, color='orange')
-  plt.bar(x+0.2, y3, width, color='green')
+  plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
+  plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
+  plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
   plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
 #  plt.legend(["Round 1", "Round 2", "Round 3"])
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
