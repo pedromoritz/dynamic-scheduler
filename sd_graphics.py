@@ -8,24 +8,20 @@ def save_graphic(value1, value2, value3, metric, filename):
   if metric == 'memory':
     plt.ylim(0, 500)
     plt.ylabel('memory (MB)')
-  if metric == 'cpu':
+  elif metric == 'cpu':
     plt.ylim(0, 200)
     plt.ylabel('CPU (millicpu)')
-#  plt.bar(0, value1, label='kube-scheduler')
-#  plt.bar(1, value2, label='kse + GreedyLB')
-#  plt.bar(2, value3, label='kse + RefineLB')
-  plt.legend(loc="upper left")
 
   x = np.arange(1)
-  y1 = [34, 56, 12, 89, 67]
-  y2 = [12, 56, 78, 45, 90]
-  y3 = [14, 23, 45, 25, 89]
+  y1 = [value1]
+  y2 = [value2]
+  y3 = [value3]
   width = 0.2
   
   plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
   plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
   plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
-  plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
+  #plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
   plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
