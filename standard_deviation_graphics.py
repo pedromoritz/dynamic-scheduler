@@ -10,15 +10,15 @@ import sys
 
 def save_graphic(value1, value2, value3, metric, filename):
   if metric == 'memory':
-    plt.ylim(0, 500)
+  #  plt.ylim(0, 500)
     plt.ylabel('memory (MB)')
   if metric == 'cpu':
-    plt.ylim(0, 200)
+  #  plt.ylim(0, 200)
     plt.ylabel('CPU (millicpu)')
   plt.bar('kube-scheduler', value1)
   plt.bar('kse + GreedyLB', value2)
   plt.bar('kse + RefineLB', value3)
-  plt.legend(loc="upper left")
+  #plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
