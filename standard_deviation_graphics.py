@@ -27,18 +27,16 @@ def save_graphic(value1, value2, value3, metric, filename):
   city=['Delhi','Beijing','Washington','Tokyo','Moscow']
   scheduler=['kube-scheduler', 'kse + GreedyLB', 'kse + RefineLB']
   pos = np.arange(len(city))
-  bar_width = 0.35
   Happiness_Index_Male=[60,40,70,65,85]
   Happiness_Index_Female=[30,60,70,55,75]
  
-  plt.bar(pos,Happiness_Index_Male,bar_width,color='blue',edgecolor='black')
-  plt.bar(pos+bar_width,Happiness_Index_Female,bar_width,color='pink',edgecolor='black')
+  plt.bar(1, value1)
+  plt.bar(2, value2)
+  plt.bar(3, value3)
   plt.xticks(pos, city)
   plt.xlabel('City', fontsize=16)
   plt.ylabel('Happiness_Index', fontsize=16)
-  plt.title('Group Barchart - Happiness index across cities By Gender',fontsize=18)
   plt.legend(scheduler, loc='upper left')
-
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
