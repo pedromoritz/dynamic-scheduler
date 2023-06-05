@@ -21,7 +21,7 @@ def save_graphic(value1, value2, value3, metric, filename):
   plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
   plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
   plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
-  #plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
+  plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
   plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
