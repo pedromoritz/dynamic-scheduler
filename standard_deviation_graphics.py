@@ -18,6 +18,7 @@ def save_graphic(value1, value2, value3, metric, filename):
   plt.bar(0, value1, label='kube-scheduler')
   plt.bar(0, value2, label='kse + GreedyLB')
   plt.bar(0, value3, label='kse + RefineLB')
+  plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
