@@ -26,7 +26,7 @@ def save_graphic(value1, value2, value3, metric, filename):
   plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
   plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
   plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
-#  plt.legend(["Round 1", "Round 2", "Round 3"])
+  plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
