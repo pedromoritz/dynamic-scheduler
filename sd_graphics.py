@@ -6,16 +6,16 @@ import sys
 
 def save_graphic(value1, value2, value3, metric, filename):
   if metric == 'memory':
-    plt.ylim(0, 500)
+    plt.ylim(0, 200)
     plt.ylabel('memory (MB)')
   elif metric == 'cpu':
     plt.ylim(0, 200)
     plt.ylabel('CPU (millicpu)')
 
   x = np.arange(1)
-  y1 = [float(value1), 56, 12, 89, 67]
-  y2 = [12, 56, 78, 45, 90]
-  y3 = [14, 23, 45, 25, 89]
+  y1 = [float(value1)]
+  y2 = [float(value2)]
+  y3 = [float(value3)]
   width = 0.2
   
   plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
