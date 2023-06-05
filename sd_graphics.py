@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def save_graphic(value1, value2, value3, metric, filename):
+def save_graphic(value1, value2, value3, metric, filename, legend):
   if metric == 'memory':
     plt.ylim(0, 200)
     plt.ylabel('memory (MB)')
@@ -21,12 +21,12 @@ def save_graphic(value1, value2, value3, metric, filename):
   plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
   plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
   plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
-  plt.xticks(x, ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
+  plt.xticks(x, [legend])
   plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
   plt.clf()
 
-save_graphic(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+save_graphic(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
 
