@@ -16,11 +16,11 @@ def save_graphic(value1, value2, value3, metric, filename, legend):
   y1 = [float(value1)]
   y2 = [float(value2)]
   y3 = [float(value3)]
-  width = 0.2
+  width = 0.1
   
-  plt.bar(x-0.2, y1, width, label='kube-scheduler', color='cyan')
+  plt.bar(x-0.1, y1, width, label='kube-scheduler', color='cyan')
   plt.bar(x, y2, width, label='kse + GreedyLB', color='orange')
-  plt.bar(x+0.2, y3, width, label='kse + RefineLB', color='green')
+  plt.bar(x+0.1, y3, width, label='kse + RefineLB', color='green')
   plt.xticks(x, [legend])
   plt.legend(loc="upper left")
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
