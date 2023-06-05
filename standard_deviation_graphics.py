@@ -25,11 +25,10 @@ def save_graphic(value1, value2, value3, metric, filename):
 #  plt.cla()
 #  plt.clf()
 
-  x = np.array(["A", "B", "C", "D"])
-  y = np.array([3, 8, 1, 10])
-
+  x = np.array(['kube-scheduler', 'kse + GreedyLB', 'kse + RefineLB'])
+  y = np.array([value1, value2, value3])
   plt.bar(x,y)
-  plt.savefig(filename, dpi=400, transparent=False, bbox_inches='tight')
+  plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.legend(loc="upper left")
   plt.close()
   plt.cla()
