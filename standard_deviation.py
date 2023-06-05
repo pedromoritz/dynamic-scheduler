@@ -8,7 +8,7 @@ def get_standard_deviation(dataset):
   data_list = []
   for data in dataset:
     data_list.append(round(np.average(data), 2))
-  print(data_list)
+  #print(data_list)
   mean = sum(data_list) / len(data_list)
   variance = sum([((x - mean) ** 2) for x in data_list]) / len(data_list)
   return round(variance ** 0.5, 2)
@@ -24,14 +24,14 @@ for path in Path("results/").glob("metrics_*.csv"):
     dataset.append(list(map(lambda n: n/1024, node2_memory)))
     dataset.append(list(map(lambda n: n/1024, node3_memory)))
     dataset.append(list(map(lambda n: n/1024, node4_memory)))
-    print(FILE_NAME + "_memory: " + str(get_standard_deviation(dataset)))
+    print(FILE_NAME + "_memory," + str(get_standard_deviation(dataset)))
     # calculating cpu standard deviation
     dataset = []
     dataset.append(list(map(lambda n: n/1000000, node1_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node2_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node3_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node4_cpu)))
-    print(FILE_NAME + "_cpu: " + str(get_standard_deviation(dataset)))
+    print(FILE_NAME + "_cpu," + str(get_standard_deviation(dataset)))
   elif 'kse' in FILE_NAME:
     if 'memory' in FILE_NAME:
       # calculating memory standard deviation
@@ -40,7 +40,7 @@ for path in Path("results/").glob("metrics_*.csv"):
       dataset.append(list(map(lambda n: n/1024, node2_memory)))
       dataset.append(list(map(lambda n: n/1024, node3_memory)))
       dataset.append(list(map(lambda n: n/1024, node4_memory)))
-      print(FILE_NAME + ": " + str(get_standard_deviation(dataset)))
+      print(FILE_NAME + "," + str(get_standard_deviation(dataset)))
     elif 'cpu' in FILE_NAME:
       # calculating cpu standard deviation
       dataset = []
@@ -48,5 +48,5 @@ for path in Path("results/").glob("metrics_*.csv"):
       dataset.append(list(map(lambda n: n/1000000, node2_cpu)))
       dataset.append(list(map(lambda n: n/1000000, node3_cpu)))
       dataset.append(list(map(lambda n: n/1000000, node4_cpu)))
-      print(FILE_NAME + ": " + str(get_standard_deviation(dataset)))
+      print(FILE_NAME + "," + str(get_standard_deviation(dataset)))
 
