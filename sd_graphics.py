@@ -6,7 +6,7 @@ import sys
 
 def addlabels(x,y):
   for i in range(len(x)):
-    plt.text(i, y[i]+1, y[i], ha = 'center')
+    plt.text(i, y[i]+10, y[i], ha = 'center')
 
 def save_graphic(value1, value2, value3, metric, filename):
   if metric == 'memory':
