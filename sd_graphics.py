@@ -9,7 +9,7 @@ def save_graphic(value1, value2, value3, metric, filename, legend):
     plt.ylim(0, 200)
     plt.ylabel('memory (MB)')
   elif metric == 'cpu':
-    plt.ylim(0, 200)
+    plt.ylim(0, 500)
     plt.ylabel('CPU (millicpu)')
 
   x = np.arange(1)
