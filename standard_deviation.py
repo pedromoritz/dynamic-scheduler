@@ -4,14 +4,22 @@ import os
 from pathlib import Path
 import numpy as np
 
-def get_standard_deviation(dataset):
+def get_standard_deviation(label, dataset):
+  print('-------------------------------------------')
+  print(label)
   data_list = []
   for data in dataset:
     data_list.append(round(np.average(data), 2))
-  #print(data_list)
+  sorted_data_list = sorted(data_list)
+  min_value = sorted_data_list[0]
+  max_value = sorted_data_list[-1]
+  print(' min: ' + str(round(min_value, 2)))
+  print(' max: ' + str(round(max_value, 2)))
   mean = sum(data_list) / len(data_list)
+  print('mean: ' + str(round(mean, 2)))
   variance = sum([((x - mean) ** 2) for x in data_list]) / len(data_list)
-  return round(variance ** 0.5, 2)
+  standard_deviation = round(variance ** 0.5, 2)
+  print('  sd: ' + str(standard_deviation))
 
 for path in Path("results/").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
@@ -24,14 +32,14 @@ for path in Path("results/").glob("metrics_*.csv"):
     dataset.append(list(map(lambda n: n/1024, node2_memory)))
     dataset.append(list(map(lambda n: n/1024, node3_memory)))
     dataset.append(list(map(lambda n: n/1024, node4_memory)))
-    print(FILE_NAME + "_memory," + str(get_standard_deviation(dataset)))
+    get_standard_deviation(FILE_NAME + "_memory", dataset)
     # calculating cpu standard deviation
     dataset = []
     dataset.append(list(map(lambda n: n/1000000, node1_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node2_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node3_cpu)))
     dataset.append(list(map(lambda n: n/1000000, node4_cpu)))
-    print(FILE_NAME + "_cpu," + str(get_standard_deviation(dataset)))
+    get_standard_deviation(FILE_NAME + "_cpu", dataset)
   elif 'kse' in FILE_NAME:
     if 'memory' in FILE_NAME:
       # calculating memory standard deviation
@@ -40,7 +48,7 @@ for path in Path("results/").glob("metrics_*.csv"):
       dataset.append(list(map(lambda n: n/1024, node2_memory)))
       dataset.append(list(map(lambda n: n/1024, node3_memory)))
       dataset.append(list(map(lambda n: n/1024, node4_memory)))
-      print(FILE_NAME + "," + str(get_standard_deviation(dataset)))
+      get_standard_deviation(FILE_NAME, dataset)
     elif 'cpu' in FILE_NAME:
       # calculating cpu standard deviation
       dataset = []
@@ -48,5 +56,5 @@ for path in Path("results/").glob("metrics_*.csv"):
       dataset.append(list(map(lambda n: n/1000000, node2_cpu)))
       dataset.append(list(map(lambda n: n/1000000, node3_cpu)))
       dataset.append(list(map(lambda n: n/1000000, node4_cpu)))
-      print(FILE_NAME + "," + str(get_standard_deviation(dataset)))
+      get_standard_deviation(FILE_NAME, dataset)
 
