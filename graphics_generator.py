@@ -17,9 +17,10 @@ def save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, fi
   plt.plot(timestamp, data3, label='node 3', linewidth='2')
   plt.plot(timestamp, data4, label='node 4', linewidth='2')
   for migration in migrations:
-    plt.axvline(x = migration, color = 'red', linewidth='1', linestyle='dashed')
+    plt.axvline(x = migration, color = 'red', linewidth='0.7', linestyle='dashed')
   plt.legend(loc="upper left")
   print("Generating " + final_filename)
+  plt.axes().yaxis.grid()
   plt.savefig(final_filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.legend(loc="upper left")
   plt.close()

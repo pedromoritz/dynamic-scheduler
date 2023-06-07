@@ -40,7 +40,7 @@ def get_refinelb_plan(processors):
         continue
       # deassign best pod from donor
       donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {'memory': donor_best_pod[0]}})
+      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
       finalProcs.append(lightProc)
   for node in finalProcs:
     for pod in node['pods']:

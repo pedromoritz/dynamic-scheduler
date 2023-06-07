@@ -19,6 +19,7 @@ def save_graphic(value1, value2, value3, filename):
   y = [value1, value2, value3]
   plt.bar(x, y)
   addlabels(x, y)
+  plt.axes().yaxis.grid()
   plt.savefig('results/'+filename, dpi=400, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
