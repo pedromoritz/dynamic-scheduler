@@ -8,11 +8,11 @@ def addlabels(x,y):
   for i in range(len(x)):
     plt.text(i, y[i]+5, y[i], ha = 'center')
 
-def save_graphic(value1, value2, value3, metric, filename):
-  if metric == 'memory':
+def save_graphic(value1, value2, value3, filename):
+  if 'memory' in filename:
     plt.ylim(0, 200)
     plt.ylabel('memory (MB)')
-  elif metric == 'cpu':
+  elif 'cpu' in filename:
     plt.ylim(0, 500)
     plt.ylabel('CPU (millicpu)')
   x = ['kube-scheduler', 'kse + GreedyLB', 'kse + RefineLB']
@@ -24,5 +24,5 @@ def save_graphic(value1, value2, value3, metric, filename):
   plt.cla()
   plt.clf()
 
-save_graphic(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), sys.argv[4], sys.argv[5])
+save_graphic(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), sys.argv[4])
 
