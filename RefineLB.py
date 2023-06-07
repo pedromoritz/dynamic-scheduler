@@ -19,32 +19,29 @@ def get_refinelb_plan(processors):
   # calculating threshold
   procs_values = list(map(lambda n: n['usage'][METRIC], processors))
   procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0) 
-  margin = 1.002 # >= 1.002
+  margin = 1.003 # >= 1.003
   threshold = procs_average * margin
   # defining heavyProcs and lightProcs based on threshold
   for processor in processors:
-    if int(processor['usage'][METRIC]) > threshold:
-      heavyProcs.append(processor)
-    else:
+    if int(processor['usage'][METRIC]) < threshold:
       lightProcs.append(processor)
+    else:
+      heavyProcs.append(processor)
   heavyProcsMapped = list(map(lambda n: (n['usage'][METRIC], n['name']), heavyProcs))
   heapq._heapify_max(heavyProcsMapped)
   finalProcs = []
   while len(heavyProcs) > 0:
     donor = heapq._heappop_max(heavyProcs)
-    while len(lightProcs) > 0:
-      lightProc = lightProcs.pop()
+    for lightProc in lightProcs:
       pods_from_donor = donor['pods']
-      pods_from_donor_sorted = list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor))
-      donor_best_pod = pods_from_donor_sorted[-1]
-      if donor_best_pod[0] + lightProc['usage'][METRIC] < procs_average:
-        break
-    donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-    finalProcs.append(donor)
-    lightProcPods = lightProc['pods']
-    lightProcPods.append({'name': donor_best_pod[1]})
-    lightProc['pods'] = lightProcPods
-    finalProcs.append(lightProc)
+      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
+      donor_best_pod = pods_from_donor_sorted[0]
+      if donor_best_pod[0] + lightProc['usage'][METRIC] > procs_average:
+        continue
+      # deassign best pod from donor
+      donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {'memory': donor_best_pod[0]}})
+      finalProcs.append(lightProc)
   for node in finalProcs:
     for pod in node['pods']:
       allocation_plan[pod['name']] = node['name'] 
