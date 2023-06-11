@@ -69,7 +69,8 @@ for path in Path("results/").glob("metrics_*.csv"):
       ylabel = 'memory (MB)'
       final_filename = FILE_NAME + '.png'
       MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-      migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+      if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
+        migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
       save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
     elif 'cpu' in FILE_NAME:
       # generating cpu graphics
@@ -82,5 +83,6 @@ for path in Path("results/").glob("metrics_*.csv"):
       ylabel = 'CPU (millicpu)'
       final_filename = FILE_NAME + '.png'
       MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-      migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+      if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
+        migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
       save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
