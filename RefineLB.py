@@ -13,6 +13,7 @@ COUNTER = 0
 METRIC = sys.argv[6]
 
 def get_refinelb_plan(processors):
+  #printj(processors)
   allocation_plan = {}
   heavyProcs = []
   lightProcs = []
@@ -30,18 +31,44 @@ def get_refinelb_plan(processors):
   heavyProcsMapped = list(map(lambda n: (n['usage'][METRIC], n['name']), heavyProcs))
   heapq._heapify_max(heavyProcsMapped)
   finalProcs = []
+  print(lightProcs)
+  print('')
+  print(heavyProcs)
+  print('')
   while len(heavyProcs) > 0:
     donor = heapq._heappop_max(heavyProcs)
+    print('donor')
+    print(donor)
+    print('')
     for lightProc in lightProcs:
+      print('lightProc')
+      print(lightProc)
+      print('')
       pods_from_donor = donor['pods']
+      print('pods_from_donor')
+      print(pods_from_donor)
+      print('')
       pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
+      #print(pods_from_donor_sorted)
+      print('donor_best_pod')
       donor_best_pod = pods_from_donor_sorted[0]
-      if donor_best_pod[0] + lightProc['usage'][METRIC] > procs_average:
-        continue
-      # deassign best pod from donor
-      donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
-      finalProcs.append(lightProc)
+      print(donor_best_pod)
+      print('')
+      print(donor_best_pod[0] + lightProc['usage'][METRIC])
+      print(procs_average)
+      print('')
+      if donor_best_pod[0] + lightProc['usage'][METRIC] < procs_average:
+        print('opa!')
+        print('')
+        break
+    # deassign best pod from donor
+    print('deassign')
+    donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+    #print('lightProc-->')
+    #print(lightProc)
+    lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {'memory': donor_best_pod[0]}})
+    #print(lightProc)
+    finalProcs.append(lightProc)
   for node in finalProcs:
     for pod in node['pods']:
       allocation_plan[pod['name']] = node['name'] 
