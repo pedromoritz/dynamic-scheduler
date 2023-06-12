@@ -14,6 +14,7 @@ METRIC = sys.argv[6]
 
 
 def get_refinelb_plan(processors):
+  print('------------------------------------')
   #printj(processors)
   print(processors[0]['usage'][METRIC])
   print(processors[1]['usage'][METRIC])
