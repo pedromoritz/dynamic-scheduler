@@ -12,10 +12,8 @@ INTERVAL = 60
 COUNTER = 0
 METRIC = sys.argv[6]
 
-
 def get_refinelb_plan(processors):
   print('------------------------------------')
-  #printj(processors)
   print(processors[0]['usage'][METRIC])
   print(processors[1]['usage'][METRIC])
   print(processors[2]['usage'][METRIC])
@@ -34,15 +32,10 @@ def get_refinelb_plan(processors):
       lightProcs.append(processor)
     else:
       heavyProcs.append(processor)
-  heavyProcsMapped = list(map(lambda n: (n['usage'][METRIC], n['name']), heavyProcs))
-  heapq._heapify_max(heavyProcsMapped)
+  heavyProcs.sort(key=lambda x: x['usage'][METRIC])
   finalProcs = []
-  print(lightProcs)
-  print('')
-  print(heavyProcs)
-  print('')
   while len(heavyProcs) > 0:
-    donor = heapq._heappop_max(heavyProcs)
+    donor = heavyProcs.pop()
     print('donor')
     print(donor)
     print('')
