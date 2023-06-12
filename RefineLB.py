@@ -53,7 +53,7 @@ def get_refinelb_plan(processors):
       print('pods_from_donor')
       print(pods_from_donor)
       print('')
-      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
+      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=False)
       #print(pods_from_donor_sorted)
       print('donor_best_pod')
       donor_best_pod = pods_from_donor_sorted[0]
