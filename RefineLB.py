@@ -12,15 +12,20 @@ INTERVAL = 60
 COUNTER = 0
 METRIC = sys.argv[6]
 
+
 def get_refinelb_plan(processors):
   #printj(processors)
+  print(processors[0]['usage'][METRIC])
+  print(processors[1]['usage'][METRIC])
+  print(processors[2]['usage'][METRIC])
+  print(processors[3]['usage'][METRIC])
   allocation_plan = {}
   heavyProcs = []
   lightProcs = []
   # calculating threshold
   procs_values = list(map(lambda n: n['usage'][METRIC], processors))
   procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0) 
-  margin = 1.003 # >= 1.003
+  margin = 1.003
   threshold = procs_average * margin
   # defining heavyProcs and lightProcs based on threshold
   for processor in processors:
@@ -57,18 +62,18 @@ def get_refinelb_plan(processors):
       print(donor_best_pod[0] + lightProc['usage'][METRIC])
       print(procs_average)
       print('')
-      if donor_best_pod[0] + lightProc['usage'][METRIC] < procs_average:
-        print('opa!')
-        print('')
-        break
-    # deassign best pod from donor
-    print('deassign')
-    donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-    #print('lightProc-->')
-    #print(lightProc)
-    lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {'memory': donor_best_pod[0]}})
-    #print(lightProc)
-    finalProcs.append(lightProc)
+      if donor_best_pod[0] + lightProc['usage'][METRIC] >= procs_average:
+        continue
+      # deassign best pod from donor
+      print('deassign')
+      print(donor_best_pod[1] + ' <-- ' + donor['name'])
+      donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+      print('')
+      print('assign')
+      print(donor_best_pod[1] + ' --> ' + lightProc['name'])
+      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
+      print('')
+      finalProcs.append(lightProc)
   for node in finalProcs:
     for pod in node['pods']:
       allocation_plan[pod['name']] = node['name'] 
