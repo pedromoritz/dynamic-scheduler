@@ -25,9 +25,17 @@ for (let i = 0; i < parseInt(__ENV.PA); i++) {
   urls.push(`${API_BASE_URL}:31${String(i+1).padStart(3, '0')}`)
 }
 
+let summaryKey = `results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}.html`;
+let summaryValue = `${__ENV.ST} - ${__ENV.PA} pods - ${__ENV.TA} requests per second with ${__ENV.DI} distribution`
+
+if (__ENV.ME) {
+  summaryKey = `results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}_${__ENV.ME}.html`;
+  summaryValue = `${__ENV.ST} - ${__ENV.PA} pods - ${__ENV.TA} requests per second with ${__ENV.DI} distribution (${__ENV.ME} as metric)`;
+}
+
 export function handleSummary(data) {
   return {
-    [`results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}_${__ENV.ME}.html`]: reportHTML(data, {title:`${__ENV.ST} - ${__ENV.PA} pods - ${__ENV.TA} requests per second with ${__ENV.DI} distribution (${__ENV.ME} as metric)`})
+    [summaryKey]: reportHTML(data, {title: summaryValue})
   };
 }
 
