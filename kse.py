@@ -24,7 +24,7 @@ class Cluster:
           node_cpu = 0
           if response and response['usage']:
             node_memory = Utils.get_memory_integer(response['usage']['memory'])
-            node_cpu = int(response['usage']['cpu'][:-1])
+            node_cpu = Utils.get_cpu_integer(response['usage']['cpu'])
           ready_nodes.append({
             'name': node.metadata.name,
             'pods': self.get_pods_from_node(node.metadata.name),
@@ -199,3 +199,11 @@ class Utils:
       memory_integer = int(memory_string[:-2]) * 1024
     return memory_integer
 
+  def get_cpu_integer(cpu_string):
+    cpu_integer = 0
+    unit = cpu_string[-1:]
+    if unit == 'n':
+      cpu_integer = int(cpu_string[:-1])
+    else:
+      cpu_integer = int(cpu_string[:-1]) * 1000
+    return cpu_integer
