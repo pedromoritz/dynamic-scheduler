@@ -117,7 +117,7 @@ class Node:
         pod_cpu = 0
         if response and response['containers']:
           pod_memory = Utils.get_memory_integer(response['containers'][0]['usage']['memory'])
-          pod_cpu = int(response['containers'][0]['usage']['cpu'][:-1])
+          pod_cpu = Utils.get_cpu_integer(response['containers'][0]['usage']['cpu'])
         pods.append({
           'name': item.metadata.name,
           'usage': {
