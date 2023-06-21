@@ -30,14 +30,7 @@ spec:
     spec:
       containers:
       - name: workloadapp
-        readinessProbe:
-          periodSeconds: 2
-          httpGet:
-            path: /health.php
-            port: 80
-          initialDelaySeconds: 10
-          periodSeconds: 5
-        image: pmoritz/workloadapp:1.1.12
+        image: pmoritz/workloadapp-{{METRIC}}:0.0.1
         imagePullPolicy: IfNotPresent
         ports:
           - name: http

@@ -1,2 +1,7 @@
-docker build --progress=plain --rm -t pmoritz/workloadapp:1.1.12 .
-docker push pmoritz/workloadapp:1.1.12
+RELEASE=0.0.1
+
+docker build --progress=plain --rm -f Dockerfile-memory -t pmoritz/workloadapp-memory:${RELEASE} .
+docker push pmoritz/workloadapp-memory:${RELEASE}
+
+docker build --progress=plain --rm -f Dockerfile-cpu -t pmoritz/workloadapp-cpu:${RELEASE} .
+docker push pmoritz/workloadapp-cpu:${RELEASE}

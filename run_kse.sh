@@ -29,6 +29,7 @@ test()
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
     template=`echo "$template" | sed "s/{{NODE_NAME}}/$NODE_NAME/g"`
+    template=`echo "$template" | sed "s/{{METRIC}}/$ME/g"`
     echo "$template" | kubectl apply -f -
   done
 
