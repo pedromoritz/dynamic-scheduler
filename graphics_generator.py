@@ -54,7 +54,7 @@ for path in Path("results/").glob("metrics_*.csv"):
 
   migrations = []
 
-  if 'kube-scheduler' in FILE_NAME:
+  if 'memory' in FILE_NAME:
     # generating memory graphics
     data1 = list(map(lambda n: n/1024, node1_memory))
     data2 = list(map(lambda n: n/1024, node2_memory))
@@ -63,8 +63,7 @@ for path in Path("results/").glob("metrics_*.csv"):
     xlabel = 'time (s)'
     ylim = 2048
     ylabel = 'memory (MB)'
-    final_filename = FILE_NAME + '_memory.png'
-    save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+  elif 'cpu' in FILE_NAME:
     # generating cpu graphics
     data1 = list(map(lambda n: n/1000000, node1_cpu))
     data2 = list(map(lambda n: n/1000000, node2_cpu))
@@ -73,34 +72,10 @@ for path in Path("results/").glob("metrics_*.csv"):
     xlabel = 'time (s)'
     ylim = 2000
     ylabel = 'CPU (millicpu)'
-    final_filename = FILE_NAME + '_cpu.png'
-    save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
-  elif 'kse' in FILE_NAME:
-    if 'memory' in FILE_NAME:
-      # generating memory graphics
-      data1 = list(map(lambda n: n/1024, node1_memory))
-      data2 = list(map(lambda n: n/1024, node2_memory))
-      data3 = list(map(lambda n: n/1024, node3_memory))
-      data4 = list(map(lambda n: n/1024, node4_memory))
-      xlabel = 'time (s)'
-      ylim = 2048
-      ylabel = 'memory (MB)'
-      final_filename = FILE_NAME + '.png'
-      MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-      if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
-        migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
-      save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
-    elif 'cpu' in FILE_NAME:
-      # generating cpu graphics
-      data1 = list(map(lambda n: n/1000000, node1_cpu))
-      data2 = list(map(lambda n: n/1000000, node2_cpu))
-      data3 = list(map(lambda n: n/1000000, node3_cpu))
-      data4 = list(map(lambda n: n/1000000, node4_cpu))
-      xlabel = 'time (s)'
-      ylim = 2000
-      ylabel = 'CPU (millicpu)'
-      final_filename = FILE_NAME + '.png'
-      MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
-      if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
-        migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
-      save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+  final_filename = FILE_NAME + '.png'
+  MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
+  if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
+    migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+  save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+
+
