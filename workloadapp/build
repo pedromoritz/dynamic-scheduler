@@ -1,4 +1,4 @@
-RELEASE=0.0.2
+RELEASE=0.0.3
 
 docker build --progress=plain --rm -f Dockerfile-memory -t pmoritz/workloadapp-memory:${RELEASE} .
 docker push pmoritz/workloadapp-memory:${RELEASE}
