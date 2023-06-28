@@ -15,7 +15,7 @@ def save_graphic(value1, value2, value3, filename):
   elif 'cpu' in filename:
     plt.ylim(0, 500)
     plt.ylabel('CPU (millicpu)')
-  x = ['kube-scheduler', 'kse + GreedyLB', 'kse + RefineLB']
+  x = ['kube-scheduler', 'KSE+GreedyLB', 'KSE+RefineLB']
   y = [value1, value2, value3]
   plt.bar(x, y)
   addlabels(x, y)
@@ -25,5 +25,7 @@ def save_graphic(value1, value2, value3, filename):
   plt.cla()
   plt.clf()
 
-save_graphic(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), sys.argv[4])
-
+if len(sys.argv) == 5:
+  save_graphic(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), sys.argv[4])
+else:
+  print("usage: ./sd_graphics.sh <kube-scheduler> <KSE+GreedyLB> <KSE+RefineLB> <FILENAME>")
