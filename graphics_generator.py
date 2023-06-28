@@ -22,7 +22,7 @@ def get_standard_deviation(dataset):
   return [min_value, max_value, round(mean, 2), standard_deviation]
 
 def save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations):
-  plt.xlim(0, 1800)
+  plt.xlim(0, 600)
   plt.xlabel(xlabel)
   plt.ylim(0, ylim)
   plt.ylabel(ylabel)
