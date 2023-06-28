@@ -26,7 +26,7 @@ scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
 scheduler.start()
 
 # keeping script running
-while COUNTER <= 1800:
+while COUNTER <= 600:
   try:
     time.sleep(0.1)
   except KeyboardInterrupt:

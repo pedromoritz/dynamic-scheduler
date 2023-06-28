@@ -10,7 +10,7 @@ export const options = {
       executor: 'ramping-vus',
       startVUs: 0,
       stages: [
-        { duration: '30m', target: parseInt(__ENV.TA)},
+        { duration: '10m', target: parseInt(__ENV.TA)},
       ],
       gracefulRampDown: '0s',
     },
@@ -26,7 +26,7 @@ for (let i = 0; i < parseInt(__ENV.PA); i++) {
 }
 
 let summaryKey = `results/summary_${__ENV.ST}_${__ENV.PA}_${__ENV.TA}_${__ENV.RT}_${__ENV.DI}_${__ENV.ME}.html`;
-let summaryValue = `${__ENV.ST} - ${__ENV.PA} pods - ${__ENV.TA} requests per second with ${__ENV.DI} distribution (${__ENV.ME} as metric)`;
+let summaryValue = `${__ENV.ST} - ${__ENV.PA} pods - ramping from 0 to ${__ENV.TA} virtual users with ${__ENV.DI} distribution (${__ENV.ME} as metric)`;
 
 export function handleSummary(data) {
   return {
