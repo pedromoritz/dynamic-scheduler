@@ -6,9 +6,9 @@ clean()
   sleep 60
 }
 
-# 20 40 constant
+# constant exponential
 clean
-./run_kube-scheduler.sh pod_amount=20 target=40 rate_type=constant distribution=exponential metric=memory
+./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=memory
 clean
 ./run_kse.sh scheduler=GreedyLB pod_amount=20 target=40 rate_type=constant distribution=exponential metric=memory
 clean
@@ -21,6 +21,7 @@ clean
 clean
 ./run_kse.sh scheduler=RefineLB pod_amount=20 target=40 rate_type=constant distribution=exponential metric=cpu
 
+# constant normal
 clean
 ./run_kube-scheduler.sh pod_amount=20 target=40 rate_type=constant distribution=normal metric=memory
 clean
@@ -35,7 +36,7 @@ clean
 clean
 ./run_kse.sh scheduler=RefineLB pod_amount=20 target=40 rate_type=constant distribution=normal metric=cpu
 
-# 20 40 ramp
+# ramp exponential
 clean
 ./run_kube-scheduler.sh pod_amount=20 target=40 rate_type=ramp distribution=exponential metric=memory
 clean
@@ -50,6 +51,7 @@ clean
 clean
 ./run_kse.sh scheduler=RefineLB pod_amount=20 target=40 rate_type=ramp distribution=exponential metric=cpu
 
+# ramp normal
 clean
 ./run_kube-scheduler.sh pod_amount=20 target=40 rate_type=ramp distribution=normal metric=memory
 clean
