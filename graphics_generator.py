@@ -50,7 +50,7 @@ def save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, fi
 for path in Path("results/").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
   print("Reading " + str(path))
-  timestamp, node1_pod_amount, node1_memory, node1_cpu, node2_pod_amount, node2_memory, node2_cpu, node3_pod_amount, node3_memory, node3_cpu, node4_pod_amount, node4_memory, node4_cpu = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1)
+  timestamp, node1_pod_amount, node1_memory, node1_cpu, node2_pod_amount, node2_memory, node2_cpu, node3_pod_amount, node3_memory, node3_cpu, node4_pod_amount, node4_memory, node4_cpu = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1, ndmin=1)
 
   migrations = []
 
@@ -75,7 +75,7 @@ for path in Path("results/").glob("metrics_*.csv"):
   final_filename = FILE_NAME + '.png'
   MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
   if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
-    migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0])
+    migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0], ndmin=1)
   save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
 
 
