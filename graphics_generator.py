@@ -50,8 +50,10 @@ def save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, fi
 for path in Path("results/").glob("metrics_*.csv"):
   FILE_NAME, FILE_EXTENSION = os.path.splitext(path)
   print("Reading " + str(path))
-  timestamp, node1_pod_amount, node1_memory, node1_cpu, node2_pod_amount, node2_memory, node2_cpu, node3_pod_amount, node3_memory, node3_cpu, node4_pod_amount, node4_memory, node4_cpu = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1, ndmin=1)
-
+  try:
+    timestamp, node1_pod_amount, node1_memory, node1_cpu, node2_pod_amount, node2_memory, node2_cpu, node3_pod_amount, node3_memory, node3_cpu, node4_pod_amount, node4_memory, node4_cpu = np.loadtxt(FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=1, ndmin=1)
+  except Exception:
+    print('error ---> ' + FILE_NAME + '.csv')
   migrations = []
 
   if 'memory' in FILE_NAME:
