@@ -21,7 +21,7 @@ def get_standard_deviation(dataset):
   standard_deviation = round(variance ** 0.5, 2)
   return [min_value, max_value, round(mean, 2), standard_deviation]
 
-def save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations):
+def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations):
   plt.xlim(0, 600)
   plt.xlabel(xlabel)
   plt.ylim(0, ylim)
@@ -75,7 +75,7 @@ for path in Path("results/").glob("metrics_*.csv"):
     MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
     if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
       migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0], ndmin=1)
-    save_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
+    save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations)
   except Exception:
     print('error ---> ' + FILE_NAME + '.csv')
 
