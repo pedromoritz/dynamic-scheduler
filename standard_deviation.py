@@ -88,5 +88,10 @@ for path in sorted(Path("results/").glob("metrics_*.csv"), reverse=True):
     }
 
 for key in sd:
-  print(key)
+  algo = 'kube-scheduler'
+  print(algo+','+key+','+sd[key][algo]['min']+','+sd[key][algo]['max']+','+sd[key][algo]['mean']+','+sd[key][algo]['sd'])
+  algo = 'kse-GreedyLB'
+  print(algo+','+key+','+sd[key][algo]['min']+','+sd[key][algo]['max']+','+sd[key][algo]['mean']+','+sd[key][algo]['sd'])
+  algo = 'kse-RefineLB'
+  print(algo+','+key+','+sd[key][algo]['min']+','+sd[key][algo]['max']+','+sd[key][algo]['mean']+','+sd[key][algo]['sd'])
   save_graphic(float(sd[key]['kube-scheduler']['sd']), float(sd[key]['kse-GreedyLB']['sd']), float(sd[key]['kse-RefineLB']['sd']), key+'.png')
