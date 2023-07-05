@@ -31,43 +31,43 @@
       let distributions = ['exponential', 'normal'];
       let metrics = ['memory', 'cpu'];
       pods.forEach((pod) => {
-      targets.forEach((target) => {
-      rates.forEach((rate) => {
-      distributions.forEach((distribution) => {
-      metrics.forEach((metric) => {
-        scenario = scenario +
-        `<hr>\
-        <h3>${pod} pods, ${target} requests/second, ${rate}, ${distribution} distribution, ${metric}</h3>\
-        <table>\
-          <tr>\
-            <th>kube-scheduler</th>\
-            <th>KSE+GreedyLB</th>\
-            <th>KSE+RefineLB</th>\
-            <th>Standard Deviation</th>\
-            <th>Mean Absolute Error</th>\
-          </tr>\
-          <tr>\
-            <td>\
-              <img src="../results/metrics_kube-scheduler_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-            </td>\
-            <td>\
-              <img src="../results/metrics_kse-GreedyLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-            </td>\
-            <td>\
-              <img src="../results/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-            </td>\
-            <td>\
-              <img src="../results/standard-deviation_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-            </td>\
-            <td>\
-              <img src="../results/mae_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-            </td>\
-          </tr>\
-        </table>`;
-      });
-      });    
-      });
-      });
+        targets.forEach((target) => {
+          rates.forEach((rate) => {
+            distributions.forEach((distribution) => {
+              metrics.forEach((metric) => {
+                scenario = scenario +
+                `<hr>\
+                <h3>${pod} pods, ${target} requests/second, ${rate}, ${distribution} distribution, ${metric}</h3>\
+                <table>\
+                  <tr>\
+                    <th>kube-scheduler</th>\
+                    <th>KSE+GreedyLB</th>\
+                    <th>KSE+RefineLB</th>\
+                    <th>Standard Deviation</th>\
+                    <th>Mean Absolute Error</th>\
+                  </tr>\
+                  <tr>\
+                    <td>\
+                      <img src="../results/metrics_kube-scheduler_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                    </td>\
+                    <td>\
+                      <img src="../results/metrics_kse-GreedyLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                    </td>\
+                    <td>\
+                      <img src="../results/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                    </td>\
+                    <td>\
+                      <img src="../results/standard-deviation_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                    </td>\
+                    <td>\
+                      <img src="../results/mae_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                    </td>\
+                  </tr>\
+                </table>`;
+              });
+            });    
+          });
+        });
       });
       document.write(scenario);
     </script>
