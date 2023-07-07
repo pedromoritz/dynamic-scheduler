@@ -41,7 +41,7 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   dataset.append(data3)
   dataset.append(data4)
   plt.axhline(y = get_standard_deviation(dataset)[2], color = 'gray', linewidth='0.7')
-  plt.savefig(final_filename, dpi=400, transparent=False, bbox_inches='tight')
+  plt.savefig(final_filename, dpi=150, transparent=False, bbox_inches='tight')
   plt.legend(loc="upper left")
   plt.close()
   plt.cla()

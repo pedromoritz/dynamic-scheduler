@@ -23,7 +23,7 @@ def save_graphic(value1, value2, value3, filename):
   y = [value1, value2, value3]
   plt.bar(x, y)
   addlabels(x, y)
-  plt.savefig('results/mae_'+filename, dpi=400, transparent=False, bbox_inches='tight')
+  plt.savefig('results/mae_'+filename, dpi=150, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
   plt.clf()
@@ -85,10 +85,14 @@ for path in sorted(Path("results/").glob("metrics_*.csv"), reverse=True):
     }
 
 for key in sd:
-  algo = 'kube-scheduler'
-  print(algo+','+key+','+sd[key][algo]['mae'])
-  algo = 'kse-GreedyLB'
-  print(algo+','+key+','+sd[key][algo]['mae'])
-  algo = 'kse-RefineLB'
-  print(algo+','+key+','+sd[key][algo]['mae'])
-  save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
+  try:
+    algo = 'kube-scheduler'
+    print(algo+','+key+','+sd[key][algo]['mae'])
+    algo = 'kse-GreedyLB'
+    print(algo+','+key+','+sd[key][algo]['mae'])
+    algo = 'kse-RefineLB'
+    print(algo+','+key+','+sd[key][algo]['mae'])
+    save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
+  except Exception as error:
+    print(error)
+
