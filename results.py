@@ -92,19 +92,32 @@ targets = [20, 40]
 rates = ['constant', 'ramp']
 distributions = ['exponential', 'normal']
 metrics = ['memory', 'cpu']
+algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
 
 def get_migrations_count(filename):
-  with open(r"results/migrations_"+filename+'.csv', 'r') as fp:
-    return len(fp.readlines())
+  try:
+    with open(r"results/migrations_"+filename+'.csv', 'r') as fp:
+      return len(fp.readlines())
+  except Exception as error:
+    return 0
 
 def get_requests_count(filename):
-  with open(r"results/summary_"+filename+'.html', 'r') as fp:
-    soup = BeautifulSoup(fp, "html.parser")
-    elements = soup.find_all("div", class_="bignum")
+  try:
+    with open(r"results/summary_"+filename+'.html', 'r') as fp:
+      soup = BeautifulSoup(fp, "html.parser")
+      elements = soup.find_all("div", class_="bignum")
+      return {
+        'total': elements[0].string,
+        'failed': elements[1].string
+      }
+  except Exception as error:
     return {
-      'total': elements[0].string,
-      'failed': elements[1].string
+      'total': 0,
+      'failed': 0
     }
+
+def get_availability(total, failed):
+  return str(round((total - failed) / ((total - failed) + failed) * 100, 2))
 
 for pod in pods:
   for target in targets:
@@ -112,24 +125,16 @@ for pod in pods:
       for distribution in distributions:
         for metric in metrics:
           key = str(pod) + '_' + str(target) + '_' + rate + '_' + distribution + '_' + metric
-          try:
-            # kube-scheduler
-            algo = 'kube-scheduler'
-            count = 0
-            requests = get_requests_count(algo+'_'+key)
-            print(key+','+algo+','+sd[key][algo]['mae']+','+str(count)+','+str(requests['total'])+','+str(requests['failed']))
-            # kse-GreedyLB
-            algo = 'kse-GreedyLB'
-            count = get_migrations_count(algo+'_'+key)
-            requests = get_requests_count(algo+'_'+key)
-            print(key+','+algo+','+sd[key][algo]['mae']+','+str(count)+','+str(requests['total'])+','+str(requests['failed']))
-            # kse-RefineLB
-            algo = 'kse-RefineLB'
-            count = get_migrations_count(algo+'_'+key)
-            requests = get_requests_count(algo+'_'+key)
-            print(key+','+algo+','+sd[key][algo]['mae']+','+str(count)+','+str(requests['total'])+','+str(requests['failed']))
-            # saving graphic
-            #save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
-          except Exception as error:
-            print(error)
+          for algo in algos:
+            try:
+              count = get_migrations_count(algo+'_'+key)
+              requests = get_requests_count(algo+'_'+key)
+              total = str(requests['total'])
+              failed = str(requests['failed'])
+              scenario = '\multirow{3}{*}{1}' if algo == 'kube-scheduler' else ''
+              print(scenario+' & '+algo+' & '+sd[key][algo]['mae']+' & '+str(count)+' & '+total+' & '+failed+' & '+get_availability(int(total), int(failed))+'\%\\\\')
+            except Exception as error:
+              print(error)
+          # saving graphic
+          save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
 
