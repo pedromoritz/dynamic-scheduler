@@ -9,6 +9,13 @@ from bs4 import BeautifulSoup
 
 sd = defaultdict(dict)
 
+pods = [20, 40]
+targets = [20, 40]
+rates = ['constant', 'ramp']
+distributions = ['exponential', 'normal']
+metrics = ['memory', 'cpu']
+algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
+
 def addlabels(x,y):
   for i in range(len(x)):
     plt.text(i, y[i]+5, y[i], ha = 'center')
@@ -86,13 +93,6 @@ def get_datasets():
       }
 
 get_datasets()
-
-pods = [20, 40]
-targets = [20, 40]
-rates = ['constant', 'ramp']
-distributions = ['exponential', 'normal']
-metrics = ['memory', 'cpu']
-algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
 
 def get_migrations_count(filename):
   try:

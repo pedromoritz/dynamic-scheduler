@@ -35,7 +35,7 @@ def get_refinelb_plan(processors):
       pods_from_donor = donor['pods']
       pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=False)
       donor_best_pod = pods_from_donor_sorted[0]
-      if donor_best_pod[0] + lightProc['usage'][METRIC] >= procs_average:
+      if donor_best_pod[0] + lightProc['usage'][METRIC] >= threshold:
         continue
       # deassign best pod from donor
       donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
