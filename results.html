@@ -11,7 +11,7 @@
 
       div img {
         display:inline-block;
-        width:300px;
+	width: 400px;
       }
 
       div:after {
@@ -23,6 +23,18 @@
   </head>
   <body>
     <div>
+      <hr>
+        <h3>normal distribution, metric memory</h3>
+        <img class="l" src="./results/grouped_normal_memory.png">
+      <hr> 
+        <h3>normal distribution, metric cpu</h3>
+	<img src="./results/grouped_normal_cpu.png">
+      <hr> 
+        <h3>exponential distribution, metric memory</h3>
+	<img src="./results/grouped_exponential_memory.png">
+      <hr>
+        <h3>exponential distribution, metric cpu</h3>
+	<img src="./results/grouped_exponential_cpu.png">
     <script>
       let scenario = '';
       let pods = [20, 40];
@@ -44,7 +56,6 @@
                     <th>kube-scheduler</th>\
                     <th>KSE+GreedyLB</th>\
                     <th>KSE+RefineLB</th>\
-                    <th>Standard Deviation</th>\
                     <th>Mean Absolute Error</th>\
                   </tr>\
                   <tr>\
@@ -56,9 +67,6 @@
                     </td>\
                     <td>\
                       <img src="./results/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
-                    </td>\
-                    <td>\
-                      <img src="./results/standard-deviation_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
                     </td>\
                     <td>\
                       <img src="./results/mae_${pod}_${target}_${rate}_${distribution}_${metric}.png">\

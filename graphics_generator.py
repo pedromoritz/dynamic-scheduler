@@ -32,8 +32,8 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   plt.plot(timestamp, data4, label='node 4', linewidth='2')
   if isinstance(migrations, Iterable):
     for migration in migrations:
-      plt.axvline(x = migration, color = 'red', linewidth='0.7', linestyle='dashed')
-  plt.legend(loc="upper left")
+      plt.axvline(x = migration, color = 'red', linewidth='0.5', linestyle='dashed')
+  plt.legend(loc="lower right")
   print("Generating " + final_filename)
   dataset = []
   dataset.append(data1)
@@ -42,7 +42,6 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   dataset.append(data4)
   plt.axhline(y = get_standard_deviation(dataset)[2], color = 'gray', linewidth='0.7')
   plt.savefig(final_filename, dpi=150, transparent=False, bbox_inches='tight')
-  plt.legend(loc="upper left")
   plt.close()
   plt.cla()
   plt.clf()
