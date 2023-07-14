@@ -47,16 +47,17 @@ def save_grouped_graphics(distribution, metric):
   for attribute, measurement in mae_data.items():
     offset = width * multiplier
     rects = ax.bar(x + offset, measurement, width, label=attribute)
-    ax.bar_label(rects, padding=3)
+    ax.bar_label(rects, padding=3, rotation=90)
     multiplier += 1
   if metric == 'memory':
-    ax.set_ylim(0, 300)
-    ax.set_ylabel('memory (MB)')
+    ax.set_ylim(0, 350)
+    ax.set_ylabel('memory (MB)', fontsize=12)
   elif metric == 'cpu':
-    ax.set_ylim(0, 600)
-    ax.set_ylabel('CPU (millicpu)')
-  ax.set_xticks(x + width, scenarios)
-  ax.legend(loc='upper right', ncols=3)
+    ax.set_ylim(0, 700)
+    ax.set_ylabel('CPU (millicpu)', fontsize=12)
+  ax.set_xticks(x + width, scenarios, fontsize=12)
+  ax.tick_params(axis='y', labelsize=12)
+  ax.legend(loc='upper right', ncols=3, fontsize=12)
   plt.savefig('results/grouped_'+distribution+'_'+metric+'.png', dpi=150, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
