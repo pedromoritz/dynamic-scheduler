@@ -69,7 +69,7 @@ def get_refinelb_plan(processors):
         print(lightProcs[index]['usage']['memory'])
         lightProcs[index]['usage']['memory'] = lightProcs[index]['usage']['memory'] + donor_best_pod[0]
         print(lightProcs[index]['usage']['memory'])
-        allocation_plan[lightProc['name']] = donor_best_pod[1]
+        allocation_plan[donor_best_pod[1]] = lightProc['name']
   #for node in finalProcs:
   #  for pod in node['pods']:
   #    allocation_plan[pod['name']] = node['name']
