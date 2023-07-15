@@ -62,13 +62,12 @@ def get_refinelb_plan(processors):
         continue
       else:
         print('------> pod choosed')
+        print(lightProcs[index]['usage']['memory'])
         # deassign best pod from donor
         donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
         # reassign best pod
         lightProcs[index]['usage']['memory'] = lightProcs[index]['usage']['memory'] + donor_best_pod[0]
-        print(lightProcs[index]['usage']['memory'])
         allocation_plan[donor_best_pod[1]] = lightProc['name']
-        break
   return dict(sorted(allocation_plan.items()))
 
 # workflow definitions
