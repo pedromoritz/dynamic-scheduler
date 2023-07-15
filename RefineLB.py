@@ -30,7 +30,7 @@ def get_refinelb_plan(processors):
     else:
       heavyProcs.append(processor)
   heavyProcs.sort(key=lambda x: x['usage'][METRIC])
-  lightProcs.sort(key=lambda x: x['usage'][METRIC], reverse=True)
+  lightProcs.sort(key=lambda x: x['usage'][METRIC])
   finalProcs = []
   print(lightProcs)
   print(heavyProcs)
@@ -62,7 +62,7 @@ def get_refinelb_plan(processors):
         continue
       else:
         # deassign best pod from donor
-        # donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+        donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
         #lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
         #finalProcs.append(lightProc)
         print('beleza')
