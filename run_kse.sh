@@ -12,6 +12,7 @@ test()
   # purging old files
   rm results/*_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.*
   touch results/metrics_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.csv
+  touch results/migrations_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.csv
 
   # defining scheduler
   SCHEDULER="schedulerName: kse"
