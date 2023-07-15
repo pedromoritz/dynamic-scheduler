@@ -68,7 +68,6 @@ def get_refinelb_plan(processors):
         lightProcs[index]['usage']['memory'] = lightProcs[index]['usage']['memory'] + donor_best_pod[0]
         print(lightProcs[index]['usage']['memory'])
         allocation_plan[donor_best_pod[1]] = lightProc['name']
-        break
   return dict(sorted(allocation_plan.items()))
 
 # workflow definitions
