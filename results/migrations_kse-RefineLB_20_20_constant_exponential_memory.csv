@@ -1,6 +1,7 @@
-60,pod-13-554b5fd777,ppgcc-m04,ppgcc-m02
-60,pod-19-6944c7c6c,ppgcc-m04,ppgcc-m03
-60,pod-4-796b9468d5,ppgcc-m04,ppgcc-m05
-180,pod-14-75956894cb,ppgcc-m05,ppgcc-m04
-180,pod-20-f699ffd79,ppgcc-m05,ppgcc-m03
-240,pod-12-86b8588778,ppgcc-m05,ppgcc-m04
+60,pod-3-67d44b9b,ppgcc-m05,ppgcc-m04
+120,pod-1-686554f64b,ppgcc-m02,ppgcc-m05
+180,pod-3-67d44b9b,ppgcc-m04,ppgcc-m03
+180,pod-4-796b9468d5,ppgcc-m02,ppgcc-m03
+240,pod-1-686554f64b,ppgcc-m05,ppgcc-m03
+240,pod-5-68bbcdc54b,ppgcc-m04,ppgcc-m02
+300,pod-3-67d44b9b,ppgcc-m03,ppgcc-m02
