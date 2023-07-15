@@ -57,7 +57,7 @@ def save_grouped_graphics(distribution, metric):
     ax.set_ylabel('CPU (millicpu)', fontsize=12)
   ax.set_xticks(x + width, scenarios, fontsize=12)
   ax.tick_params(axis='y', labelsize=12)
-  ax.legend(loc='upper right', ncols=3, fontsize=12)
+  ax.legend(loc='upper right', fontsize=12)
   plt.savefig('results/grouped_'+distribution+'_'+metric+'.png', dpi=150, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
