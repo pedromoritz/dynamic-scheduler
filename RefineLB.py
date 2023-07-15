@@ -57,17 +57,18 @@ def get_refinelb_plan(processors):
       print('lightProc[usage][METRIC]')
       print(lightProc['usage'][METRIC])
       print('')
-      if donor_best_pod[0] + lightProc['usage'][METRIC] > procs_average:
+      if donor_best_pod[0] + lightProc['usage'][METRIC] > threshold:
         print('continue')
         continue
       else:
-        print('pod choosed')
+        print('------> pod choosed')
         # deassign best pod from donor
         donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
         # reassign best pod
         lightProcs[index]['usage']['memory'] = lightProcs[index]['usage']['memory'] + donor_best_pod[0]
         print(lightProcs[index]['usage']['memory'])
         allocation_plan[donor_best_pod[1]] = lightProc['name']
+        break
   return dict(sorted(allocation_plan.items()))
 
 # workflow definitions
