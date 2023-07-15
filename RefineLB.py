@@ -18,7 +18,9 @@ def get_refinelb_plan(processors):
   lightProcs = []
   # calculating threshold
   procs_values = list(map(lambda n: n['usage'][METRIC], processors))
-  procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0) 
+  procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0)
+  print('procs_average')
+  print(procs_average)
   margin = 1.05
   threshold = procs_average * margin
   # defining heavyProcs and lightProcs based on threshold
@@ -28,22 +30,49 @@ def get_refinelb_plan(processors):
     else:
       heavyProcs.append(processor)
   heavyProcs.sort(key=lambda x: x['usage'][METRIC])
+  lightProcs.sort(key=lambda x: x['usage'][METRIC], reverse=True)
   finalProcs = []
+  print(lightProcs)
+  print(heavyProcs)
+  print('')
+
   while len(heavyProcs) > 0:
+    print('--------------------')
+    print('itera heavyProcs')
+    print('')
     donor = heavyProcs.pop()
-    for lightProc in lightProcs:
+    print('donor')
+    print(donor)
+    print('')
+    for index, lightProc in enumerate(lightProcs):
+      print('--------------------')
+      print('itera lightProcs')
       pods_from_donor = donor['pods']
       pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
       donor_best_pod = pods_from_donor_sorted[0]
-      if donor_best_pod[0] + lightProc['usage'][METRIC] < procs_average:
-        break
-    # deassign best pod from donor
-    donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-    lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
-    finalProcs.append(lightProc)
-  for node in finalProcs:
-    for pod in node['pods']:
-      allocation_plan[pod['name']] = node['name'] 
+      print('donor_best_pod')
+      print(donor_best_pod[1])
+      print(donor_best_pod[0])
+      print('')
+      print('lightProc[usage][METRIC]')
+      print(lightProc['usage'][METRIC])
+      print('')
+      if donor_best_pod[0] + lightProc['usage'][METRIC] > procs_average:
+        print('continue')
+        continue
+      else:
+        # deassign best pod from donor
+        # donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+        #lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
+        #finalProcs.append(lightProc)
+        print('beleza')
+        print(lightProcs[index]['usage']['memory'])
+        lightProcs[index]['usage']['memory'] = lightProcs[index]['usage']['memory'] + donor_best_pod[0]
+        print(lightProcs[index]['usage']['memory'])
+        allocation_plan[lightProc['name']] = donor_best_pod[1]
+  #for node in finalProcs:
+  #  for pod in node['pods']:
+  #    allocation_plan[pod['name']] = node['name']
   return dict(sorted(allocation_plan.items()))
 
 # workflow definitions
