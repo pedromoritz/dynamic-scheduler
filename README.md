@@ -64,5 +64,4 @@ pyreverse -p Dynamic-Scheduler -o png -d results experiments
 
 pyreverse -o png -p KSE .
 
-./standard_deviation.py; ./mae.py; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.png; git commit -m "update"; git push
-
+./results.py > results.csv; git add results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.png; git commit -m "update"; git push
