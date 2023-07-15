@@ -37,7 +37,7 @@ def save_grouped_graphics(distribution, metric):
            except Exception as error:
              print(error)
 
-  print(scenarios)
+  #print(scenarios)
 
   x = np.arange(len(scenarios))
   width = 0.25
@@ -162,24 +162,23 @@ def get_availability(total, failed):
 
 get_datasets()
 
-#for pod in pods:
-#  for target in targets:
-#    for rate in rates:
-#      for distribution in distributions:
-#        for metric in metrics:
-#          key = str(pod) + '_' + str(target) + '_' + rate + '_' + distribution + '_' + metric
-#          for algo in algos:
-#            try:
-#              count = get_migrations_count(algo+'_'+key)
-#              requests = get_requests_count(algo+'_'+key)
-#              total = str(requests['total'])
-#              failed = str(requests['failed'])
-#              scenario = '\multirow{3}{*}{1}' if algo == 'kube-scheduler' else ''
-#              print(scenario+' & '+algo+' & '+sd[key][algo]['mae']+' & '+str(count)+' & '+total+' & '+failed+' & '+get_availability(int(total), int(failed))+'\%\\\\')
-#            except Exception as error:
-#              print(error)
-#          # saving graphic
-#          save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
+for pod in pods:
+  for target in targets:
+    for rate in rates:
+      for distribution in distributions:
+        for metric in metrics:
+          key = str(pod) + '_' + str(target) + '_' + rate + '_' + distribution + '_' + metric
+          for algo in algos:
+            try:
+              migrations = get_migrations_count(algo+'_'+key)
+              requests = get_requests_count(algo+'_'+key)
+              total = str(requests['total'])
+              failed = str(requests['failed'])
+              print(sd[key][algo]['mae']+','+str(migrations)+','+total+','+failed+','+get_availability(int(total), int(failed)))
+            except Exception as error:
+              print(error)
+          # saving graphic
+          save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
 
 save_grouped_graphics('normal', 'memory')
 save_grouped_graphics('normal', 'cpu')
