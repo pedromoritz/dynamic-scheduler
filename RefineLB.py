@@ -33,14 +33,14 @@ def get_refinelb_plan(processors):
     donor = heavyProcs.pop()
     for lightProc in lightProcs:
       pods_from_donor = donor['pods']
-      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=False)
+      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
       donor_best_pod = pods_from_donor_sorted[0]
-      if donor_best_pod[0] + lightProc['usage'][METRIC] >= threshold:
-        continue
-      # deassign best pod from donor
-      donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-      lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
-      finalProcs.append(lightProc)
+      if donor_best_pod[0] + lightProc['usage'][METRIC] < procs_average:
+        break
+    # deassign best pod from donor
+    donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
+    lightProc['pods'].append({'name': donor_best_pod[1], 'usage': {METRIC: donor_best_pod[0]}})
+    finalProcs.append(lightProc)
   for node in finalProcs:
     for pod in node['pods']:
       allocation_plan[pod['name']] = node['name'] 
