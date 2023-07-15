@@ -174,7 +174,7 @@ for pod in pods:
               requests = get_requests_count(algo+'_'+key)
               total = str(requests['total'])
               failed = str(requests['failed'])
-              print(sd[key][algo]['mae']+','+str(migrations)+','+total+','+failed+','+get_availability(int(total), int(failed)))
+              print(sd[key][algo]['mae']+','+str(migrations)+','+total+','+failed)
             except Exception as error:
               print(error)
           # saving graphic
