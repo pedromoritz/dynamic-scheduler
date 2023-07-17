@@ -9,18 +9,6 @@ from pylab import cm
 import sys
 from collections.abc import Iterable
 
-def get_standard_deviation(dataset):
-  data_list = []
-  for data in dataset:
-    data_list.append(round(np.average(data), 2))
-  sorted_data_list = sorted(data_list)
-  min_value = sorted_data_list[0]
-  max_value = sorted_data_list[-1]
-  mean = sum(data_list) / len(data_list)
-  variance = sum([((x - mean) ** 2) for x in data_list]) / len(data_list)
-  standard_deviation = round(variance ** 0.5, 2)
-  return [min_value, max_value, round(mean, 2), standard_deviation]
-
 def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations):
   plt.xlim(0, 600)
   plt.xlabel(xlabel)
@@ -40,7 +28,6 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   dataset.append(data2)
   dataset.append(data3)
   dataset.append(data4)
-  plt.axhline(y = get_standard_deviation(dataset)[2], color = 'gray', linewidth='0.7')
   plt.savefig(final_filename, dpi=150, transparent=False, bbox_inches='tight')
   plt.close()
   plt.cla()
