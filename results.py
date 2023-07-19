@@ -178,7 +178,7 @@ for pod in pods:
             except Exception as error:
               print(error)
           # saving graphic
-          save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
+          # save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
 
 save_grouped_graphics('normal', 'memory')
 save_grouped_graphics('normal', 'cpu')
