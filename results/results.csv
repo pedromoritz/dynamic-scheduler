@@ -1,7 +1,10 @@
 178.57,0,12001,0
 73.28,135,12001,217
-117.23,2,0,0
-'kube-scheduler'
+257.57,15,12001,49
+529.92,0,12000,0
+1018.9,126,12001,306
+340.93,0,12001,0
+50.9,0,0,0
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
@@ -91,10 +94,6 @@
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
