@@ -1,70 +1,24 @@
 #!/bin/bash
 
-clean()
-{
-  kubectl delete namespace lab
-  sleep 60
-}
+pods_array=(20 40)
+targets_array=(20 40)
+rates_array=('constant' 'ramp')
+distributions_array=('exponential' 'normal')
+metrics_array=('memory' 'cpu')
+algos_array=('kube-scheduler' 'kse-GreedyLB' 'kse-RefineLB')
 
-# constant exponential
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=memory
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=memory
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=memory
-
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=cpu
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=cpu
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=constant distribution=exponential metric=cpu
-
-# constant normal
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=memory
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=memory
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=memory
-
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=cpu
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=cpu
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=constant distribution=normal metric=cpu
-
-# ramp exponential
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=memory
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=memory
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=memory
-
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=cpu
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=cpu
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=ramp distribution=exponential metric=cpu
-
-# ramp normal
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=memory
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=memory
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=memory
-
-clean
-./run_kube-scheduler.sh pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=cpu
-clean
-./run_kse.sh scheduler=GreedyLB pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=cpu
-clean
-./run_kse.sh scheduler=RefineLB pod_amount=$1 target=$2 rate_type=ramp distribution=normal metric=cpu
-
-clean
+for i in ${pods_array[@]}; do
+  for j in ${targets_array[@]}; do
+    for k in ${rates_array[@]}; do
+      for l in ${distributions_array[@]}; do
+        for m in ${metrics_array[@]}; do
+          echo $i $j $k $l $m        
+          ./run_kube-scheduler.sh pod_amount=$i target=$j rate_type=$k distribution=$l metric=$m
+          ./run_kse.sh scheduler=GreedyLB pod_amount=$i target=$j rate_type=$k distribution=$l metric=$m
+          ./run_kse.sh scheduler=RefineLB pod_amount=$i target=$j rate_type=$k distribution=$l metric=$m
+        done
+      done
+    done
+  done
+done
 
