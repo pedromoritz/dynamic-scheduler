@@ -5,7 +5,6 @@ targets_array=(20 40)
 rates_array=('constant' 'ramp')
 distributions_array=('exponential' 'normal')
 metrics_array=('memory' 'cpu')
-algos_array=('kube-scheduler' 'kse-GreedyLB' 'kse-RefineLB')
 
 for i in ${pods_array[@]}; do
   for j in ${targets_array[@]}; do
