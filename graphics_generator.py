@@ -11,9 +11,11 @@ from collections.abc import Iterable
 
 def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabel, final_filename, migrations):
   plt.xlim(0, 600)
-  plt.xlabel(xlabel)
+  plt.xlabel(xlabel, fontsize=18)
+  plt.xticks(fontsize=16)
   plt.ylim(0, ylim)
-  plt.ylabel(ylabel)
+  plt.ylabel(ylabel, fontsize=18)
+  plt.yticks(fontsize=16)
   plt.plot(timestamp, data1, label='node 1', linewidth='2')
   plt.plot(timestamp, data2, label='node 2', linewidth='2')
   plt.plot(timestamp, data3, label='node 3', linewidth='2')
@@ -21,7 +23,7 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   if isinstance(migrations, Iterable):
     for migration in migrations:
       plt.axvline(x = migration, color = 'red', linewidth='0.5', linestyle='dashed')
-  plt.legend(loc="lower right")
+  plt.legend(loc="lower right", fontsize=16)
   print("Generating " + final_filename)
   dataset = []
   dataset.append(data1)
