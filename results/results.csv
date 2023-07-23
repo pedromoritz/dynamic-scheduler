@@ -1,6 +1,3 @@
-results/metrics_kse-RefineLB_40_40_constant_exponential_memory.csv ---> ERROR
-Wrong number of columns at line 12
--
 178.57,0,12001,0
 73.28,135,12001,217
 257.57,15,12001,49
@@ -75,7 +72,7 @@ Wrong number of columns at line 12
 360.43,9,8671,6
 88.93,0,24001,0
 110.9,287,24000,587
-0.0,6,22701,1094
+105.86,1,24001,4
 447.07,0,24001,0
 172.89,263,24000,378
 301.39,0,24001,0
