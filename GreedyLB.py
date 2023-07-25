@@ -32,20 +32,25 @@ def scheduling_workflow():
   global COUNTER
   global INTERVAL
   global CSV_FILENAME_BASE 
-  print('scheduling_workflow...')
+  #print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
-  nodes = cluster.get_nodes()
-  if len(cluster.get_unready_pods()) > 0:
-    return 
-  pods = []
-  for node_item in nodes:
-    this_node_pods = cluster.get_pods_from_node(node_item['name'])
-    pods = pods + this_node_pods
-  if COUNTER > 0:
-    allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
-    cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
-  COUNTER += INTERVAL
+  try:
+    cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
+    nodes = cluster.get_nodes()
+  except Exception as a:
+    print ("Exception:")
+    print(a)
+  finally:
+    if len(cluster.get_unready_pods()) > 0:
+      return 
+    pods = []
+    for node_item in nodes:
+      this_node_pods = cluster.get_pods_from_node(node_item['name'])
+      pods = pods + this_node_pods
+    if COUNTER > 0:
+      allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
+      cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
+    COUNTER += INTERVAL
 
 scheduling_workflow()
 # creating a timer for workflow trigger

@@ -3,7 +3,6 @@
 import time
 import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
-import heapq
 import sys
 from functools import reduce
 
@@ -19,8 +18,8 @@ def get_refinelb_plan(processors):
   # calculating threshold
   procs_values = list(map(lambda n: n['usage'][METRIC], processors))
   procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0)
-  print('procs_average')
-  print(procs_average)
+  #print('procs_average')
+  #print(procs_average)
   margin = 1.05
   threshold = procs_average * margin
   # defining heavyProcs and lightProcs based on threshold
@@ -32,37 +31,37 @@ def get_refinelb_plan(processors):
   heavyProcs.sort(key=lambda x: x['usage'][METRIC])
   lightProcs.sort(key=lambda x: x['usage'][METRIC])
   finalProcs = []
-  print(lightProcs)
-  print(heavyProcs)
-  print('')
+  #print(lightProcs)
+  #print(heavyProcs)
+  #print('')
 
   while len(heavyProcs) > 0:
-    print('--------------------')
-    print('itera heavyProcs')
-    print('')
+    #print('--------------------')
+    #print('itera heavyProcs')
+    #print('')
     donor = heavyProcs.pop()
-    print('donor')
-    print(donor)
-    print('')
+    #print('donor')
+    #print(donor)
+    #print('')
     for index, lightProc in enumerate(lightProcs):
-      print('--------------------')
-      print('itera lightProcs')
+      #print('--------------------')
+      #print('itera lightProcs')
       pods_from_donor = donor['pods']
       pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
       donor_best_pod = pods_from_donor_sorted[0]
-      print('donor_best_pod')
-      print(donor_best_pod[1])
-      print(donor_best_pod[0])
-      print('')
-      print('lightProc[usage][METRIC]')
-      print(lightProc['usage'][METRIC])
-      print('')
+      #print('donor_best_pod')
+      #print(donor_best_pod[1])
+      #print(donor_best_pod[0])
+      #print('')
+      #print('lightProc[usage][METRIC]')
+      #print(lightProc['usage'][METRIC])
+      #print('')
       if donor_best_pod[0] + lightProc['usage'][METRIC] > threshold:
-        print('continue')
+        #print('continue')
         continue
       else:
-        print('------> pod choosed')
-        print(lightProcs[index]['usage']['memory'])
+        #print('------> pod choosed')
+        #print(lightProcs[index]['usage']['memory'])
         # deassign best pod from donor
         donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
         # reassign best pod
@@ -75,16 +74,21 @@ def scheduling_workflow():
   global COUNTER
   global INTERVAL
   global CSV_FILENAME_BASE 
-  print('scheduling_workflow...')
+  #print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
-  nodes = cluster.get_nodes()
-  if len(cluster.get_unready_pods()) > 0:
-    return 
-  if COUNTER > 0:
-    allocation_plan = get_refinelb_plan(nodes)
-    cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
-  COUNTER += INTERVAL
+  try:
+    cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
+    nodes = cluster.get_nodes()
+  except Exception as a:
+    print ("Exception:")
+    print(a)
+  finally:   
+    if len(cluster.get_unready_pods()) > 0:
+      return 
+    if COUNTER > 0:
+      allocation_plan = get_refinelb_plan(nodes)
+      cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
+    COUNTER += INTERVAL
 
 scheduling_workflow()
 # creating a timer for workflow trigger
