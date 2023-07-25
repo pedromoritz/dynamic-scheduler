@@ -1,9 +1,7 @@
-results/metrics_kse-GreedyLB_20_20_constant_exponential_memory.csv ---> ERROR
-Wrong number of columns at line 7
--
 187.3,0,12001,0
-0.0,102,11313,4726
+'kse-GreedyLB'
 184.42,0,12001,0
+'kse-GreedyLB'
 573.87,0,12001,0
 149.73,121,12000,122
 550.62,0,12001,0
