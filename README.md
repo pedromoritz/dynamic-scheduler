@@ -57,11 +57,5 @@ kubectl top node --namespace lab
 #### Show nodes through Metrics API
 kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 
-#### Generate class and packages diagram
-sudo apt install pylint graphviz
+./results.py > results/results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.svg; git commit -m "update"; git push
 
-pyreverse -p Dynamic-Scheduler -o png -d results experiments
-
-pyreverse -o png -p KSE .
-
-./results.py > results.csv; git add results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.png; git commit -m "update"; git push
