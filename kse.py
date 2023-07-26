@@ -182,6 +182,7 @@ class Utils:
       response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
       print(path)
       print(response)
+      return response
     except Exception as a:
       print("call_api exception: %s\n" % path)
       print(a.body)
