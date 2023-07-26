@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 from collections import defaultdict
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 from bs4 import BeautifulSoup
 
 sd = defaultdict(dict)
@@ -37,8 +38,6 @@ def save_grouped_graphics(distribution, metric):
            except Exception as error:
              print(error)
 
-  #print(scenarios)
-
   x = np.arange(len(scenarios))
   width = 0.25
   multiplier = 0
@@ -57,8 +56,11 @@ def save_grouped_graphics(distribution, metric):
     ax.set_ylabel('CPU (millicpu)', fontsize=12)
   ax.set_xticks(x + width, scenarios, fontsize=12)
   ax.tick_params(axis='y', labelsize=12)
-  ax.legend(loc='upper right', fontsize=12)
-  plt.savefig('results/grouped_'+distribution+'_'+metric+'.png', dpi=150, transparent=False, bbox_inches='tight')
+  ksl = mpatches.Patch(color='blue', label='kube-scheduler')
+  ksegl = mpatches.Patch(color='orange', label='KSE-GreedyLB')
+  kserl = mpatches.Patch(color='green', label='KSE-RefineLB')
+  ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
+  plt.savefig('results/grouped_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
   plt.close()
   plt.cla()
   plt.clf()
@@ -74,7 +76,7 @@ def save_graphic(value1, value2, value3, filename):
   y = [value1, value2, value3]
   plt.bar(x, y)
   addlabels(x, y)
-  plt.savefig('results/mae_'+filename, dpi=150, transparent=False, bbox_inches='tight')
+  plt.savefig('results/mae_'+filename, dpi=150, transparent=False, bbox_inches='tight', format='svg')
   plt.close()
   plt.cla()
   plt.clf()
@@ -179,7 +181,7 @@ for pod in pods:
               print(error)
           # saving graphic
           try:
-            save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.png')
+            save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.svg')
           except Exception as error:
             print(error)
 

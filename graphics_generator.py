@@ -22,7 +22,7 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   plt.plot(timestamp, data4, label='node 4', linewidth='2')
   if isinstance(migrations, Iterable):
     for migration in migrations:
-      plt.axvline(x = migration, color = 'red', linewidth='0.5', linestyle='dashed')
+      plt.axvline(x = migration, color = 'red', linewidth='0.3', linestyle='dashed')
   plt.legend(loc="lower right", fontsize=16)
   print("Generating " + final_filename)
   dataset = []
@@ -30,7 +30,7 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   dataset.append(data2)
   dataset.append(data3)
   dataset.append(data4)
-  plt.savefig(final_filename, dpi=150, transparent=False, bbox_inches='tight')
+  plt.savefig(final_filename, dpi=150, transparent=False, bbox_inches='tight', format='svg')
   plt.close()
   plt.cla()
   plt.clf()
@@ -59,7 +59,7 @@ for path in Path("results/").glob("metrics_*.csv"):
       xlabel = 'time (s)'
       ylim = 2000
       ylabel = 'CPU (millicpu)'
-    final_filename = FILE_NAME + '.png'
+    final_filename = FILE_NAME + '.svg'
     MIGRATIONS_FILE_NAME = FILE_NAME.replace('metrics', 'migrations')
     if os.path.isfile(MIGRATIONS_FILE_NAME + '.csv'):
       migrations = np.loadtxt(MIGRATIONS_FILE_NAME + '.csv', unpack=True, delimiter=',', skiprows=0, usecols=[0], ndmin=1)
