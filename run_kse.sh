@@ -51,6 +51,9 @@ test()
 
   # metrics monitoring
   ./${ST}.py kse-$ST $PA $TA $RT $DI $ME
+
+  # removing all workloads
+  kubectl delete namespace lab
 }
 
 for ARGUMENT in "$@"
