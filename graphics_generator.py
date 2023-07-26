@@ -22,7 +22,7 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   plt.plot(timestamp, data4, label='node 4', linewidth='2')
   if isinstance(migrations, Iterable):
     for migration in migrations:
-      plt.axvline(x = migration, color = 'red', linewidth='0.3', linestyle='dashed')
+      plt.axvline(x = migration, color = 'red', linewidth='0.3', linestyle=(0, (5, 1)))
   plt.legend(loc="lower right", fontsize=16)
   print("Generating " + final_filename)
   dataset = []
