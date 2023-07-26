@@ -20,9 +20,6 @@ class Cluster:
       if last_condition.status == 'True' and last_condition.type == 'Ready' and last_condition.reason == 'KubeletReady':
         if 'node-role.kubernetes.io/control-plane' not in node.metadata.labels:
           response = Utils.call_api('nodes/'+node.metadata.name)
-          print('response')
-          print(response)
-#{'kind': 'NodeMetrics', 'apiVersion': 'metrics.k8s.io/v1beta1', 'metadata': {'name': 'ppgcc-m05', 'creationTimestamp': '2023-07-24T23:41:36Z', 'labels': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostname': 'ppgcc-m05', 'kubernetes.io/os': 'linux'}}, 'timestamp': '2023-07-24T23:41:22Z', 'window': '1m0.416s', 'usage': {'cpu': '1332382406n', 'memory': '1131792Ki'}}
           node_memory = 0
           node_cpu = 0
           if response and response['usage']:
@@ -182,7 +179,9 @@ class Utils:
       configuration.api_key_prefix['authorization'] = 'Bearer'
       api_client = client.ApiClient(configuration)
       custom_api = client.CustomObjectsApi(api_client)
-      return custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+      response = custom_api.list_cluster_custom_object('metrics.k8s.io', 'v1beta1', path)
+      print(path)
+      print(response)
     except Exception as a:
       print("call_api exception: %s\n" % path)
       print(a.body)
