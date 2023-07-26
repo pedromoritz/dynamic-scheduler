@@ -46,6 +46,9 @@ test()
   # starting testset
   k6 run -q --out csv="results/results_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.gz" -e IP=$IP -e ST=kse-$ST -e PA=$PA -e TA=$TA -e RT=$RT -e DI=$DI -e ME=$ME k6_script-${RT}.js >/dev/null 2>&1 &
 
+  # avoiding 1st minute
+  sleep 60
+
   # metrics monitoring
   ./${ST}.py kse-$ST $PA $TA $RT $DI $ME
 }
