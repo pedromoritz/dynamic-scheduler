@@ -36,7 +36,7 @@
 'kube-scheduler'
 648.16,0,28801,0
 274.83,111,28801,174
-658.9,0,0,0
+646.69,0,0,0
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -124,7 +124,6 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
-normal, memory
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -150,7 +149,6 @@ normal, memory
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-normal, cpu
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -176,7 +174,6 @@ normal, cpu
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-exponential, memory
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -202,7 +199,6 @@ exponential, memory
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-exponential, cpu
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
