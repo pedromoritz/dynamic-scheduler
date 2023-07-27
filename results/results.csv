@@ -67,9 +67,9 @@
 'kse-RefineLB'
 'kube-scheduler'
 148.87,0,14401,0
-'kse-GreedyLB'
+145.29,59,0,0
 'kse-RefineLB'
-'kse-GreedyLB'
+'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
