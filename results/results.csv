@@ -1,5 +1,5 @@
 results/metrics_kse-RefineLB_20_40_constant_exponential_cpu.csv ---> ERROR
-
+'numpy.float64' object is not iterable
 -
 'kube-scheduler'
 'kse-GreedyLB'
@@ -127,6 +127,7 @@ results/metrics_kse-RefineLB_20_40_constant_exponential_cpu.csv ---> ERROR
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
+normal, memory
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -152,6 +153,7 @@ results/metrics_kse-RefineLB_20_40_constant_exponential_cpu.csv ---> ERROR
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
+normal, cpu
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -177,6 +179,7 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
+exponential, memory
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -202,6 +205,7 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
+exponential, cpu
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
