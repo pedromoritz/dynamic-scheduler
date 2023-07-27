@@ -24,7 +24,7 @@ test()
 
   # creating workloads
   for i in $(seq $PA); do	
-    POD_NAME=pod-$i
+    POD_NAME=pod-$(printf %02d $i)
     NODE_PORT=31$(printf %03d $i)
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
