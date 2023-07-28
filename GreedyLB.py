@@ -8,7 +8,7 @@ import sys
 
 CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'_'+sys.argv[6]+'.csv'
 INTERVAL = 60
-COUNTER = 0
+COUNTER = -2
 METRIC = sys.argv[6]
 
 def get_greedylb_plan(chare_objects, processors, background_load):
@@ -32,25 +32,22 @@ def scheduling_workflow():
   global COUNTER
   global INTERVAL
   global CSV_FILENAME_BASE 
-  #print('scheduling_workflow...')
   cluster = kse.Cluster()
-  try:
-    cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER)
-    nodes = cluster.get_nodes()
-  except Exception as a:
-    print ("Exception:")
-    print(a)
-  finally:
-    if len(cluster.get_unready_pods()) > 0:
-      return 
+  nodes = cluster.get_nodes() 
+  if COUNTER == -2:
+    COUNTER = -1
+  else:
+    COUNTER = 0 if COUNTER == -1 else COUNTER + INTERVAL
+    cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER, nodes)
+  if len(cluster.get_unready_pods()) > 0:
+    return 
+  if COUNTER > 0:
     pods = []
     for node_item in nodes:
       this_node_pods = cluster.get_pods_from_node(node_item['name'])
       pods = pods + this_node_pods
-    if COUNTER > 0:
-      allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
-      cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
-    COUNTER += INTERVAL
+    allocation_plan = get_greedylb_plan(pods, nodes, 1000000)
+    cluster.set_allocation_plan(allocation_plan, 'migrations_'+CSV_FILENAME_BASE, COUNTER)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
@@ -59,7 +56,7 @@ scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
 scheduler.start()
 
 # keeping script running
-while COUNTER <= 600:
+while COUNTER < 600:
   try:
     time.sleep(0.1)
   except KeyboardInterrupt:

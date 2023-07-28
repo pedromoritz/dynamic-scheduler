@@ -7,17 +7,20 @@ import sys
 
 CSV_FILENAME = 'metrics_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'_'+sys.argv[6]+'.csv'
 INTERVAL = 60
-COUNTER = 0
+COUNTER = -2
 
 # workflow definitions
 def scheduling_workflow():
   global COUNTER
   global INTERVAL
   global CSV_FILENAME 
-  print('scheduling_workflow...')
   cluster = kse.Cluster()
-  cluster.do_info_snapshot(CSV_FILENAME, COUNTER)
-  COUNTER += INTERVAL
+  nodes = cluster.get_nodes() 
+  if COUNTER == -2:
+    COUNTER = -1
+  else:
+    COUNTER = 0 if COUNTER == -1 else COUNTER + INTERVAL
+    cluster.do_info_snapshot(CSV_FILENAME, COUNTER, nodes)
 
 scheduling_workflow()
 # creating a timer for workflow trigger
@@ -26,7 +29,7 @@ scheduler.add_job(scheduling_workflow, 'interval', seconds=INTERVAL)
 scheduler.start()
 
 # keeping script running
-while COUNTER <= 600:
+while COUNTER < 600:
   try:
     time.sleep(0.1)
   except KeyboardInterrupt:

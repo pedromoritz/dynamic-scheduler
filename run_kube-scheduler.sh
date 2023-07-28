@@ -22,8 +22,14 @@ test()
 
   NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
 
-  DISTRIBUTION_ARRAY=('ppgcc-m03' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m05')
+  DISTRIBUTION_ARRAY=('ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m03')
 
+  #DISTRIBUTION_ARRAY=()
+  #for i in $(seq $(expr $PA / ${#NODES[@]})); do
+  #  DISTRIBUTION_ARRAY+=($(shuf -e "${NODES[@]}"))
+  #done
+  #echo "${DISTRIBUTION_ARRAY[@]}"
+  
   # creating workloads
   for i in $(seq $PA); do	
     POD_NAME=pod-$(printf %02d $i)

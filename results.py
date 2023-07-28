@@ -43,27 +43,31 @@ def save_grouped_graphics(distribution, metric):
   multiplier = 0
   plt.figure().set_figwidth(12)
   fig, ax = plt.subplots(figsize=(14,4))
-  for attribute, measurement in mae_data.items():
-    offset = width * multiplier
-    rects = ax.bar(x + offset, measurement, width, label=attribute)
-    ax.bar_label(rects, padding=3, rotation=90)
-    multiplier += 1
-  if metric == 'memory':
-    ax.set_ylim(0, 350)
-    ax.set_ylabel('memory (MB)', fontsize=12)
-  elif metric == 'cpu':
-    ax.set_ylim(0, 700)
-    ax.set_ylabel('CPU (millicpu)', fontsize=12)
-  ax.set_xticks(x + width, scenarios, fontsize=12)
-  ax.tick_params(axis='y', labelsize=12)
-  ksl = mpatches.Patch(color='#1f77b4', label='kube-scheduler')
-  ksegl = mpatches.Patch(color='#ff7f0e', label='KSE-GreedyLB')
-  kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
-  ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
-  plt.savefig('results/grouped_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
-  plt.close()
-  plt.cla()
-  plt.clf()
+  try:
+    for attribute, measurement in mae_data.items():
+      offset = width * multiplier
+      rects = ax.bar(x + offset, measurement, width, label=attribute)
+      ax.bar_label(rects, padding=3, rotation=90)
+      multiplier += 1
+    if metric == 'memory':
+      ax.set_ylim(0, 350)
+      ax.set_ylabel('memory (MB)', fontsize=12)
+    elif metric == 'cpu':
+      ax.set_ylim(0, 700)
+      ax.set_ylabel('CPU (millicpu)', fontsize=12)
+    ax.set_xticks(x + width, scenarios, fontsize=12)
+    ax.tick_params(axis='y', labelsize=12)
+    ksl = mpatches.Patch(color='#1f77b4', label='kube-scheduler')
+    ksegl = mpatches.Patch(color='#ff7f0e', label='KSE-GreedyLB')
+    kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
+    ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
+    plt.savefig('results/grouped_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
+  except Exception as error:
+    print(error)
+  finally:
+    plt.close()
+    plt.cla()
+    plt.clf()
 
 def save_graphic(value1, value2, value3, filename):
   if 'memory' in filename:
@@ -130,7 +134,6 @@ def get_datasets():
     except Exception as error:
       print(FILE_NAME + '.csv' + ' ---> ERROR')
       print(error)
-      print('-')
       key = FILE_NAME[FILE_NAME.find('_', FILE_NAME.find('_') + 1)+1:]
       algo = FILE_NAME.split('_')[1]
       sd[key][algo] = {
@@ -186,6 +189,6 @@ for pod in pods:
             print(error)
 
 save_grouped_graphics('normal', 'memory')
-save_grouped_graphics('normal', 'cpu')
-save_grouped_graphics('exponential', 'memory')
-save_grouped_graphics('exponential', 'cpu')
+#save_grouped_graphics('normal', 'cpu')
+#save_grouped_graphics('exponential', 'memory')
+#save_grouped_graphics('exponential', 'cpu')
