@@ -1,5 +1,5 @@
-results/metrics_kse-GreedyLB_20_40_constant_exponential_memory.csv ---> ERROR
-Wrong number of columns at line 5
+results/metrics_kse-RefineLB_20_40_constant_exponential_memory.csv ---> ERROR
+
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -33,9 +33,8 @@ Wrong number of columns at line 5
 'kse-RefineLB'
 'kube-scheduler'
 171.9,0,28801,0
-0.0,29,0,0
-'kse-RefineLB'
-'kse-RefineLB'
+223.19,73,28800,149
+0.0,0,0,0
 648.16,0,28801,0
 274.83,111,28801,174
 652.93,0,28800,0
