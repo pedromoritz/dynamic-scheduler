@@ -42,7 +42,7 @@ export default function () {
         distribution_output = Math.round(PD.rexp(1, 5 / pods)); // exponential distribution
         break;
       case 'normal':
-        distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 6)); // normal distribution
+        distribution_output = Math.round(PD.rnorm(1, ((pods + 1) / 2) * 1.50, ((pods + 1) / 2) / 4)); // normal distribution
         break;
     }
   }
