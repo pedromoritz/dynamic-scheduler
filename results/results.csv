@@ -1,10 +1,12 @@
+results/metrics_kse-GreedyLB_20_20_constant_exponential_cpu.csv ---> ERROR
+
 155.29,0,14400,0
 125.44,125,14401,179
-120.47,0,0,0
-'kube-scheduler'
-'kse-GreedyLB'
+150.66,5,14400,27
+422.57,0,14400,0
+0.0,0,0,0
 'kse-RefineLB'
-'kube-scheduler'
+'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
