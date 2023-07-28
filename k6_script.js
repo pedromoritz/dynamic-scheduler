@@ -5,7 +5,7 @@ for (let i = 0; i < 24000; i++) {
   let distribution_output = -1;
   while (distribution_output < 1 || distribution_output > pods) {
     //distribution_output = Math.round(PD.rexp(1, 5 / pods)); // exponential distribution
-    distribution_output = Math.round(PD.rnorm(1, (pods + 1) / 2, ((pods + 1) / 2) / 6)); // normal distribution
+    distribution_output = Math.round(PD.rnorm(1, ((pods + 1) / 2) * 1.50, ((pods + 1) / 2) / 4)); // normal distribution
   }
   console.log(distribution_output - 1)
 }
