@@ -2,7 +2,11 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kse-GreedyLB'
-1348.39,0,0,0
+1338.86,0,4966,0
+'kse-GreedyLB'
+'kse-RefineLB'
+'kse-GreedyLB'
+494.2,0,0,0
 'kse-GreedyLB'
 'kse-RefineLB'
 'kse-GreedyLB'
@@ -121,11 +125,6 @@
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
-'kube-scheduler'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
