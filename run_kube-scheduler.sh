@@ -21,8 +21,7 @@ test()
   kubectl create namespace lab
 
   NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
-
-  DISTRIBUTION_ARRAY=('ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m03' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m05' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m03' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m05' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m05')
+  SHUFFLE_ARRAY=(0 0 1 0 1 3 2 0 1 1 0 2 3 1 3 2 2 3 2 3 0 0 1 0 1 3 2 0 1 1 0 2 3 1 3 2 2 3 2 3)
 
   # creating workloads
   for i in $(seq $PA); do	
@@ -31,7 +30,7 @@ test()
     template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
-    template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${DISTRIBUTION_ARRAY[i-1]}/g"`
+    template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${NODES[SHUFFLE_ARRAY[i-1]]}/g"`
     template=`echo "$template" | sed "s/{{METRIC}}/$ME/g"`
     echo "$template" | kubectl apply -f -
   done
