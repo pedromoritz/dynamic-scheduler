@@ -1,3 +1,5 @@
+results/metrics_kube-scheduler_20_40_constant_normal_cpu.csv ---> ERROR
+'numpy.float64' object is not iterable
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -42,7 +44,7 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
-1114.76,0,0,0
+0.0,0,0,0
 334.88,132,28801,414
 650.42,1,28801,9
 'kube-scheduler'
