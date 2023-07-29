@@ -1,5 +1,3 @@
-results/metrics_kube-scheduler_20_40_ramp_exponential_memory.csv ---> ERROR
-'numpy.float64' object is not iterable
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -47,7 +45,7 @@ results/metrics_kube-scheduler_20_40_ramp_exponential_memory.csv ---> ERROR
 727.99,0,28800,0
 405.6,84,28801,301
 729.84,0,28801,0
-0.0,0,0,0
+159.65,0,0,0
 'kse-GreedyLB'
 'kse-RefineLB'
 'kse-GreedyLB'
