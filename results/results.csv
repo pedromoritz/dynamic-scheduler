@@ -1,13 +1,15 @@
+results/metrics_kse-GreedyLB_20_20_constant_normal_memory.csv ---> ERROR
+
 210.23,0,14401,0
 127.03,142,14400,212
 190.69,7,14400,33
 535.09,0,14400,0
 217.36,103,14401,90
 309.71,1,14401,3
-265.17,0,0,0
-'kse-GreedyLB'
+244.14,0,14401,0
+0.0,0,0,0
 'kse-RefineLB'
-'kse-GreedyLB'
+'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -122,7 +124,6 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
-'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
