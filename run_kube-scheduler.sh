@@ -21,7 +21,7 @@ test()
   kubectl create namespace lab
 
   NODES=("ppgcc-m02" "ppgcc-m03" "ppgcc-m04" "ppgcc-m05")
-  SHUFFLE_ARRAY=(0 0 1 0 1 3 1 0 2 1 0 2 3 1 3 2 2 3 2 3 0 0 1 0 1 3 1 0 2 1 0 2 3 1 3 2 2 3 2 3)
+  SHUFFLE_ARRAY=(0 2 1 3 1 1 1 0 2 1 0 0 0 3 3 2 2 3 2 3 0 2 1 3 1 1 1 0 2 1 0 0 0 3 3 2 2 3 2 3)
 
   # creating workloads
   for i in $(seq $PA); do	
