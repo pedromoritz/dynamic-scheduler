@@ -1,28 +1,23 @@
-results/metrics_kse-RefineLB_20_20_ramp_normal_memory.csv ---> ERROR
-
-results/metrics_kse-GreedyLB_20_20_ramp_normal_memory.csv ---> ERROR
-'numpy.float64' object is not iterable
 210.23,0,14401,0
 127.03,142,14400,212
 190.69,7,14400,33
 535.09,0,14400,0
 217.36,103,14401,90
 309.71,1,14401,3
-411.51,0,14400,0
-160.49,140,14400,215
-232.13,2,14401,10
-1093.99,0,14401,0
-545.2,76,14401,83
-666.41,5,14401,23
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
 151.8,0,10686,0
 62.14,128,10605,92
 152.87,19,10517,30
 414.14,0,10471,0
 130.4,121,10432,81
 188.55,1,10511,0
-248.13,0,10521,0
-0.0,0,381,0
-0.0,0,0,0
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -123,6 +118,16 @@ results/metrics_kse-GreedyLB_20_20_ramp_normal_memory.csv ---> ERROR
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
