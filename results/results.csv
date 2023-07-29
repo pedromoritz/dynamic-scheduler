@@ -1,7 +1,5 @@
-results/metrics_kse-GreedyLB_20_20_constant_exponential_memory.csv ---> ERROR
-
 210.23,0,14401,0
-0.0,0,0,0
+147.82,84,0,0
 'kse-RefineLB'
 'kse-RefineLB'
 'kube-scheduler'
