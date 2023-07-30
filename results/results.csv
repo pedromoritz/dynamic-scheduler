@@ -1,6 +1,4 @@
 results/metrics_kube-scheduler_40_40_constant_exponential_memory.csv ---> ERROR
-Wrong number of columns at line 5
-results/metrics_kse-RefineLB_40_40_ramp_exponential_cpu.csv ---> ERROR
 
 210.23,0,14401,0
 127.03,142,14400,212
@@ -74,7 +72,7 @@ results/metrics_kse-RefineLB_40_40_ramp_exponential_cpu.csv ---> ERROR
 72.36,0,10554,0
 198.44,258,10250,112
 78.22,0,10505,0
-0.0,0,26994,5970
+0.0,0,0,0
 287.28,160,28801,258
 152.64,2,28801,8
 763.87,0,28801,0
@@ -91,7 +89,7 @@ results/metrics_kse-RefineLB_40_40_ramp_exponential_cpu.csv ---> ERROR
 182.44,18,17951,60
 546.45,0,20402,0
 152.42,297,20452,270
-0.0,0,0,0
+354.11,6,20704,12
 138.29,0,21421,0
 203.49,250,18973,285
 125.41,13,21122,31
