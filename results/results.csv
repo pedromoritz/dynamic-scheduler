@@ -1,5 +1,7 @@
 results/metrics_kube-scheduler_40_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 3
+results/metrics_kse-RefineLB_40_40_ramp_normal_cpu.csv ---> ERROR
+
 results/metrics_kse-RefineLB_40_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 3
 210.23,0,14401,0
@@ -96,7 +98,5 @@ Wrong number of columns at line 3
 203.49,250,18973,285
 125.41,13,21122,31
 102.34,0,20854,0
-150.97,246,0,0
-0, 0, 0
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
+161.81,309,20556,437
+0.0,0,0,0
