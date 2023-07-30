@@ -91,10 +91,10 @@ Wrong number of columns at line 4
 173.31,0,17989,14
 177.14,173,20624,188
 182.44,18,17951,60
-'kube-scheduler'
+275.84,0,0,0
 'kse-GreedyLB'
 'kse-RefineLB'
-'kube-scheduler'
+'kse-GreedyLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -111,7 +111,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
