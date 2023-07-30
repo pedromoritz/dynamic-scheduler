@@ -189,6 +189,6 @@ for pod in pods:
             print(error)
 
 save_grouped_graphics('normal', 'memory')
-#save_grouped_graphics('normal', 'cpu')
-#save_grouped_graphics('exponential', 'memory')
-#save_grouped_graphics('exponential', 'cpu')
+save_grouped_graphics('normal', 'cpu')
+save_grouped_graphics('exponential', 'memory')
+save_grouped_graphics('exponential', 'cpu')

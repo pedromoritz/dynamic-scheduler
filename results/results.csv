@@ -49,14 +49,10 @@
 185.59,0,14400,0
 123.36,293,14400,265
 139.28,11,14400,37
-457.0,0,0,0
-'kse-GreedyLB'
+458.28,0,14400,0
+498.01,44,0,0
 'kse-RefineLB'
-'kse-GreedyLB'
-'kube-scheduler'
-'kse-GreedyLB'
 'kse-RefineLB'
-'kube-scheduler'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -113,15 +109,6 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -144,8 +131,20 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
+'kube-scheduler'
 'kse-GreedyLB'
+'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
