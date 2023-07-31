@@ -1,5 +1,5 @@
 results/metrics_kube-scheduler_40_40_constant_exponential_memory.csv ---> ERROR
-
+Wrong number of columns at line 7
 210.23,0,14401,0
 127.03,142,14400,212
 190.69,7,14400,33
