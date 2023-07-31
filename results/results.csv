@@ -1,7 +1,9 @@
+results/metrics_kube-scheduler_20_20_constant_exponential_cpu.csv ---> ERROR
+
 98.25,0,14401,0
-76.97,0,12372,12372
-76.71,0,0,0
+115.78,71,0,0
 0, 0, 0
+0.0,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -144,8 +146,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-'kube-scheduler'
-'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
@@ -166,6 +166,9 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
