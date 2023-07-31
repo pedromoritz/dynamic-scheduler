@@ -1,6 +1,6 @@
-113.14,0,0,0
-0, 0, 0
-0, 0, 0
+98.25,0,14401,0
+76.97,0,12372,12372
+76.71,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -144,8 +144,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kse-GreedyLB'
 'kse-RefineLB'
 shape mismatch: objects cannot be broadcast to a single shape
-'kse-GreedyLB'
-'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -167,7 +165,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
