@@ -1,7 +1,7 @@
+results/metrics_kube-scheduler_20_40_ramp_exponential_memory.csv ---> ERROR
+
 results/metrics_kube-scheduler_20_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 3
-results/metrics_kse-RefineLB_20_40_constant_normal_cpu.csv ---> ERROR
-
 results/metrics_kse-RefineLB_20_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 4
 results/metrics_kse-GreedyLB_20_40_constant_exponential_memory.csv ---> ERROR
@@ -33,7 +33,7 @@ Wrong number of columns at line 4
 0.0,0,19405,9411
 0.0,19,17895,9760
 0.0,5,15354,9387
-1624.35,0,28511,432
+854.43,0,28800,0
 754.24,69,28686,191
 826.45,1,28714,35
 567.65,0,28801,0
@@ -41,8 +41,8 @@ Wrong number of columns at line 4
 217.86,4,28801,31
 1456.58,0,28800,0
 681.37,119,28801,290
+1033.79,2,12525,8
 0.0,0,0,0
-239.34,0,20965,0
 109.99,84,21037,116
 155.32,10,20912,40
 685.74,0,20190,0
