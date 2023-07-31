@@ -1,8 +1,10 @@
+results/metrics_kse-RefineLB_20_20_constant_exponential_memory.csv ---> ERROR
+
 results/metrics_kse-GreedyLB_20_20_constant_exponential_cpu.csv ---> ERROR
 
-96.82,0,0,0
-146.02,71,14400,66
-93.91,0,14401,0
+317.7,0,0,0
+66.21,0,4831,4831
+0.0,0,0,0
 493.24,0,6890,0
 0.0,0,0,0
 309.71,1,14401,3
