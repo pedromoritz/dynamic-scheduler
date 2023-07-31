@@ -1,5 +1,3 @@
-results/metrics_kse-GreedyLB_40_40_constant_exponential_memory.csv ---> ERROR
-
 210.23,0,14401,0
 127.03,142,14400,212
 190.69,7,14400,33
@@ -73,7 +71,7 @@ results/metrics_kse-GreedyLB_40_40_constant_exponential_memory.csv ---> ERROR
 198.44,258,10250,112
 78.22,0,10505,0
 144.34,0,28800,0
-0.0,0,0,0
+177.04,21,0,0
 152.64,2,28801,8
 763.87,0,28801,0
 368.11,271,28801,422
