@@ -50,10 +50,10 @@ def save_grouped_graphics(distribution, metric):
       ax.bar_label(rects, padding=3, rotation=90)
       multiplier += 1
     if metric == 'memory':
-      ax.set_ylim(0, 350)
+      ax.set_ylim(0, 500)
       ax.set_ylabel('memory (MB)', fontsize=12)
     elif metric == 'cpu':
-      ax.set_ylim(0, 700)
+      ax.set_ylim(0, 2000)
       ax.set_ylabel('CPU (millicpu)', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
@@ -74,7 +74,7 @@ def save_graphic(value1, value2, value3, filename):
     plt.ylim(0, 500)
     plt.ylabel('memory (MB)')
   elif 'cpu' in filename:
-    plt.ylim(0, 1000)
+    plt.ylim(0, 2000)
     plt.ylabel('CPU (millicpu)')
   x = ['kube-scheduler', 'KSE+GreedyLB', 'KSE+RefineLB']
   y = [value1, value2, value3]
@@ -181,12 +181,16 @@ for pod in pods:
               failed = str(requests['failed'])
               print(sd[key][algo]['mae']+','+str(migrations)+','+total+','+failed)
             except Exception as error:
-              print(error)
+              total = 0
+              failed = 0
+              print('0, 0, 0')
+              #print(error)
           # saving graphic
           try:
             save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.svg')
           except Exception as error:
-            print(error)
+            save_graphic(0.0, 0.0, 0.0, key+'.svg')
+            #print(error)
 
 save_grouped_graphics('normal', 'memory')
 save_grouped_graphics('normal', 'cpu')

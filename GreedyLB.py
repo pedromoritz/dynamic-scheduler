@@ -33,11 +33,11 @@ def scheduling_workflow():
   global INTERVAL
   global CSV_FILENAME_BASE 
   cluster = kse.Cluster()
-  nodes = cluster.get_nodes() 
   if COUNTER == -2:
     COUNTER = -1
   else:
     COUNTER = 0 if COUNTER == -1 else COUNTER + INTERVAL
+    nodes = cluster.get_nodes()
     cluster.do_info_snapshot('metrics_'+CSV_FILENAME_BASE, COUNTER, nodes)
   if len(cluster.get_unready_pods()) > 0:
     return 
