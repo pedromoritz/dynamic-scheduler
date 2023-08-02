@@ -90,11 +90,7 @@
 207.59,0,20798,0
 69.75,0,21431,0
 81.84,297,20964,427
-83.39,6,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
+96.99,8,21474,19
+134.09,0,20915,0
+152.7,273,20224,417
+139.47,0,20976,0
