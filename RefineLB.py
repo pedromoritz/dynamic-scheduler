@@ -11,73 +11,93 @@ CSV_FILENAME_BASE = sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+
 INTERVAL = 60
 COUNTER = -2
 METRIC = sys.argv[6]
-MARGIN = 1.05
 
-def get_refinelb_plan(processors):
-  global MARGIN
-  allocation_plan = {}
-  heavyProcs = []
-  lightProcs = []
-  # calculating threshold
-  procs_values = list(map(lambda n: n['usage'][METRIC], processors))
-  procs_average = round(reduce(lambda x, y: x + y, procs_values) / len(procs_values), 0)
-  print('procs_average')
-  print(procs_average)
-  threshold = procs_average * MARGIN
-  # defining heavyProcs and lightProcs based on threshold
-  for processor in processors:
-    if int(processor['usage'][METRIC]) < procs_average:
-      print('light')
-      print(processor)
-      print('')
-      lightProcs.append(processor)
+def get_refinelb_plan(nodes):
+  allocationPlan = {}
+  overLoad = 1.05
+  heavyNodes = []
+  lightNodes = []
+  # calculating averageLoad
+  nodesValues = list(map(lambda n: n['usage'][METRIC], nodes))
+  averageLoad = round(reduce(lambda x, y: x + y, nodesValues) / len(nodesValues), 0)
+  # defining heavyNodes and lightNodes based on threshold
+  for node in nodes:
+    if node['usage'][METRIC] > overLoad * averageLoad:
+      heavyNodes.append(node)
+    if node['usage'][METRIC] < averageLoad:
+      lightNodes.append(node)
+  heavyNodes.sort(key=lambda x: x['usage'][METRIC])
+
+  print('heavyNodes')
+  print(heavyNodes)
+  print('')
+
+  print('lightNodes')
+  print(lightNodes)
+  print('')
+
+  done = True
+  while done:
+    if len(heavyNodes) > 0:
+      donor = heavyNodes.pop()
     else:
-      print('heavy')
-      print(processor)
-      print('')
-      heavyProcs.append(processor)
-  heavyProcs.sort(key=lambda x: x['usage'][METRIC])
-  lightProcs.sort(key=lambda x: x['usage'][METRIC])
-  finalProcs = []
+      break
 
-  while len(heavyProcs) > 0:
-    print('--------------------')
-    print('itera heavyProcs')
+    highestLoadFromDonor = 0
+    bestPodFromDonor = None
+    bestNodeFromLightNodes = None
+
+    for indexlightNode, currentLightNode in enumerate(lightNodes):
+      for indexPodFromDonor, currentPodFromDonor in enumerate(donor['pods']):
+        #print(currentPodFromDonor)
+        if currentPodFromDonor['usage'][METRIC] + currentLightNode['usage'][METRIC] < overLoad * averageLoad:
+          if currentPodFromDonor['usage'][METRIC] > highestLoadFromDonor:
+            highestLoadFromDonor = currentPodFromDonor['usage'][METRIC]
+            bestPodFromDonor = currentPodFromDonor
+            bestNodeFromLightNodes = currentLightNode
+
+    if bestPodFromDonor is not None:
+      # deassign
+      donorIndexAtNodes = nodes.index(next(filter(lambda n: n.get('name') == donor['name'], nodes)))
+      nodes[donorIndexAtNodes]['pods'] = [d for d in donor['pods'] if d['name'] != bestPodFromDonor['name']]
+      nodes[donorIndexAtNodes]['usage'][METRIC] -= bestPodFromDonor['usage'][METRIC]
+      # assign
+      bestNodeIndexAtNodes = nodes.index(next(filter(lambda n: n.get('name') == bestNodeFromLightNodes['name'], nodes)))
+      nodes[bestNodeIndexAtNodes]['pods'].append(bestPodFromDonor)
+      nodes[bestNodeIndexAtNodes]['usage'][METRIC] += bestPodFromDonor['usage'][METRIC]
+    else:
+      break
+
+    print('lightNodes antes')
+    print(lightNodes)
     print('')
-    donor = heavyProcs.pop()
-    print('donor')
-    print(donor)
+
+    print("bestNodeFromLightNodes['usage'][METRIC]")
+    print(bestNodeFromLightNodes['usage'][METRIC])
     print('')
-    for index, lightProc in enumerate(lightProcs):
-      print('--------------------')
-      print('itera lightProcs')
-      pods_from_donor = donor['pods']
-      pods_from_donor_sorted = sorted(list(map(lambda n: (n['usage'][METRIC], n['name']), pods_from_donor)), reverse=True)
-      donor_best_pod = pods_from_donor_sorted[0]
-      print('donor_best_pod')
-      print(donor_best_pod[1])
-      print(donor_best_pod[0])
-      print('')
-      print('lightProc[usage][METRIC]')
-      print(lightProc['usage'][METRIC])
-      print('')
-      print('donor_best_pod[0] + lightProc[usage][METRIC]')
-      print(donor_best_pod[0] + lightProc['usage'][METRIC])
-      print('procs_average')
-      print(procs_average)
-      if donor_best_pod[0] + lightProc['usage'][METRIC] > threshold:
-        print('continue')
-        continue
-      else:
-        print('------> pod choosed')
-        print(lightProcs[index]['usage'][METRIC])
-        # deassign best pod from donor
-        donor['pods'] = [d for d in donor['pods'] if d['name'] != donor_best_pod[1]]
-        # reassign best pod
-        lightProcs[index]['usage'][METRIC] = lightProcs[index]['usage'][METRIC] + donor_best_pod[0]
-        allocation_plan[donor_best_pod[1]] = lightProc['name']
-        #break
-  return dict(sorted(allocation_plan.items()))
+
+    print('averageLoad')
+    print(averageLoad)
+    print('')
+
+    if bestNodeFromLightNodes['usage'][METRIC] > averageLoad:
+      lightNodes = [d for d in lightNodes if d['name'] != bestNodeFromLightNodes['name']]
+
+    print('lightNodes depois')
+    print(lightNodes)
+    print('')
+
+    if donor['usage'][METRIC] > overLoad * averageLoad:
+      heavyNodes.append(donor)
+      heavyNodes.sort(key=lambda x: x['usage'][METRIC])      
+    elif donor['usage'][METRIC] < averageLoad:
+      lightNodes.append(donor)
+
+  for node in nodes:
+    for pod in node['pods']:
+      allocationPlan[pod['name']] = node['name']
+
+  return dict(sorted(allocationPlan.items()))
 
 # workflow definitions
 def scheduling_workflow():
