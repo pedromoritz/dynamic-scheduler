@@ -50,10 +50,10 @@ def save_grouped_graphics(distribution, metric):
       ax.bar_label(rects, padding=3, rotation=90)
       multiplier += 1
     if metric == 'memory':
-      ax.set_ylim(0, 500)
+      ax.set_ylim(0, 400)
       ax.set_ylabel('memory (MB)', fontsize=12)
     elif metric == 'cpu':
-      ax.set_ylim(0, 2000)
+      ax.set_ylim(0, 800)
       ax.set_ylabel('CPU (millicpu)', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
@@ -71,10 +71,10 @@ def save_grouped_graphics(distribution, metric):
 
 def save_graphic(value1, value2, value3, filename):
   if 'memory' in filename:
-    plt.ylim(0, 500)
+    plt.ylim(0, 400)
     plt.ylabel('memory (MB)')
   elif 'cpu' in filename:
-    plt.ylim(0, 2000)
+    plt.ylim(0, 800)
     plt.ylabel('CPU (millicpu)')
   x = ['kube-scheduler', 'KSE+GreedyLB', 'KSE+RefineLB']
   y = [value1, value2, value3]
