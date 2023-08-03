@@ -3,7 +3,6 @@
 import time
 import kse as kse
 from apscheduler.schedulers.background import BackgroundScheduler
-import heapq
 import sys
 from functools import reduce
 
