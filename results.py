@@ -47,7 +47,7 @@ def save_grouped_graphics(distribution, metric):
     for attribute, measurement in mae_data.items():
       offset = width * multiplier
       rects = ax.bar(x + offset, measurement, width, label=attribute)
-      ax.bar_label(rects, padding=2, rotation=90, fontsize=9)
+      ax.bar_label(rects, padding=2, rotation=90)
       multiplier += 1
     if metric == 'memory':
       ax.set_ylim(0, 300)
