@@ -47,10 +47,10 @@ def save_grouped_graphics(distribution, metric):
     for attribute, measurement in mae_data.items():
       offset = width * multiplier
       rects = ax.bar(x + offset, measurement, width, label=attribute)
-      ax.bar_label(rects, padding=3, rotation=90)
+      ax.bar_label(rects, padding=2, rotation=90)
       multiplier += 1
     if metric == 'memory':
-      ax.set_ylim(0, 400)
+      ax.set_ylim(0, 300)
       ax.set_ylabel('memory (MB)', fontsize=12)
     elif metric == 'cpu':
       ax.set_ylim(0, 800)
@@ -71,7 +71,7 @@ def save_grouped_graphics(distribution, metric):
 
 def save_graphic(value1, value2, value3, filename):
   if 'memory' in filename:
-    plt.ylim(0, 400)
+    plt.ylim(0, 300)
     plt.ylabel('memory (MB)')
   elif 'cpu' in filename:
     plt.ylim(0, 800)
