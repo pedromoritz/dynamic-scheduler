@@ -26,16 +26,16 @@
       let output = '<h1>' + folder + '<br>' +
       `<hr>\
       <h3>normal distribution, metric memory</h3>\
-      <img src="./${folder}/grouped_normal_memory.png">\
+      <img src="./${folder}/grouped_normal_memory.svg">\
       <hr>\
       <h3>normal distribution, metric cpu</h3>\
-      <img src="./${folder}/grouped_normal_cpu.png">\
+      <img src="./${folder}/grouped_normal_cpu.svg">\
       <hr>\
       <h3>exponential distribution, metric memory</h3>\
-      <img src="./${folder}/grouped_exponential_memory.png">\
+      <img src="./${folder}/grouped_exponential_memory.svg">\
       <hr>\
       <h3>exponential distribution, metric cpu</h3>\
-      <img src="./${folder}/grouped_exponential_cpu.png">`;
+      <img src="./${folder}/grouped_exponential_cpu.svg">`;
 
       let pods = [20, 40];
       let targets = [20, 40];
@@ -59,16 +59,16 @@
                   </tr>\
                   <tr>\
                     <td>\
-                      <img src="./${folder}/metrics_kube-scheduler_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                      <img src="./${folder}/metrics_kube-scheduler_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
                     </td>\
                     <td>\
-                      <img src="./${folder}/metrics_kse-GreedyLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                      <img src="./${folder}/metrics_kse-GreedyLB_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
                     </td>\
                     <td>\
-                      <img src="./${folder}/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                      <img src="./${folder}/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
                     </td>\
                     <td>\
-                      <img src="./${folder}/mae_${pod}_${target}_${rate}_${distribution}_${metric}.png">\
+                      <img src="./${folder}/mae_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
                     </td>\
                   </tr>\
                 </table>`;
