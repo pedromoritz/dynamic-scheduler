@@ -26,8 +26,8 @@
 20_40_constant_exponential_memory,kse-GreedyLB,138.34,108,28801,165
 20_40_constant_exponential_memory,kse-RefineLB,146.59,2,28800,3
 20_40_constant_exponential_cpu,kube-scheduler,662.75,0,28800,0
-20_40_constant_exponential_cpu,kse-GreedyLB,235.61,88,0,0
-0, 0, 0
+20_40_constant_exponential_cpu,kse-GreedyLB,219.06,96,28801,141
+20_40_constant_exponential_cpu,kse-RefineLB,634.9,5,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -150,7 +150,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
-'kse-RefineLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
