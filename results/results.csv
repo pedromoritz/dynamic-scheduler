@@ -39,7 +39,7 @@
 20_40_ramp_exponential_memory,kse-RefineLB,99.65,1,21198,1
 20_40_ramp_exponential_cpu,kube-scheduler,464.97,0,20428,0
 20_40_ramp_exponential_cpu,kse-GreedyLB,279.28,75,20584,108
-20_40_ramp_exponential_cpu,kse-RefineLB,150.76,7,0,0
+20_40_ramp_exponential_cpu,kse-RefineLB,137.16,7,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
