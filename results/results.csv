@@ -14,7 +14,31 @@
 20_20_ramp_exponential_memory,kse-GreedyLB,87.06,134,10719,115
 20_20_ramp_exponential_memory,kse-RefineLB,39.39,0,10659,0
 20_20_ramp_exponential_cpu,kube-scheduler,283.22,0,10492,0
-20_20_ramp_exponential_cpu,kse-GreedyLB,166.31,61,0,0
+20_20_ramp_exponential_cpu,kse-GreedyLB,159.19,73,10525,59
+20_20_ramp_exponential_cpu,kse-RefineLB,111.27,14,10533,9
+20_20_ramp_normal_memory,kube-scheduler,45.23,0,10761,0
+20_20_ramp_normal_memory,kse-GreedyLB,40.08,153,10577,164
+20_20_ramp_normal_memory,kse-RefineLB,51.02,0,10692,0
+20_20_ramp_normal_cpu,kube-scheduler,111.78,0,10550,0
+20_20_ramp_normal_cpu,kse-GreedyLB,78.72,129,10562,119
+20_20_ramp_normal_cpu,kse-RefineLB,99.15,11,10525,4
+20_40_constant_exponential_memory,kube-scheduler,198.66,0,28800,0
+20_40_constant_exponential_memory,kse-GreedyLB,147.88,137,28801,359
+20_40_constant_exponential_memory,kse-RefineLB,156.07,4,28801,7
+20_40_constant_exponential_cpu,kube-scheduler,675.97,0,28800,0
+20_40_constant_exponential_cpu,kse-GreedyLB,205.3,111,28800,162
+20_40_constant_exponential_cpu,kse-RefineLB,214.67,7,28800,17
+20_40_constant_normal_memory,kube-scheduler,102.93,0,28801,0
+20_40_constant_normal_memory,kse-GreedyLB,157.87,87,28800,320
+20_40_constant_normal_memory,kse-RefineLB,112.25,2,28801,6
+20_40_constant_normal_cpu,kube-scheduler,262.33,0,28800,0
+20_40_constant_normal_cpu,kse-GreedyLB,270.46,75,28801,301
+20_40_constant_normal_cpu,kse-RefineLB,217.56,2,28800,0
+20_40_ramp_exponential_memory,kube-scheduler,71.99,0,21096,0
+20_40_ramp_exponential_memory,kse-GreedyLB,57.12,113,20897,125
+20_40_ramp_exponential_memory,kse-RefineLB,72.43,0,21245,0
+20_40_ramp_exponential_cpu,kube-scheduler,479.79,0,20627,0
+20_40_ramp_exponential_cpu,kse-GreedyLB,190.75,97,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -70,75 +94,6 @@
 0, 0, 0
 0, 0, 0
 0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
@@ -164,12 +119,35 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
+'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
+'kube-scheduler'
+'kse-GreedyLB'
+'kse-RefineLB'
 'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
