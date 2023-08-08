@@ -92,7 +92,5 @@
 40_40_ramp_normal_memory,kse-GreedyLB,78.79,295,20802,449
 40_40_ramp_normal_memory,kse-RefineLB,54.55,0,21385,0
 40_40_ramp_normal_cpu,kube-scheduler,90.68,0,20845,0
-40_40_ramp_normal_cpu,kse-GreedyLB,34.4,32,0,0
-0, 0, 0
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
+40_40_ramp_normal_cpu,kse-GreedyLB,148.06,177,20466,212
+40_40_ramp_normal_cpu,kse-RefineLB,232.1,15,20830,18
