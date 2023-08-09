@@ -1,0 +1,42 @@
+<html>
+  <head> 
+    <meta http-equiv='cache-control' content='no-cache'> 
+    <meta http-equiv='expires' content='0'> 
+    <meta http-equiv='pragma' content='no-cache'>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <style id="compiled-css" type="text/css">
+      div {<!--from ww  w .j av a2 s.c o m-->
+        text-align:justify;
+      }
+      div img {
+        display:inline-block;
+        width: 100%;
+      }
+      div:after {
+        content:'';
+        display:inline-block;
+        width:100%;
+      }
+    </style> 
+  </head>
+  <body>
+    <div>
+    <script>
+      let output = '<h1>mean results<br>' +
+      `<hr>\
+      <h3>normal distribution, metric memory</h3>\
+      <img src="grouped_mean_normal_memory.svg">\
+      <hr>\
+      <h3>normal distribution, metric cpu</h3>\
+      <img src="grouped_mean_normal_cpu.svg">\
+      <hr>\
+      <h3>exponential distribution, metric memory</h3>\
+      <img src="grouped_mean_exponential_memory.svg">\
+      <hr>\
+      <h3>exponential distribution, metric cpu</h3>\
+      <img src="grouped_mean_exponential_cpu.svg">`;
+      document.write(output);
+    </script>
+    </div>  
+  </body>
+</html>
