@@ -53,19 +53,20 @@ def save_grouped_graphics(distribution, metric):
       offset = width * multiplier
       std = std_data[attribute]
       rects = ax.bar(x + offset, measurement, width, yerr=std, capsize=5, label=attribute)
-      ax.bar_label(rects, padding=2, rotation=90)
+      #ax.bar_label(rects, padding=2, rotation=90)
       multiplier += 1
     if metric == 'memory':
-      ax.set_ylim(0, 300)
-      ax.set_ylabel('memory (MB)', fontsize=12)
+      ax.set_ylim(0, 250)
+      ax.set_ylabel('memória (MB)', fontsize=12)
     elif metric == 'cpu':
-      ax.set_ylim(0, 800)
+      ax.set_ylim(0, 700)
       ax.set_ylabel('CPU (millicpu)', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
     ksl = mpatches.Patch(color='#1f77b4', label='kube-scheduler')
     ksegl = mpatches.Patch(color='#ff7f0e', label='KSE-GreedyLB')
     kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
+    ax.grid(axis="y")
     ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
     plt.savefig('grouped_mean_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
   except Exception as error:
