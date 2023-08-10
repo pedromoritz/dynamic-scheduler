@@ -13,7 +13,7 @@ pods = [20, 40]
 targets = [20, 40]
 rates = ['constant', 'ramp']
 algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
-executions = ['results_1', 'results_2', 'results_3', 'results_4']
+executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5']
 
 def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
