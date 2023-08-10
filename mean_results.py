@@ -67,6 +67,7 @@ def save_grouped_graphics(distribution, metric):
     ksegl = mpatches.Patch(color='#ff7f0e', label='KSE-GreedyLB')
     kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
     ax.grid(axis="y")
+    ax.set_axisbelow(True)
     ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
     plt.savefig('grouped_mean_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
   except Exception as error:
