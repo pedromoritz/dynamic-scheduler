@@ -16,10 +16,18 @@ def save_load_graphic(timestamp, data1, data2, data3, data4, xlabel, ylim, ylabe
   plt.ylim(0, ylim)
   plt.ylabel(ylabel, fontsize=18)
   plt.yticks(fontsize=16)
-  plt.plot(timestamp, data1, label='node 1', linewidth='2')
-  plt.plot(timestamp, data2, label='node 2', linewidth='2')
-  plt.plot(timestamp, data3, label='node 3', linewidth='2')
-  plt.plot(timestamp, data4, label='node 4', linewidth='2')
+  title = ''
+  if 'kube-scheduler' in final_filename:
+    title = 'Kube-Scheduler'
+  elif 'kse-GreedyLB' in final_filename:
+    title = 'KSE-GreedyLB'
+  elif 'kse-RefineLB' in final_filename:
+    title = 'KSE-RefineLB'
+  plt.title(title, fontsize=18, fontweight='bold')
+  plt.plot(timestamp, data1, label='nó 1', linewidth='2')
+  plt.plot(timestamp, data2, label='nó 2', linewidth='2')
+  plt.plot(timestamp, data3, label='nó 3', linewidth='2')
+  plt.plot(timestamp, data4, label='nó 4', linewidth='2')
   previousMigration = 0
   if isinstance(migrations, Iterable):
     for migration in migrations:
@@ -50,16 +58,16 @@ for path in Path("results/").glob("metrics_*.csv"):
       data2 = list(map(lambda n: n/1024, n2_memory))
       data3 = list(map(lambda n: n/1024, n3_memory))
       data4 = list(map(lambda n: n/1024, n4_memory))
-      xlabel = 'time (s)'
+      xlabel = 'tempo (s)'
       ylim = 2048
-      ylabel = 'memory (MB)'
+      ylabel = 'memória (MB)'
     elif 'cpu' in FILE_NAME:
       # generating cpu graphics
       data1 = list(map(lambda n: n/1000000, n1_cpu))
       data2 = list(map(lambda n: n/1000000, n2_cpu))
       data3 = list(map(lambda n: n/1000000, n3_cpu))
       data4 = list(map(lambda n: n/1000000, n4_cpu))
-      xlabel = 'time (s)'
+      xlabel = 'tempo (s)'
       ylim = 2000
       ylabel = 'CPU (millicpu)'
     final_filename = FILE_NAME + '.svg'

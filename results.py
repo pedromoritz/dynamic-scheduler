@@ -57,7 +57,7 @@ def save_grouped_graphics(distribution, metric):
       ax.set_ylabel('CPU (millicpu)', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
-    ksl = mpatches.Patch(color='#1f77b4', label='kube-scheduler')
+    ksl = mpatches.Patch(color='#1f77b4', label='Kube-Scheduler')
     ksegl = mpatches.Patch(color='#ff7f0e', label='KSE-GreedyLB')
     kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
     ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
