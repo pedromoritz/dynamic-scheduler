@@ -2,8 +2,6 @@ results/metrics_kube-scheduler_40_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 8
 results/metrics_kse-RefineLB_40_40_constant_exponential_memory.csv ---> ERROR
 Wrong number of columns at line 11
-results/metrics_kse-GreedyLB_40_40_ramp_normal_memory.csv ---> ERROR
-
 20_20_constant_exponential_memory,kube-scheduler,119.43,0,14400,0
 20_20_constant_exponential_memory,kse-GreedyLB,129.61,91,14401,156
 20_20_constant_exponential_memory,kse-RefineLB,121.76,4,14401,16
@@ -95,14 +93,8 @@ results/metrics_kse-GreedyLB_40_40_ramp_normal_memory.csv ---> ERROR
 40_40_ramp_exponential_cpu,kse-GreedyLB,108.88,286,20391,293
 40_40_ramp_exponential_cpu,kse-RefineLB,112.7,8,20962,10
 40_40_ramp_normal_memory,kube-scheduler,58.01,0,21343,0
-40_40_ramp_normal_memory,kse-GreedyLB,0.0,0,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
+40_40_ramp_normal_memory,kse-GreedyLB,132.7,289,20769,402
+40_40_ramp_normal_memory,kse-RefineLB,47.72,0,21385,0
+40_40_ramp_normal_cpu,kube-scheduler,125.45,0,20969,0
+40_40_ramp_normal_cpu,kse-GreedyLB,180.71,175,20643,243
+40_40_ramp_normal_cpu,kse-RefineLB,231.23,12,20966,19
