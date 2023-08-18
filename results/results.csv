@@ -1,5 +1,3 @@
-results/metrics_kse-RefineLB_40_40_constant_exponential_memory.csv ---> ERROR
-Wrong number of columns at line 11
 20_20_constant_exponential_memory,kube-scheduler,97.89,0,14401,0
 20_20_constant_exponential_memory,kse-GreedyLB,70.37,113,14401,112
 20_20_constant_exponential_memory,kse-RefineLB,112.45,2,14401,5
@@ -74,7 +72,7 @@ Wrong number of columns at line 11
 40_20_ramp_normal_cpu,kse-RefineLB,77.35,9,10459,5
 40_40_constant_exponential_memory,kube-scheduler,62.9,0,28800,0
 40_40_constant_exponential_memory,kse-GreedyLB,142.72,175,28801,347
-40_40_constant_exponential_memory,kse-RefineLB,0.0,0,28347,1485
+40_40_constant_exponential_memory,kse-RefineLB,87.97,0,28347,1485
 40_40_constant_exponential_cpu,kube-scheduler,300.05,0,28801,0
 40_40_constant_exponential_cpu,kse-GreedyLB,212.92,222,28801,444
 40_40_constant_exponential_cpu,kse-RefineLB,298.36,17,28800,32
