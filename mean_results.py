@@ -15,7 +15,7 @@ rates = ['constant', 'ramp']
 distributions = ['exponential', 'normal']
 metrics = ['memory', 'cpu']
 algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
-executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5']
+executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5', 'results_6', 'results_7', 'results_8', 'results_9', 'results_10']
 
 def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
