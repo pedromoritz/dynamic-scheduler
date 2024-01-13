@@ -59,3 +59,6 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 
 ./results.py > results/results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.svg; git commit -m "update"; git push
 
+#### Access tesla machine ####
+ssh pedrocarvalho@lapesd-tesla.inf.ufsc.br
+
