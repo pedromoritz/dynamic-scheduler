@@ -26,15 +26,7 @@ def get_refinelb_plan(nodes):
     if node['usage'][METRIC] < averageLoad:
       lightNodes.append(node)
   heavyNodes.sort(key=lambda x: x['usage'][METRIC])
-
-  print('heavyNodes')
-  print(heavyNodes)
-  print('')
-
-  print('lightNodes')
-  print(lightNodes)
-  print('')
-
+ 
   done = True
   while done:
     if len(heavyNodes) > 0:
@@ -48,7 +40,6 @@ def get_refinelb_plan(nodes):
 
     for indexlightNode, currentLightNode in enumerate(lightNodes):
       for indexPodFromDonor, currentPodFromDonor in enumerate(donor['pods']):
-        #print(currentPodFromDonor)
         if currentPodFromDonor['usage'][METRIC] + currentLightNode['usage'][METRIC] < overLoad * averageLoad:
           if currentPodFromDonor['usage'][METRIC] > highestLoadFromDonor:
             highestLoadFromDonor = currentPodFromDonor['usage'][METRIC]
@@ -67,24 +58,8 @@ def get_refinelb_plan(nodes):
     else:
       break
 
-    print('lightNodes antes')
-    print(lightNodes)
-    print('')
-
-    print("bestNodeFromLightNodes['usage'][METRIC]")
-    print(bestNodeFromLightNodes['usage'][METRIC])
-    print('')
-
-    print('averageLoad')
-    print(averageLoad)
-    print('')
-
     if bestNodeFromLightNodes['usage'][METRIC] > averageLoad:
       lightNodes = [d for d in lightNodes if d['name'] != bestNodeFromLightNodes['name']]
-
-    print('lightNodes depois')
-    print(lightNodes)
-    print('')
 
     if donor['usage'][METRIC] > overLoad * averageLoad:
       heavyNodes.append(donor)
@@ -95,7 +70,6 @@ def get_refinelb_plan(nodes):
   for node in nodes:
     for pod in node['pods']:
       allocationPlan[pod['name']] = node['name']
-
   return dict(sorted(allocationPlan.items()))
 
 # workflow definitions
