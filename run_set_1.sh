@@ -17,7 +17,7 @@ for PA in ${pods_array[@]}; do
             echo "$FILE exists."
           else 
             echo "$FILE does not exist."
-            ./run_kube-scheduler.sh pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
+            ./run_kube-scheduler_experiment.sh pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
           fi
 
           FILE=results/metrics_kse-GreedyLB_${PA}_${TA}_${RT}_${DI}_${ME}.csv
@@ -25,7 +25,7 @@ for PA in ${pods_array[@]}; do
             echo "$FILE exists."
           else
             echo "$FILE does not exist."
-            ./run_kse.sh scheduler=GreedyLB pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
+            ./run_kse_experiment.sh scheduler=GreedyLB pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
           fi
 
           FILE=results/metrics_kse-RefineLB_${PA}_${TA}_${RT}_${DI}_${ME}.csv
@@ -33,7 +33,7 @@ for PA in ${pods_array[@]}; do
             echo "$FILE exists."
           else
             echo "$FILE does not exist."
-            ./run_kse.sh scheduler=RefineLB pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
+            ./run_kse_experiment.sh scheduler=RefineLB pod_amount=$PA target=$TA rate_type=$RT distribution=$DI metric=$ME
           fi
 
         done
