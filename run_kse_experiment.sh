@@ -8,6 +8,7 @@ test()
   RT=$4 # rate type
   DI=$5 # distribution
   ME=$6 # metric
+  WL=$7 # workload
 
   # purging old files
   rm results/*_kse-${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.*
@@ -22,17 +23,22 @@ test()
   kubectl delete namespace lab
   kubectl create namespace lab
 
-  # creating workloads
-  for i in $(seq $PA); do	
-    POD_NAME=pod-$(printf %02d $i)
-    NODE_PORT=31$(printf %03d $i)
-    template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
-    template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
-    template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
-    template=`echo "$template" | sed "s/{{NODE_NAME}}/$NODE_NAME/g"`
-    template=`echo "$template" | sed "s/{{METRIC}}/$ME/g"`
-    echo "$template" | kubectl apply -f -
-  done
+  # selecting pod template and creating workloads
+  if [ $WL="synthetic" ]
+  then
+    for i in $(seq $PA); do	
+      POD_NAME=pod-$(printf %02d $i)
+      NODE_PORT=31$(printf %03d $i)
+      template=`cat "synthetic-workload_pod_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
+      template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
+      template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
+      template=`echo "$template" | sed "s/{{NODE_NAME}}/$NODE_NAME/g"`
+      template=`echo "$template" | sed "s/{{METRIC}}/$ME/g"`
+      echo "$template" | kubectl apply -f -
+    done
+  else
+
+  fi
 
   # shuffle scheduler
   ./shuffle_scheduler.py
@@ -64,9 +70,9 @@ do
   export "$KEY"="$VALUE"
 done
 
-if ([ "$scheduler" != "GreedyLB" ] && [ "$scheduler" != "RefineLB" ]) || [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ])
+if ([ "$scheduler" != "GreedyLB" ] && [ "$scheduler" != "RefineLB" ]) || [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ]) || ([ "$workload" != "synthetic" ] && [ "$workload" != "moodle" ])
 then
-  echo "usage: ./run_kse.sh scheduler=<SCHEDULER> pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC>"
+  echo "usage: ./run_kse.sh scheduler=<SCHEDULER> pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC> workload=<WORKLOAD>"
 else
   test $scheduler $pod_amount $target $rate_type $distribution $metric
 fi
