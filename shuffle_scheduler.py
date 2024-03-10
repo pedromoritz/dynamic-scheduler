@@ -6,8 +6,6 @@ import numpy as np
 def scheduling_workflow():
   cluster = kse.Cluster()
   pending_pods = cluster.get_pending_pods()
-  #nodes = ['ppgcc-m02', 'ppgcc-m03', 'ppgcc-m04', 'ppgcc-m05']
-  #shuffle_sequence=[1, 0, 1, 2, 1, 1, 2, 3, 2, 1, 0, 3, 0, 3, 0, 0, 2, 3, 2, 3, 1, 0, 1, 2, 1, 1, 2, 3, 2, 1, 0, 3, 0, 3, 0, 0, 2, 3, 2, 3]
   distribution_array=['ppgcc-m05', 'ppgcc-m03', 'ppgcc-m02', 'ppgcc-m04', 'ppgcc-m05', 'ppgcc-m03', 'ppgcc-m02', 'ppgcc-m04', 'ppgcc-m03', 'ppgcc-m05', 'ppgcc-m04', 'ppgcc-m02', 'ppgcc-m02', 'ppgcc-m03', 'ppgcc-m05', 'ppgcc-m04', 'ppgcc-m03', 'ppgcc-m04', 'ppgcc-m05', 'ppgcc-m02', 'ppgcc-m05', 'ppgcc-m03', 'ppgcc-m02', 'ppgcc-m04', 'ppgcc-m05', 'ppgcc-m03', 'ppgcc-m02', 'ppgcc-m04', 'ppgcc-m03', 'ppgcc-m05', 'ppgcc-m04', 'ppgcc-m02', 'ppgcc-m02', 'ppgcc-m03', 'ppgcc-m05', 'ppgcc-m04', 'ppgcc-m03', 'ppgcc-m04', 'ppgcc-m05', 'ppgcc-m02']
   allocation_plan = {}
   for j in range(len(pending_pods)):
