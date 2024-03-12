@@ -37,7 +37,7 @@ spec:
             containerPort: 80
         env:
           - name: WORDPRESS_DB_HOST
-            value: '137.184.26.18:16398'
+            value: '143.198.161.106:16398'
           - name: WORDPRESS_DB_PASSWORD
             value: 'AVNS_UarevlHO3kq6eyf8LH0'
           - name: WORDPRESS_DB_USER
