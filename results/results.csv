@@ -1,3 +1,5 @@
+results/metrics_kube-scheduler_20_20_ramp_normal_cpu.csv ---> ERROR
+
 20_20_constant_exponential_memory,kube-scheduler,316.78,0,22335,0
 20_20_constant_exponential_memory,kse-GreedyLB,122.7,111,22273,176
 20_20_constant_exponential_memory,kse-RefineLB,127.5,2,22345,1
@@ -16,10 +18,10 @@
 20_20_ramp_exponential_cpu,kube-scheduler,126.19,0,1393,0
 20_20_ramp_exponential_cpu,kse-GreedyLB,141.38,127,1397,13
 20_20_ramp_exponential_cpu,kse-RefineLB,109.66,4,1398,0
-20_20_ramp_normal_memory,kube-scheduler,42.51,0,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
+20_20_ramp_normal_memory,kube-scheduler,75.89,0,1424,0
+20_20_ramp_normal_memory,kse-GreedyLB,59.92,85,1425,17
+20_20_ramp_normal_memory,kse-RefineLB,72.96,1,1427,0
+20_20_ramp_normal_cpu,kube-scheduler,0.0,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -101,8 +103,6 @@
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
@@ -124,7 +124,6 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
-'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
 'kube-scheduler'
@@ -136,6 +135,7 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
+shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
