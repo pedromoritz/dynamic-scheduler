@@ -8,6 +8,7 @@ test()
   RT=$4 # rate type
   DI=$5 # distribution
   ME=$6 # metric
+  WL=$7 # workload
 
   # purging old files
   rm results/*_${ST}_${PA}_${TA}_${RT}_${DI}_${ME}.*
@@ -24,11 +25,18 @@ test()
 
   DISTRIBUTION_ARRAY=('ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m03' 'ppgcc-m02' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m02' 'ppgcc-m02' 'ppgcc-m03' 'ppgcc-m05' 'ppgcc-m04' 'ppgcc-m03' 'ppgcc-m04' 'ppgcc-m05' 'ppgcc-m02')
 
-  # creating workloads
+  # selecting pod template and creating workloads
+  if [[ $WL == "synthetic" ]]
+  then
+    WORKLOAD_TEMPLATE=synthetic-workload_pod_template.yaml
+  else
+    WORKLOAD_TEMPLATE=real-workload_pod_template.yaml
+  fi
+
   for i in $(seq $PA); do	
     POD_NAME=pod-$(printf %02d $i)
     NODE_PORT=31$(printf %03d $i)
-    template=`cat "pod_deployment_template.yaml" | sed "s/{{POD_NAME}}/$POD_NAME/g"`
+    template=`cat $WORKLOAD_TEMPLATE | sed "s/{{POD_NAME}}/$POD_NAME/g"`
     template=`echo "$template" | sed "s/{{NODE_PORT}}/$NODE_PORT/g"`
     template=`echo "$template" | sed "s/{{SCHEDULER}}/$SCHEDULER/g"`
     template=`echo "$template" | sed "s/{{NODE_NAME}}/nodeName: ${DISTRIBUTION_ARRAY[i-1]}/g"`
@@ -63,9 +71,9 @@ do
   export "$KEY"="$VALUE"
 done
 
-if [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ])
+if [ -z $pod_amount ] || [ -z $target ] || ([ "$rate_type" != "ramp" ] && [ "$rate_type" != "constant" ]) || ([ "$distribution" != "exponential" ] && [ "$distribution" != "normal" ]) || ([ "$metric" != "memory" ] && [ "$metric" != "cpu" ]) || ([ "$workload" != "synthetic" ] && [ "$workload" != "real" ])
 then
-  echo "usage: ./run_kube-scheduler.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC>"
+  echo "usage: ./run_kube-scheduler.sh pod_amount=<POD_AMOUNT> target=<TARGET> rate_type=<RATE_TYPE> distribution=<DISTRIBUTION> metric=<METRIC> workload=<WORKLOAD>"
 else
-  test kube-scheduler $pod_amount $target $rate_type $distribution $metric
+  test kube-scheduler $pod_amount $target $rate_type $distribution $metric $workload
 fi
