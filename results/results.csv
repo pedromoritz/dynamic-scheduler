@@ -1,4 +1,4 @@
-results/metrics_kube-scheduler_8_10_constant_exponential_memory.csv ---> ERROR
+results/metrics_kube-scheduler_10_10_constant_exponential_memory.csv ---> ERROR
 
 0, 0, 0
 0, 0, 0
