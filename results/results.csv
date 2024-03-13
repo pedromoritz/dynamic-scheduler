@@ -1,4 +1,4 @@
-results/metrics_kse-RefineLB_10_15_constant_exponential_memory.csv ---> ERROR
+results/metrics_kube-scheduler_8_10_constant_exponential_memory.csv ---> ERROR
 
 0, 0, 0
 0, 0, 0
@@ -24,9 +24,9 @@ results/metrics_kse-RefineLB_10_15_constant_exponential_memory.csv ---> ERROR
 0, 0, 0
 0, 0, 0
 0, 0, 0
-20_40_constant_exponential_memory,kube-scheduler,92.93,0,28781,18121
 0, 0, 0
-20_40_constant_exponential_memory,kse-RefineLB,96.32,0,28776,18111
+0, 0, 0
+0, 0, 0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -152,7 +152,9 @@ shape mismatch: objects cannot be broadcast to a single shape
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
+'kube-scheduler'
 'kse-GreedyLB'
+'kse-RefineLB'
 'kube-scheduler'
 'kse-GreedyLB'
 'kse-RefineLB'
