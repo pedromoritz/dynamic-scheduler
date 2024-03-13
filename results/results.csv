@@ -1,5 +1,5 @@
 results/metrics_kse-GreedyLB_10_10_constant_normal_cpu.csv ---> ERROR
-
+'numpy.float64' object is not iterable
 10_10_constant_exponential_memory,kube-scheduler,251.55,0,7201,0
 10_10_constant_exponential_memory,kse-GreedyLB,162.27,32,7201,40
 10_10_constant_exponential_memory,kse-RefineLB,116.09,2,7201,0
