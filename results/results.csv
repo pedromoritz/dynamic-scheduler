@@ -1,3 +1,5 @@
+results/metrics_kse-GreedyLB_10_10_ramp_normal_memory.csv ---> ERROR
+'numpy.float64' object is not iterable
 10_10_constant_exponential_memory,kube-scheduler,251.55,0,7201,0
 10_10_constant_exponential_memory,kse-GreedyLB,162.27,32,7201,40
 10_10_constant_exponential_memory,kse-RefineLB,116.09,2,7201,0
@@ -15,9 +17,9 @@
 10_10_ramp_exponential_memory,kse-RefineLB,79.76,1,565,0
 10_10_ramp_exponential_cpu,kube-scheduler,46.61,0,567,0
 10_10_ramp_exponential_cpu,kse-GreedyLB,49.88,75,589,37
-0, 0, 0
-0, 0, 0
-0, 0, 0
+10_10_ramp_exponential_cpu,kse-RefineLB,34.42,11,561,0
+10_10_ramp_normal_memory,kube-scheduler,61.07,0,568,0
+10_10_ramp_normal_memory,kse-GreedyLB,0.0,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
