@@ -34,9 +34,10 @@ def save_grouped_graphics(distribution, metric):
            scenarios.append(str(pod)+' pods,\n'+str(target)+' req/s\n'+'rampa')  
          for algo in algos:
            try:
-             mae_data[algo].append(float(sd[key][algo]['mae']))
+             mae_value = float(sd[key][algo]['mae'])
+             mae_data[algo].append(mae_value)
            except Exception as error:
-             print(error)
+             mae_data[algo].append(0.0)
 
   x = np.arange(len(scenarios))
   width = 0.25
@@ -184,13 +185,10 @@ for pod in pods:
               total = 0
               failed = 0
               print('0, 0, 0')
-              #print(error)
-          # saving graphic
           try:
             save_graphic(float(sd[key]['kube-scheduler']['mae']), float(sd[key]['kse-GreedyLB']['mae']), float(sd[key]['kse-RefineLB']['mae']), key+'.svg')
           except Exception as error:
             save_graphic(0.0, 0.0, 0.0, key+'.svg')
-            #print(error)
 
 save_grouped_graphics('normal', 'memory')
 save_grouped_graphics('normal', 'cpu')
