@@ -59,8 +59,8 @@
 20_10_constant_normal_cpu,kse-GreedyLB,133.19,162,7201,188
 20_10_constant_normal_cpu,kse-RefineLB,67.95,11,7201,5
 20_10_ramp_exponential_memory,kube-scheduler,33.87,0,557,0
-20_10_ramp_exponential_memory,kse-GreedyLB,49.57,18,0,0
-0, 0, 0
+20_10_ramp_exponential_memory,kse-GreedyLB,69.84,158,559,26
+20_10_ramp_exponential_memory,kse-RefineLB,57.57,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
