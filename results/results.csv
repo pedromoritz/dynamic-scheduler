@@ -1,4 +1,4 @@
-results/metrics_kube-scheduler_10_10_ramp_exponential_memory.csv ---> ERROR
+results/metrics_kse-RefineLB_10_10_ramp_exponential_memory.csv ---> ERROR
 
 10_10_constant_exponential_memory,kube-scheduler,251.55,0,7201,0
 10_10_constant_exponential_memory,kse-GreedyLB,162.27,32,7201,40
@@ -12,7 +12,9 @@ results/metrics_kube-scheduler_10_10_ramp_exponential_memory.csv ---> ERROR
 10_10_constant_normal_cpu,kube-scheduler,191.48,0,7201,0
 10_10_constant_normal_cpu,kse-GreedyLB,263.6,46,7201,73
 10_10_constant_normal_cpu,kse-RefineLB,203.88,1,7201,0
-10_10_ramp_exponential_memory,kube-scheduler,0.0,0,0,0
+10_10_ramp_exponential_memory,kube-scheduler,82.14,0,564,0
+10_10_ramp_exponential_memory,kse-GreedyLB,64.76,75,580,22
+10_10_ramp_exponential_memory,kse-RefineLB,0.0,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
@@ -94,89 +96,3 @@ results/metrics_kube-scheduler_10_10_ramp_exponential_memory.csv ---> ERROR
 0, 0, 0
 0, 0, 0
 0, 0, 0
-0, 0, 0
-0, 0, 0
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-shape mismatch: objects cannot be broadcast to a single shape
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
-'kube-scheduler'
-'kse-GreedyLB'
-'kse-RefineLB'
