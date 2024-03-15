@@ -1,3 +1,5 @@
+results/metrics_kube-scheduler_20_20_constant_exponential_memory.csv ---> ERROR
+
 10_10_constant_exponential_memory,kube-scheduler,224.93,0,7201,0
 10_10_constant_exponential_memory,kse-GreedyLB,110.35,36,7201,37
 10_10_constant_exponential_memory,kse-RefineLB,147.35,2,7201,1
@@ -60,17 +62,17 @@
 20_10_constant_normal_cpu,kse-RefineLB,67.95,11,7201,5
 20_10_ramp_exponential_memory,kube-scheduler,33.87,0,557,0
 20_10_ramp_exponential_memory,kse-GreedyLB,69.84,158,559,26
-20_10_ramp_exponential_memory,kse-RefineLB,57.57,0,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
+20_10_ramp_exponential_memory,kse-RefineLB,71.45,0,554,0
+20_10_ramp_exponential_cpu,kube-scheduler,22.29,0,555,0
+20_10_ramp_exponential_cpu,kse-GreedyLB,80.03,143,546,24
+20_10_ramp_exponential_cpu,kse-RefineLB,100.63,42,552,1
+20_10_ramp_normal_memory,kube-scheduler,54.09,0,556,0
+20_10_ramp_normal_memory,kse-GreedyLB,73.1,88,556,13
+20_10_ramp_normal_memory,kse-RefineLB,60.54,0,556,0
+20_10_ramp_normal_cpu,kube-scheduler,22.41,0,557,0
+20_10_ramp_normal_cpu,kse-GreedyLB,113.53,152,549,29
+20_10_ramp_normal_cpu,kse-RefineLB,77.59,32,554,0
+20_20_constant_exponential_memory,kube-scheduler,0.0,0,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
