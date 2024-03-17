@@ -77,22 +77,22 @@ Wrong number of columns at line 8
 40_40_constant_exponential_memory,kse-RefineLB,55.48,0,28799,18178
 40_40_constant_exponential_cpu,kube-scheduler,133.03,0,28801,18178
 40_40_constant_exponential_cpu,kse-GreedyLB,0.0,125,28101,21035
-40_40_constant_exponential_cpu,kse-RefineLB,128.82,1,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
+40_40_constant_exponential_cpu,kse-RefineLB,106.64,8,28798,18163
+40_40_constant_normal_memory,kube-scheduler,54.52,0,28801,18157
+40_40_constant_normal_memory,kse-GreedyLB,60.64,300,28801,18317
+40_40_constant_normal_memory,kse-RefineLB,36.22,0,28801,18155
+40_40_constant_normal_cpu,kube-scheduler,71.97,0,28736,18560
+40_40_constant_normal_cpu,kse-GreedyLB,184.82,175,28800,18996
+40_40_constant_normal_cpu,kse-RefineLB,93.8,9,28801,18968
+40_40_ramp_exponential_memory,kube-scheduler,55.89,0,2340,0
+40_40_ramp_exponential_memory,kse-GreedyLB,75.56,286,2362,72
+40_40_ramp_exponential_memory,kse-RefineLB,60.97,0,2345,0
+40_40_ramp_exponential_cpu,kube-scheduler,54.85,0,2336,0
+40_40_ramp_exponential_cpu,kse-GreedyLB,170.13,303,2320,75
+40_40_ramp_exponential_cpu,kse-RefineLB,107.86,25,2345,14
+40_40_ramp_normal_memory,kube-scheduler,72.81,0,2343,0
+40_40_ramp_normal_memory,kse-GreedyLB,74.91,314,2463,80
+40_40_ramp_normal_memory,kse-RefineLB,49.37,0,2407,0
+40_40_ramp_normal_cpu,kube-scheduler,40.95,0,2343,0
+40_40_ramp_normal_cpu,kse-GreedyLB,154.09,289,2376,94
+40_40_ramp_normal_cpu,kse-RefineLB,69.18,24,2350,6
