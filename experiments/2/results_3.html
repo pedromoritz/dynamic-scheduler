@@ -1,0 +1,84 @@
+<html>
+  <head> 
+    <meta http-equiv='cache-control' content='no-cache'> 
+    <meta http-equiv='expires' content='0'> 
+    <meta http-equiv='pragma' content='no-cache'>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <style id="compiled-css" type="text/css">
+      div {<!--from ww  w .j av a2 s.c o m-->
+        text-align:justify;
+      }
+      div img {
+        display:inline-block;
+        width: 100%;
+      }
+      div:after {
+        content:'';
+        display:inline-block;
+        width:100%;
+      }
+    </style> 
+  </head>
+  <body>
+    <div>
+    <script>
+      let folder = 'results_3';
+      let output = '<h1>' + folder + '<br>' +
+      `<hr>\
+      <h3>normal distribution, metric memory</h3>\
+      <img src="./${folder}/grouped_normal_memory.svg">\
+      <hr>\
+      <h3>normal distribution, metric cpu</h3>\
+      <img src="./${folder}/grouped_normal_cpu.svg">\
+      <hr>\
+      <h3>exponential distribution, metric memory</h3>\
+      <img src="./${folder}/grouped_exponential_memory.svg">\
+      <hr>\
+      <h3>exponential distribution, metric cpu</h3>\
+      <img src="./${folder}/grouped_exponential_cpu.svg">`;
+
+      let pods = [20, 40];
+      let targets = [20, 40];
+      let rates = ['constant', 'ramp'];
+      let distributions = ['exponential', 'normal'];
+      let metrics = ['memory', 'cpu'];
+      pods.forEach((pod) => {
+        targets.forEach((target) => {
+          rates.forEach((rate) => {
+            distributions.forEach((distribution) => {
+              metrics.forEach((metric) => {
+                output = output +
+                `<hr>\
+                <h3>${pod} pods, ${target} requests/second, ${rate}, ${distribution} distribution, ${metric}</h3>\
+                <table>\
+                  <tr>\
+                    <th>kube-scheduler</th>\
+                    <th>KSE+GreedyLB</th>\
+                    <th>KSE+RefineLB</th>\
+                    <th>Mean Absolute Error</th>\
+                  </tr>\
+                  <tr>\
+                    <td>\
+                      <img src="./${folder}/metrics_kube-scheduler_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
+                    </td>\
+                    <td>\
+                      <img src="./${folder}/metrics_kse-GreedyLB_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
+                    </td>\
+                    <td>\
+                      <img src="./${folder}/metrics_kse-RefineLB_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
+                    </td>\
+                    <td>\
+                      <img src="./${folder}/mae_${pod}_${target}_${rate}_${distribution}_${metric}.svg">\
+                    </td>\
+                  </tr>\
+                </table>`;
+              });
+            });    
+          });
+        });
+      });
+      document.write(output);
+    </script>
+    </div>  
+  </body>
+</html>
