@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 sd = defaultdict(dict)
 
 pods = [10, 20]
-targets = [10, 20]
+targets = [20, 40]
 rates = ['constant', 'ramp']
 distributions = ['exponential', 'normal']
 metrics = ['memory', 'cpu']

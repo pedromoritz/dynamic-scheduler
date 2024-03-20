@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pods_array=(10 20)
-targets_array=(10 20)
+targets_array=(20 40)
 rates_array=('constant' 'ramp')
 distributions_array=('exponential' 'normal')
 metrics_array=('memory' 'cpu')
