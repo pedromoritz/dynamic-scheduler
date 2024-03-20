@@ -16,53 +16,53 @@
 10_20_ramp_exponential_cpu,kube-scheduler,77.64,0,1211,0
 10_20_ramp_exponential_cpu,kse-GreedyLB,79.91,57,1217,24
 10_20_ramp_exponential_cpu,kse-RefineLB,65.48,2,1205,0
-10_20_ramp_normal_memory,kube-scheduler,115.05,0,0,0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
-0, 0, 0
+10_20_ramp_normal_memory,kube-scheduler,104.3,0,1187,0
+10_20_ramp_normal_memory,kse-GreedyLB,77.6,56,1216,42
+10_20_ramp_normal_memory,kse-RefineLB,78.73,0,1178,0
+10_20_ramp_normal_cpu,kube-scheduler,39.92,0,1184,0
+10_20_ramp_normal_cpu,kse-GreedyLB,66.76,45,1202,26
+10_20_ramp_normal_cpu,kse-RefineLB,88.69,15,1192,9
+10_40_constant_exponential_memory,kube-scheduler,287.28,0,28774,18479
+10_40_constant_exponential_memory,kse-GreedyLB,120.76,46,28764,18434
+10_40_constant_exponential_memory,kse-RefineLB,212.02,5,28760,18448
+10_40_constant_exponential_cpu,kube-scheduler,618.7,0,28764,18459
+10_40_constant_exponential_cpu,kse-GreedyLB,379.35,46,28762,18451
+10_40_constant_exponential_cpu,kse-RefineLB,524.35,2,28772,18466
+10_40_constant_normal_memory,kube-scheduler,159.53,0,28771,18420
+10_40_constant_normal_memory,kse-GreedyLB,134.25,55,28771,18410
+10_40_constant_normal_memory,kse-RefineLB,128.98,3,28772,18180
+10_40_constant_normal_cpu,kube-scheduler,272.98,0,28768,18131
+10_40_constant_normal_cpu,kse-GreedyLB,196.94,67,28761,18169
+10_40_constant_normal_cpu,kse-RefineLB,252.57,1,28774,18146
+10_40_ramp_exponential_memory,kube-scheduler,136.82,0,2489,0
+10_40_ramp_exponential_memory,kse-GreedyLB,102.64,65,2531,64
+10_40_ramp_exponential_memory,kse-RefineLB,94.77,2,2497,6
+10_40_ramp_exponential_cpu,kube-scheduler,164.1,0,2489,0
+10_40_ramp_exponential_cpu,kse-GreedyLB,89.96,33,2489,8
+10_40_ramp_exponential_cpu,kse-RefineLB,100.96,7,2483,1
+10_40_ramp_normal_memory,kube-scheduler,58.92,0,2487,0
+10_40_ramp_normal_memory,kse-GreedyLB,82.85,41,2537,58
+10_40_ramp_normal_memory,kse-RefineLB,61.04,0,2489,0
+10_40_ramp_normal_cpu,kube-scheduler,80.36,0,2493,0
+10_40_ramp_normal_cpu,kse-GreedyLB,147.11,38,2511,32
+10_40_ramp_normal_cpu,kse-RefineLB,79.05,9,2490,0
+20_20_constant_exponential_memory,kube-scheduler,98.56,0,14400,3662
+20_20_constant_exponential_memory,kse-GreedyLB,112.53,86,14401,3733
+20_20_constant_exponential_memory,kse-RefineLB,87.41,0,14401,3671
+20_20_constant_exponential_cpu,kube-scheduler,311.23,0,14401,3653
+20_20_constant_exponential_cpu,kse-GreedyLB,172.63,116,14401,3759
+20_20_constant_exponential_cpu,kse-RefineLB,143.51,14,14401,3663
+20_20_constant_normal_memory,kube-scheduler,69.87,0,14401,3646
+20_20_constant_normal_memory,kse-GreedyLB,72.21,157,14401,3888
+20_20_constant_normal_memory,kse-RefineLB,71.87,0,14401,3644
+20_20_constant_normal_cpu,kube-scheduler,125.24,0,14401,3648
+20_20_constant_normal_cpu,kse-GreedyLB,200.41,154,14401,3878
+20_20_constant_normal_cpu,kse-RefineLB,91.13,3,14401,3653
+20_20_ramp_exponential_memory,kube-scheduler,57.49,0,1190,0
+20_20_ramp_exponential_memory,kse-GreedyLB,62.97,145,1200,41
+20_20_ramp_exponential_memory,kse-RefineLB,47.65,0,1188,0
+20_20_ramp_exponential_cpu,kube-scheduler,40.52,0,1191,0
+20_20_ramp_exponential_cpu,kse-GreedyLB,117.65,49,0,0
 0, 0, 0
 0, 0, 0
 0, 0, 0
