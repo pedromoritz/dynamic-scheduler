@@ -58,10 +58,10 @@ def save_grouped_graphics(distribution, metric):
       #ax.bar_label(rects, padding=2, rotation=90)
       multiplier += 1
     if metric == 'memory':
-      ax.set_ylim(0, 250)
+      ax.set_ylim(0, 300)
       ax.set_ylabel('Erro Médio Absoluto', fontsize=12)
     elif metric == 'cpu':
-      ax.set_ylim(0, 700)
+      ax.set_ylim(0, 800)
       ax.set_ylabel('Erro Médio Absoluto', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
