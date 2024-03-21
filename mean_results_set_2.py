@@ -15,7 +15,7 @@ rates = ['constant', 'ramp']
 distributions = ['exponential', 'normal']
 metrics = ['memory', 'cpu']
 algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
-executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5', 'results_6', 'results_7', 'results_8', 'results_9', 'results_10']
+executions = ['results_1', 'results_2']
 
 def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
@@ -44,7 +44,7 @@ def save_grouped_graphics(distribution, metric):
               std_data[algo].append(round(np.std(data_array), 2))
            except Exception as error:
              print(error)
-
+  
   x = np.arange(len(scenarios))
   width = 0.25
   multiplier = 0
