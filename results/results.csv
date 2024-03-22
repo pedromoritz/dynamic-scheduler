@@ -93,4 +93,4 @@
 20_40_ramp_normal_memory,kse-RefineLB,42.43,0,2473,0
 20_40_ramp_normal_cpu,kube-scheduler,36.44,0,2473,0
 20_40_ramp_normal_cpu,kse-GreedyLB,92.81,89,2516,60
-20_40_ramp_normal_cpu,kse-RefineLB,37.44,8,0,0
+20_40_ramp_normal_cpu,kse-RefineLB,42.11,13,2473,4
