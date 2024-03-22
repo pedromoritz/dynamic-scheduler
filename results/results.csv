@@ -1,0 +1,98 @@
+results/metrics_kube-scheduler_20_20_ramp_exponential_cpu.csv ---> ERROR
+
+10_20_constant_exponential_memory,kube-scheduler,258.16,0,14401,3644
+10_20_constant_exponential_memory,kse-GreedyLB,144.24,29,14398,3692
+10_20_constant_exponential_memory,kse-RefineLB,143.57,5,14401,3634
+10_20_constant_exponential_cpu,kube-scheduler,596.47,0,14401,3641
+10_20_constant_exponential_cpu,kse-GreedyLB,565.17,28,14400,3678
+10_20_constant_exponential_cpu,kse-RefineLB,564.1,2,14400,3620
+10_20_constant_normal_memory,kube-scheduler,146.93,0,14401,3618
+10_20_constant_normal_memory,kse-GreedyLB,128.32,39,14401,3718
+10_20_constant_normal_memory,kse-RefineLB,72.24,1,14400,3622
+10_20_constant_normal_cpu,kube-scheduler,263.96,0,14400,3630
+10_20_constant_normal_cpu,kse-GreedyLB,366.13,39,14400,3714
+10_20_constant_normal_cpu,kse-RefineLB,245.4,1,14401,3635
+10_20_ramp_exponential_memory,kube-scheduler,79.68,0,1205,0
+10_20_ramp_exponential_memory,kse-GreedyLB,86.29,35,1215,18
+10_20_ramp_exponential_memory,kse-RefineLB,67.44,1,1205,0
+10_20_ramp_exponential_cpu,kube-scheduler,90.65,0,1205,0
+10_20_ramp_exponential_cpu,kse-GreedyLB,79.85,39,1220,19
+10_20_ramp_exponential_cpu,kse-RefineLB,77.46,8,1203,3
+10_20_ramp_normal_memory,kube-scheduler,80.01,0,1205,0
+10_20_ramp_normal_memory,kse-GreedyLB,43.91,69,1224,34
+10_20_ramp_normal_memory,kse-RefineLB,79.42,0,1205,0
+10_20_ramp_normal_cpu,kube-scheduler,53.65,0,1207,0
+10_20_ramp_normal_cpu,kse-GreedyLB,98.26,75,1235,47
+10_20_ramp_normal_cpu,kse-RefineLB,48.7,7,1201,4
+10_40_constant_exponential_memory,kube-scheduler,299.62,0,28765,18162
+10_40_constant_exponential_memory,kse-GreedyLB,161.17,49,28758,18151
+10_40_constant_exponential_memory,kse-RefineLB,205.22,2,28772,18163
+10_40_constant_exponential_cpu,kube-scheduler,627.19,0,28758,18164
+10_40_constant_exponential_cpu,kse-GreedyLB,396.75,32,28760,18154
+10_40_constant_exponential_cpu,kse-RefineLB,543.08,2,28762,18152
+10_40_constant_normal_memory,kube-scheduler,142.93,0,28779,18158
+10_40_constant_normal_memory,kse-GreedyLB,86.22,40,28769,18150
+10_40_constant_normal_memory,kse-RefineLB,84.55,1,28778,18143
+10_40_constant_normal_cpu,kube-scheduler,251.9,0,28774,18152
+10_40_constant_normal_cpu,kse-GreedyLB,171.22,65,28759,18148
+10_40_constant_normal_cpu,kse-RefineLB,227.48,1,28774,18143
+10_40_ramp_exponential_memory,kube-scheduler,104.76,0,2488,0
+10_40_ramp_exponential_memory,kse-GreedyLB,61.51,62,2535,61
+10_40_ramp_exponential_memory,kse-RefineLB,120.5,4,2490,1
+10_40_ramp_exponential_cpu,kube-scheduler,164.6,0,2484,0
+10_40_ramp_exponential_cpu,kse-GreedyLB,124.29,74,2554,91
+10_40_ramp_exponential_cpu,kse-RefineLB,111.31,4,2492,0
+10_40_ramp_normal_memory,kube-scheduler,100.98,0,2500,0
+10_40_ramp_normal_memory,kse-GreedyLB,83.01,65,2583,115
+10_40_ramp_normal_memory,kse-RefineLB,104.89,1,2489,0
+10_40_ramp_normal_cpu,kube-scheduler,65.88,0,2493,0
+10_40_ramp_normal_cpu,kse-GreedyLB,118.32,72,2572,103
+10_40_ramp_normal_cpu,kse-RefineLB,71.65,1,2493,0
+20_20_constant_exponential_memory,kube-scheduler,106.91,0,14400,3660
+20_20_constant_exponential_memory,kse-GreedyLB,73.67,132,14401,3817
+20_20_constant_exponential_memory,kse-RefineLB,95.55,0,14400,3657
+20_20_constant_exponential_cpu,kube-scheduler,279.17,0,14401,3670
+20_20_constant_exponential_cpu,kse-GreedyLB,180.86,132,14401,3747
+20_20_constant_exponential_cpu,kse-RefineLB,109.75,8,14401,3650
+20_20_constant_normal_memory,kube-scheduler,83.22,0,14401,3642
+20_20_constant_normal_memory,kse-GreedyLB,66.29,149,14401,3875
+20_20_constant_normal_memory,kse-RefineLB,46.88,0,14400,3650
+20_20_constant_normal_cpu,kube-scheduler,95.8,0,14400,3635
+20_20_constant_normal_cpu,kse-GreedyLB,161.4,153,14401,3861
+20_20_constant_normal_cpu,kse-RefineLB,123.22,9,14401,3720
+20_20_ramp_exponential_memory,kube-scheduler,64.26,0,1188,0
+20_20_ramp_exponential_memory,kse-GreedyLB,76.87,86,1193,28
+20_20_ramp_exponential_memory,kse-RefineLB,37.98,0,1191,0
+20_20_ramp_exponential_cpu,kube-scheduler,0.0,0,0,0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
+0, 0, 0
