@@ -49,7 +49,7 @@
 20_20_constant_exponential_memory,0.0,14386.0,5262.0
 20_20_constant_exponential_memory,97.5,14385.0,5513.0
 20_20_constant_exponential_memory,0.33,14387.0,5435.0
-20_20_constant_exponential_cpu,0.0,14390.0,5442.0
+20_20_constant_exponential_cpu,0.0,14401.0,3665.0
 20_20_constant_exponential_cpu,124.0,14401.0,3757.0
 20_20_constant_exponential_cpu,11.0,14401.0,3661.0
 20_20_constant_normal_memory,0.0,14400.0,3647.0
