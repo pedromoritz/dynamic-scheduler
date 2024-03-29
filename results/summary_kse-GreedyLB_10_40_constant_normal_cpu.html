@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+    <meta charset="UTF-8" />
+    <meta name="author" content="Fabio Ziviello">
+    <meta name="description" content="K6 Html Report">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/fziviello/k6-report-html/main/assets/icon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K6 Report</title>
+    <style>
+      .h2, h2 {
+        margin-bottom: 10px;
+      }
+      .failed {
+        background-color: #af2626 !important;
+        color: #fff;
+        text-align: center;
+      }     
+      .good {
+        background-color: #235723 !important;
+        color: #fff;
+        text-align: center;
+      }
+      .info {
+        background-color: #084298a8 !important;
+        color: #fff;
+        text-align: center;
+      }
+      td.failed {
+        font-weight: bold;
+      }
+      .table-responsive {
+        margin-bottom: 15px;
+      }
+      .table>thead {
+        background: #084298a8;
+        color: #fff;
+      }
+      th, tr{
+        text-align: center;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px; 
+      }
+      .tabs label {
+        order: 1; 
+        display: block;
+        padding: 5px;
+        text-align: center;
+        cursor: pointer;
+        color: #666;
+        background: #ddd;
+        font-weight: bold;
+        font-size: 1.2rem;
+        flex: 1 1;
+        transition: background ease 0.2s;
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.3rem;
+        border-color: #ccc;
+        border-width: 2px 2px 0px;
+        box-shadow: inset 0px -3px 7px -1px rgba(0,0,0,0.33);
+      }
+      label {
+        margin: 0px;
+      }
+      .tabs .tab {
+        order: 99;
+        flex-grow: 1;
+        width: 100%;
+        display: none;
+      }
+      .tabs input[type="radio"] {
+        display: none;
+        background: #084298a8;
+        color: #000;
+      }
+      .tabs input[type="radio"]:checked + label {
+        background: #084298a8;
+        box-shadow: none;
+        color: #FFF;
+      }
+      .tabs input[type="radio"]:checked + label + .tab {
+        display: block;
+      }
+      .table td, .table th{
+        border-top: 0px !important;
+      }
+      .box {
+        flex: 1 1;
+        border-radius: 0.3rem;
+        background-color: #0f2649;
+        margin: 1rem;
+        padding: 0.5rem;
+        font-size: 1vw; 
+        box-shadow: 0px 4px 7px -1px rgba(0,0,0,0.49);
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+      .box h4 {
+        margin: 0;
+        padding-bottom: 0.5rem;
+        text-align: center;
+        position: relative;
+        z-index: 50;
+      }
+      .row div {
+        flex: 1 1;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+      .bignum {
+        position: relative;
+        font-size: 5vw;
+        z-index: 20;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .icon { 
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #0000002d;
+        font-size: 8vw;
+        z-index: 1;
+      }
+      .metricbox {
+        background-color: #5697e2;
+        font-size: 3vw;
+        height: auto;
+      }
+      .metricbox .row {
+        position: relative;
+        z-index: 20;
+      }
+      .groupTitle{
+        padding: 0.75rem;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container px-4 py-5">
+      <h3 class="pb-2 border-bottom"> <svg style="vertical-align:middle" width="40" height="45" viewBox="0 0 50 45" fill="none" class="footer-module--logo--_lkxx"><path d="M31.968 34.681a2.007 2.007 0 002.011-2.003c0-1.106-.9-2.003-2.011-2.003a2.007 2.007 0 00-2.012 2.003c0 1.106.9 2.003 2.012 2.003z" fill="#7D64FF"></path><path d="M39.575 0L27.154 16.883 16.729 9.31 0 45h50L39.575 0zM23.663 37.17l-2.97-4.072v4.072h-2.751V22.038l2.75 1.989v7.66l3.659-5.014 2.086 1.51-3.071 4.21 3.486 4.776h-3.189v.001zm8.305.17c-2.586 0-4.681-2.088-4.681-4.662 0-1.025.332-1.972.896-2.743l4.695-6.435 2.086 1.51-2.239 3.07a4.667 4.667 0 013.924 4.6c0 2.572-2.095 4.66-4.681 4.66z" fill="#7D64FF"></path></svg>kse-GreedyLB - 10 pods - 40 requests per second with normal distribution (cpu as metric)</h3>
+      <div class="row g-4 py-2 row-cols-1 row-cols-lg-3">
+        <div class="box">
+          <i class="fas fa-globe icon"></i>
+          <h4>Total Requests</h4>
+          <div class="bignum">28775</div>
+          
+        </div>
+        
+          <div class="box failed">
+            <i class="far fa-times-circle icon"></i>
+            <h4>Failed Requests</h4>
+            <div class="bignum">18151</div>
+          </div> 
+             
+        <div class="box good">
+          <i class="fas fa-chart-bar icon"></i>
+          <h4>Breached Thresholds</h4>
+          <div class="bignum">0</div>
+        </div>
+        <div class="box good">
+          <i class="fas fa-eye icon"></i>
+          <h4>Failed Checks</h4>
+          <div class="bignum">0</div>
+        </div>
+      </div>
+      <div class="tabs">
+        <input type="radio" name="tabs" id="tabSwitch" checked="checked">
+        <label for="tabSwitch"><i class="far fa-clock"></i> &nbsp; Request Metrics</label>
+        <div class="tab">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Thresholds</th>
+                  <th scope="col">Count</th>
+                  <th scope="col">Rate</th>
+                  <th scope="col">Average</th>
+                  <th scope="col">Maximum</th>
+                  <th scope="col">Median</th> 
+                  <th scope="col">Minimum</th>
+                  <th scope="col">90%</th>
+                  <th scope="col">95%</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td><b>http_req_duration</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">2173.76 ms</td>
+                    
+    
+                    
+                      <td class="">8335.31 ms</td>
+                      
+    
+                    
+                      <td class="">456.60 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">5114.02 ms</td>
+                    
+    
+                    
+                      <td class="">5135.47 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_waiting</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">2171.71 ms</td>
+                    
+    
+                    
+                      <td class="">8331.77 ms</td>
+                      
+    
+                    
+                      <td class="">456.41 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">5108.81 ms</td>
+                    
+    
+                    
+                      <td class="">5130.02 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_connecting</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">1.49 ms</td>
+                    
+    
+                    
+                      <td class="">11.69 ms</td>
+                      
+    
+                    
+                      <td class="">1.59 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">2.18 ms</td>
+                    
+    
+                    
+                      <td class="">2.30 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_tls_handshaking</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                      
+    
+                    
+                      <td>-</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td> 
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_sending</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">0.06 ms</td>
+                    
+    
+                    
+                      <td class="">5.51 ms</td>
+                      
+    
+                    
+                      <td class="">0.06 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">0.08 ms</td>
+                    
+    
+                    
+                      <td class="">0.09 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_receiving</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">1.99 ms</td>
+                    
+    
+                    
+                      <td class="">39.73 ms</td>
+                      
+    
+                    
+                      <td class="">0.14 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">5.55 ms</td>
+                    
+    
+                    
+                      <td class="">6.06 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>http_req_blocked</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">1.58 ms</td>
+                    
+    
+                    
+                      <td class="">17.04 ms</td>
+                      
+    
+                    
+                      <td class="">1.68 ms</td>
+                      
+                    
+                    
+                      <td>-</td>
+                       
+                                  
+                    
+                      <td class="">2.28 ms</td>
+                    
+    
+                    
+                      <td class="">2.40 ms</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    <td><b>iteration_duration</b></td>
+    
+                    
+                      <td>-</td>
+                    
+    
+                    
+                      <td>-</td>
+                    
+                    
+                    
+                      <td class="">2176.61 ms</td>
+                    
+    
+                    
+                      <td class="">30001.01 ms</td>
+                      
+    
+                    
+                      <td class="">458.52 ms</td>
+                      
+                    
+                    
+                      <td class="">1.27 ms</td>
+                       
+                                  
+                    
+                      <td class="">5115.83 ms</td>
+                    
+    
+                    
+                      <td class="">5137.28 ms</td>
+                    
+                  </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          
+             <h2>Custom Metrics</h2>
+              <div class="table-responsive"> 
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Thresholds</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Rate</th>
+                        <th scope="col">Average</th>
+                        <th scope="col">Maximum</th>
+                        <th scope="col">Median</th> 
+                        <th scope="col">Minimum</th>
+                        <th scope="col">90%</th>
+                        <th scope="col">95%</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><b>dropped_iterations</b></td>
+      
+                      
+                        <td class="">26.00</td>
+                      
+      
+                      
+                        <td class="">0.04</td>
+                      
+                      
+                      
+                        <td>-</td>
+                      
+      
+                      
+                        <td>-</td>
+                        
+      
+                      
+                        <td>-</td>
+                        
+                      
+                      
+                        <td>-</td>
+                         
+                                    
+                      
+                        <td>-</td>
+                      
+      
+                      
+                        <td>-</td> 
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+        
+        </div> 
+        <!-- ---- end tab ---- -->
+        <input type="radio" name="tabs" id="tabtwo">
+        <label for="tabtwo"><i class="fas fa-chart-line"></i> &nbsp; Statistics</label>
+        <div class="tab">
+          <div class="row">
+            
+            
+              <div class="box info">
+                <h4>Iterations</h4>
+                <i class="fas fa-redo icon"></i>
+                <div class="row"><div>Total</div><div>28775</div></div>
+                <div class="row"><div>Rate</div><div>39.68/s</div></div>
+              </div>
+            
+            <div class="box info">
+              <h4>Virtual Users</h4>
+              <i class="fas fa-user icon"></i>
+              <div class="row"><div>Min</div><div>100</div></div>
+              <div class="row"><div>Max</div><div>126</div></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="box info">
+              <h4>Requests</h4>
+              <i class="fas fa-globe icon"></i>
+              <div class="row"><div>Total</div><div>28775</div></div>
+              <div class="row"><div>Rate</div><div>39.68/s</div></div>
+            </div>
+            <div class="box info">
+              <h4>Data Received</h4>
+              <i class="fas fa-cloud-download-alt icon"></i>
+              <div class="row"><div>Total</div><div>946.69 MB</div></div>
+              <div class="row"><div>Rate</div><div>1.31 mB/s</div></div>
+            </div>
+            <div class="box info">
+              <h4>Data Sent</h4>
+              <i class="fas fa-cloud-upload-alt icon"></i>
+              <div class="row"><div>Total</div><div>2.44 MB</div></div>
+              <div class="row"><div>Rate</div><div>0.00 mB/s</div></div>
+            </div>   
+          </div>
+        </div>  
+        <!-- ---- end tab ---- -->     
+        <input type="radio" name="tabs" id="tabthree">
+        <label for="tabthree"><i class="fas fa-tasks"></i> Checks & Groups</label>
+        <div class="tab">
+          
+          
+        </div> 
+        <!-- ---- end tab ---- -->
+      </div>
+      <footer class="py-1">
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+          <p>K6 Report HTML v2.0.0</p>
+          <ul class="list-unstyled d-flex">
+            <li class="ms-3"><a class="link-dark" href="https://github.com/fziviello/k6-report-html" alt="Powerd By Fabio Ziviello"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+     </footer>
+  </body>
+</html>
