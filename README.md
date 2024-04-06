@@ -57,7 +57,7 @@ kubectl top node --namespace lab
 #### Show nodes through Metrics API
 kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 
-./results_set_X.py > results/results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.svg; git commit -m "update"; git push
+./results_X.py > results/results.csv; ./graphics_generator.py; git add results/*.txt; git add results/*.csv; git add results/*.html; git add results/*.svg; git commit -m "update"; git push
 
 #### Access tesla machine ####
 ssh pedrocarvalho@lapesd-tesla.inf.ufsc.br
