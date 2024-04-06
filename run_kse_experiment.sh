@@ -26,9 +26,9 @@ test()
   # selecting pod template and creating workloads
   if [[ $WL == "synthetic" ]]
   then
-    WORKLOAD_TEMPLATE=synthetic-workload_pod_template.yaml
+    WORKLOAD_TEMPLATE=workload_pod_template-synthetic.yaml
   else
-    WORKLOAD_TEMPLATE=realistic-workload_pod_template.yaml
+    WORKLOAD_TEMPLATE=workload_pod_template-realistic.yaml
   fi
 
   for i in $(seq $PA); do
