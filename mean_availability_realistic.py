@@ -20,8 +20,7 @@ executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5', '
 def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
   scenarios = []
-  mae_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
-  std_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
+  ava_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
   for rate in rates:
     for target in targets:
       for pod in pods:
@@ -37,12 +36,10 @@ def save_grouped_graphics(distribution, metric):
               obj_requests = get_requests_count(execution, algo+'_'+key)  
               data_total = float(obj_requests['total'])
               data_failed = float(obj_requests['failed'])
-              availability =round((data_total - data_failed) / ((data_total - data_failed) + data_failed) * 100, 2)
-              data_array.append(availability)
+              data_array.append((data_total - data_failed) / ((data_total - data_failed) + data_failed) * 100)
             except Exception as error:
               data_array.append(100)
-          mae_data[algo].append(round(np.mean(data_array), 2))
-          std_data[algo].append(round(np.std(data_array), 2))
+          ava_data[algo].append(round(np.mean(data_array), 2))
 
   x = np.arange(len(scenarios))
   width = 0.25
@@ -50,15 +47,13 @@ def save_grouped_graphics(distribution, metric):
   plt.figure().set_figwidth(12)
   fig, ax = plt.subplots(figsize=(14,4))
   try:
-    for attribute, measurement in mae_data.items():
+    for attribute, measurement in ava_data.items():
       offset = width * multiplier
-      #std = std_data[attribute]
-      #rects = ax.bar(x + offset, measurement, width, yerr=std, capsize=5, label=attribute)
       rects = ax.bar(x + offset, measurement, width, capsize=5, label=attribute)
-      ax.bar_label(rects, padding=2, rotation=90, fmt='%.0f%%')
+      ax.bar_label(rects, padding=2, rotation=90, fmt='%.02f%%')
       multiplier += 1
     ax.set_ylim(0, 100)
-    ax.set_ylabel('Disponibilidade (%)', fontsize=12)
+    ax.set_ylabel('Disponibilidade', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
     ksl = mpatches.Patch(color='#1f77b4', label='Kube-Scheduler')
