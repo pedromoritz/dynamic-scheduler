@@ -28,7 +28,7 @@ test()
   then
     WORKLOAD_TEMPLATE=synthetic-workload_pod_template.yaml
   else
-    WORKLOAD_TEMPLATE=real-workload_pod_template.yaml
+    WORKLOAD_TEMPLATE=realistic-workload_pod_template.yaml
   fi
 
   for i in $(seq $PA); do
