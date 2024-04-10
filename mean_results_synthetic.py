@@ -59,10 +59,10 @@ def save_grouped_graphics(distribution, metric):
       multiplier += 1
     if metric == 'memory':
       ax.set_ylim(0, 300)
-      ax.set_ylabel('Erro Médio Absoluto', fontsize=12)
+      ax.set_ylabel('Erro Médio Absoluto (MB)', fontsize=12)
     elif metric == 'cpu':
       ax.set_ylim(0, 700)
-      ax.set_ylabel('Erro Médio Absoluto', fontsize=12)
+      ax.set_ylabel('Erro Médio Absoluto (milliCPU)', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
     ksl = mpatches.Patch(color='#1f77b4', label='Kube-Scheduler')
