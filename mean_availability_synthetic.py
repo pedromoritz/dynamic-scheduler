@@ -45,7 +45,7 @@ def save_grouped_graphics(distribution, metric):
   width = 0.25
   multiplier = 0
   plt.figure().set_figwidth(12)
-  fig, ax = plt.subplots(figsize=(14,3.5))
+  fig, ax = plt.subplots(figsize=(14,3.1))
   try:
     for attribute, measurement in ava_data.items():
       offset = width * multiplier
