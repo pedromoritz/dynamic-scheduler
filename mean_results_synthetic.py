@@ -55,7 +55,6 @@ def save_grouped_graphics(distribution, metric):
       offset = width * multiplier
       std = std_data[attribute]
       rects = ax.bar(x + offset, measurement, width, yerr=std, capsize=5, label=attribute)
-      #ax.bar_label(rects, padding=2, rotation=90)
       multiplier += 1
     if metric == 'memory':
       ax.set_ylim(0, 300)
