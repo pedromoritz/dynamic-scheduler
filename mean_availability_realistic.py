@@ -21,6 +21,7 @@ def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
   scenarios = []
   ava_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
+  std_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
   for rate in rates:
     for target in targets:
       for pod in pods:
@@ -40,6 +41,7 @@ def save_grouped_graphics(distribution, metric):
             except Exception as error:
               data_array.append(100)
           ava_data[algo].append(round(np.mean(data_array), 2))
+          std_data[algo].append(round(np.std(data_array), 2))
 
   x = np.arange(len(scenarios))
   width = 0.25
@@ -49,8 +51,8 @@ def save_grouped_graphics(distribution, metric):
   try:
     for attribute, measurement in ava_data.items():
       offset = width * multiplier
-      rects = ax.bar(x + offset, measurement, width, capsize=5, label=attribute)
-      ax.bar_label(rects, padding=2, rotation=90, fmt='%.02f%%')
+      std = std_data[attribute]
+      rects = ax.bar(x + offset, measurement, width, yerr=std, capsize=5, label=attribute)
       multiplier += 1
     ax.set_ylim(0, 100)
     ax.set_ylabel('Disponibilidade', fontsize=12)
@@ -61,7 +63,7 @@ def save_grouped_graphics(distribution, metric):
     kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
     ax.grid(axis="y")
     ax.set_axisbelow(True)
-    ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
+    ax.legend(handles=[ksl, ksegl, kserl], loc='lower right', fontsize=12)
     plt.savefig('grouped_mean_availability_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
   except Exception as error:
     print(error)
