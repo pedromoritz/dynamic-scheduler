@@ -57,7 +57,7 @@ def save_grouped_graphics(rate, metric):
     if rate == 'constant':
       ax.set_ylim(20, 100)
     elif rate == 'ramp': 
-      ax.set_ylim(80, 100)
+      ax.set_ylim(50, 100)
     ax.set_ylabel('Disponibilidade', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
