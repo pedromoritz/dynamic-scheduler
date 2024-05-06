@@ -33,7 +33,7 @@
 10_40_constant_normal_memory,kse-RefineLB,145.02,2,28768,19007
 10_40_constant_normal_cpu,kube-scheduler,237.03,0,28775,18993
 10_40_constant_normal_cpu,kse-GreedyLB,136.74,55,28771,18989
-10_40_constant_normal_cpu,kse-RefineLB,107.14,1,28763,25806
+10_40_constant_normal_cpu,kse-RefineLB,151.84,1,28768,16943
 10_40_ramp_exponential_memory,kube-scheduler,88.19,0,732,7
 10_40_ramp_exponential_memory,kse-GreedyLB,83.56,79,734,53
 10_40_ramp_exponential_memory,kse-RefineLB,97.26,1,626,16
