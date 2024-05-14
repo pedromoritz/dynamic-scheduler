@@ -62,3 +62,4 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes
 #### Access tesla machine ####
 ssh pedrocarvalho@lapesd-tesla.inf.ufsc.br
 
+find . -type f -name "*.svg" -exec bash -c 'rsvg-convert -f pdf -o $0.pdf $0' {} \;
