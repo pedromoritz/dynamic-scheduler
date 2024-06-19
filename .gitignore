@@ -1,3 +1,4 @@
 /__pycache__/
 experiment_*/results_*/*.gz
 results/*.gz
+node_modules/*.*
