@@ -17,19 +17,19 @@ metrics = ['memory', 'cpu']
 algos = ['kube-scheduler', 'kse-GreedyLB', 'kse-RefineLB']
 executions = ['results_1', 'results_2', 'results_3', 'results_4', 'results_5', 'results_6', 'results_7', 'results_8', 'results_9', 'results_10']
 
-def save_grouped_graphics(rate, metric):
+def save_grouped_graphics(distribution, metric):
   executions_data = defaultdict(dict)
   scenarios = []
   ava_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
   std_data = {'kube-scheduler': [], 'kse-GreedyLB': [], 'kse-RefineLB': []}
-  for distribution in distributions:
+  for rate in rates:
     for target in targets:
       for pod in pods:
         key = str(pod) + '_' + str(target) + '_' + rate + '_' + distribution + '_' + metric
-        if distribution == 'normal':
-          scenarios.append(str(pod)+' pods\n'+str(target)+' req/s\n'+'normal')
-        elif distribution == 'exponential': 
-          scenarios.append(str(pod)+' pods,\n'+str(target)+' req/s\n'+'exponencial')  
+        if rate == 'constant':
+          scenarios.append(str(pod)+' pods\n'+str(target)+' req/s\n'+'constante')
+        elif rate == 'ramp': 
+          scenarios.append(str(pod)+' pods,\n'+str(target)+' req/s\n'+'linear')  
         for algo in algos:
           data_array = []
           for execution in executions:
@@ -54,10 +54,7 @@ def save_grouped_graphics(rate, metric):
       std = std_data[attribute]
       rects = ax.bar(x + offset, measurement, width, yerr=std, capsize=5, label=attribute)
       multiplier += 1
-    if rate == 'constant':
-      ax.set_ylim(20, 100)
-    elif rate == 'ramp': 
-      ax.set_ylim(90, 100)
+    ax.set_ylim(0, 100)
     ax.set_ylabel('Disponibilidade', fontsize=12)
     ax.set_xticks(x + width, scenarios, fontsize=12)
     ax.tick_params(axis='y', labelsize=12)
@@ -66,11 +63,8 @@ def save_grouped_graphics(rate, metric):
     kserl = mpatches.Patch(color='#2ca02c', label='KSE-RefineLB')
     ax.grid(axis="y")
     ax.set_axisbelow(True)
-    if rate == 'constant':
-      ax.legend(handles=[ksl, ksegl, kserl], loc='upper right', fontsize=12)
-    elif rate == 'ramp':
-      ax.legend(handles=[ksl, ksegl, kserl], loc='lower right', fontsize=12)
-    plt.savefig('grouped_mean_availability_'+rate+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
+    ax.legend(handles=[ksl, ksegl, kserl], loc='lower right', fontsize=12)
+    plt.savefig('grouped_mean_availability_'+distribution+'_'+metric+'.svg', dpi=150, transparent=False, bbox_inches='tight', format='svg')
   except Exception as error:
     print(error)
   finally:
@@ -93,8 +87,8 @@ def get_requests_count(execution, filename):
       'failed': 0
     }
 
-save_grouped_graphics('constant', 'memory')
-save_grouped_graphics('constant', 'cpu')
-save_grouped_graphics('ramp', 'memory')
-save_grouped_graphics('ramp', 'cpu')
+save_grouped_graphics('normal', 'memory')
+save_grouped_graphics('normal', 'cpu')
+save_grouped_graphics('exponential', 'memory')
+save_grouped_graphics('exponential', 'cpu')
 
