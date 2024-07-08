@@ -9,7 +9,7 @@ import matplotlib.patches as mpatches
 from bs4 import BeautifulSoup
 import csv
 
-lang = 'en' 
+lang = 'pt' 
 constantStr = 'constante' if lang == 'pt' else 'constant'
 linearStr = 'linear' if lang == 'pt' else 'linear'
 availabilityStr = 'Disponibilidade' if lang == 'pt' else 'Availability'

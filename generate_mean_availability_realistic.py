@@ -9,7 +9,7 @@ import matplotlib.patches as mpatches
 from bs4 import BeautifulSoup
 import csv
 
-lang = 'en' 
+lang = 'pt' 
 normalStr = 'normal' if lang == 'pt' else 'normal'
 exponentialStr = 'exponencial' if lang == 'pt' else 'exponential'
 availabilityStr = 'Disponibilidade' if lang == 'pt' else 'Availability'
