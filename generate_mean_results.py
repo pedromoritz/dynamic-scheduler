@@ -23,7 +23,7 @@ else:
   print('usage: generate_mean_results.py synthetic|realistic')
   sys.exit()
 
-lang = 'en'
+lang = 'pt'
 constantStr = 'constante' if lang == 'pt' else 'constant'
 linearStr = 'linear' if lang == 'pt' else 'linear'
 maeStr = 'Erro Médio Absoluto' if lang == 'pt' else 'Mean Absolute Error'
