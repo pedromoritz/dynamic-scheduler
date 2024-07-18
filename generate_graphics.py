@@ -9,7 +9,7 @@ from pylab import cm
 import sys
 from collections.abc import Iterable
 
-lang = 'en' 
+lang = 'pt' 
 timeStr = 'tempo' if lang == 'pt' else 'time'
 memoryStr = 'memória' if lang == 'pt' else 'memory'
 nodeStr = 'nó' if lang == 'pt' else 'node'
