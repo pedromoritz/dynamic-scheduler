@@ -26,6 +26,7 @@ lang = 'pt'
 constantStr = 'constante' if lang == 'pt' else 'constant'
 linearStr = 'linear' if lang == 'pt' else 'linear'
 maeStr = 'Erro Médio Absoluto' if lang == 'pt' else 'Mean Absolute Error'
+memoryStr = 'memória' if lang == 'pt' else 'memory'
 
 targets = [20, 40]
 rates = ['constant', 'ramp']
@@ -69,7 +70,7 @@ def save_grouped_graphics(distribution, metric):
       multiplier += 1
     if metric == 'memory':
       ax.set_ylim(0, 300)
-      ax.set_ylabel('memory (MB)', fontsize=12)
+      ax.set_ylabel(memoryStr + ' (MB)', fontsize=12)
     elif metric == 'cpu':
       ax.set_ylim(0, 800)
       ax.set_ylabel('CPU (millicpu)', fontsize=12)
@@ -90,7 +91,7 @@ def save_grouped_graphics(distribution, metric):
 def save_graphic(value1, value2, value3, filename):
   if 'memory' in filename:
     plt.ylim(0, 300)
-    plt.ylabel('memory (MB)')
+    plt.ylabel(memoryStr + ' (MB)')
   elif 'cpu' in filename:
     plt.ylim(0, 800)
     plt.ylabel('CPU (millicpu)')

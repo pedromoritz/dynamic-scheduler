@@ -63,9 +63,9 @@ for path in Path("results/").glob("metrics_*.csv"):
       data2 = list(map(lambda n: n/1024, n2_memory))
       data3 = list(map(lambda n: n/1024, n3_memory))
       data4 = list(map(lambda n: n/1024, n4_memory))
-      xlabel = timeStr+' (s)'
+      xlabel = timeStr + ' (s)'
       ylim = 2048
-      ylabel = memoryStr+' (MB)'
+      ylabel = memoryStr + ' (MB)'
     elif 'cpu' in FILE_NAME:
       # generating cpu graphics
       data1 = list(map(lambda n: n/1000000, n1_cpu))
